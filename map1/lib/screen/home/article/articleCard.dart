@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:map1/constant.dart';
+import 'package:map1/shared/constant.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ArticleCard extends StatelessWidget {

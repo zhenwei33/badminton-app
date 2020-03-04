@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:map1/assets/news_data.json' as response;
 import 'package:http/http.dart' as http;
-import 'package:map1/articleCard.dart';
-import 'package:map1/classes/news.dart';
+import 'articleCard.dart';
+import 'package:map1/model/news.dart';
 
 class Carousel extends StatefulWidget {
   @override
