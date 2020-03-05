@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:map1/constant.dart';
+import 'package:map1/shared/constant.dart';
 
 class AnnouncementItem extends StatelessWidget {
   final String title;
