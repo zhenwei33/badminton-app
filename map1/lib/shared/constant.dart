@@ -37,3 +37,20 @@ TextStyle announcementTime = TextStyle(
   fontWeight: FontWeight.normal,
   color: Colors.grey
 );
+
+InputDecoration customInputDecoration = InputDecoration(
+  filled: true,
+  fillColor: Colors.indigoAccent[100],
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.amber[100],
+      width: 1.0,
+    )
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.deepOrangeAccent[100],
+      width: 1.0,
+    )
+  )
+);
