@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "715423990780",
+    "firebase_url": "https://sporty-ab009.firebaseio.com",
+    "project_id": "sporty-ab009",
+    "storage_bucket": "sporty-ab009.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715423990780:android:b44b93dec005ca468e6879",
+        "android_client_info": {
+          "package_name": "com.borisvillanueva.sporty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715423990780-r0271djmaq0l8nmun8vkuaq2d9cvi6u9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoutJyiELiA030N0uycSoXYGpU1JgEXiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715423990780-r0271djmaq0l8nmun8vkuaq2d9cvi6u9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
