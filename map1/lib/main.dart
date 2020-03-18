@@ -16,6 +16,5 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: true,
         home: Wrapper(),
       ),
-    );
   }
 }

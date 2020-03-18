@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:map1/model/user.dart';
 
 class Wrapper extends StatelessWidget {
+  //conditional return
+  //return home() if user is logged in
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
