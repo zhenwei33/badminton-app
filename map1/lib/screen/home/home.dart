@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:map1/services/auth.dart';
 import 'package:map1/shared/constant.dart';
 import 'announcement/announcementItem.dart';
 import 'article/carousel.dart';
@@ -17,11 +18,15 @@ class Home extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.home),
-                onPressed: () {},
+                onPressed: () async{
+                  //Temporary logout
+                  AuthService auth = AuthService();
+                  await auth.signOut();
+                },
               ),
               IconButton(
                 icon: Icon(Icons.add),
-                onPressed: () {},
+                onPressed: () {print('asd');},
               ),
               IconButton(
                 icon: Icon(Icons.person),
