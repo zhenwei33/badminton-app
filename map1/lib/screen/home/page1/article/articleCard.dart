@@ -12,7 +12,7 @@ class ArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 18, bottom: 26, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 18, bottom: 26, left: 10, right: 10),
         child: isLoaded
             ? Container(
                 width: 140,
