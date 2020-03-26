@@ -68,8 +68,6 @@ TextStyle lightBlueRegText = TextStyle(
   color: lightBlue
 );
 
-
-
 TextStyle announcementTime = TextStyle(
   fontFamily: 'Roboto',
   fontSize: 12,
@@ -89,4 +87,20 @@ TextStyle courtTitle = TextStyle(
   fontSize: 30,
   fontWeight: FontWeight.normal,
   color: Colors.white
+);
+InputDecoration customInputDecoration = InputDecoration(
+  filled: true,
+  fillColor: Colors.indigoAccent[100],
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.amber[100],
+      width: 1.0,
+    )
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.deepOrangeAccent[100],
+      width: 1.0,
+    )
+  )
 );
