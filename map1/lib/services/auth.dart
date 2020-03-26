@@ -42,6 +42,8 @@ class AuthService {
           email: email, password: password);
       return _userFromFirebaseUser(result.user);
     } catch (err) {
+      print(err);
+      
       return _errorMessage;
     }
   }
