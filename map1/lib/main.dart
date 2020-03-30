@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:map1/model/user.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:map1/route/Routes.dart';
+import 'screen/chatbot/chatbot.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
           ],
           debugShowCheckedModeBanner: false,
           onGenerateRoute: Routes.generateRoute,
-          home: Wrapper()),
+          home: Conversation()),
+          // home: Wrapper()),
     );
   }
 }
