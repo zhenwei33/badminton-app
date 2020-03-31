@@ -4,7 +4,6 @@ import 'package:map1/services/database.dart';
 
 class AuthService {
   final _auth = FirebaseAuth.instance;
-  String _errorMessage = '';
 
   Stream<User> get user {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
@@ -16,8 +15,8 @@ class AuthService {
         : null;
   }
 
-  Future registerWtihEmailAndPassword(String username, String matrics,
-      String contact, String email, String password) async {
+  Future registerWtihEmailAndPassword(
+      String username, String contact, String email, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -26,7 +25,7 @@ class AuthService {
       final uid = firebaseUser.uid;
 
       DatabaseService databaseService = DatabaseService(uid: uid);
-      databaseService.createUser(username, matrics, contact).catchError((err) {
+      databaseService.createUser(username, contact).catchError((err) {
         print(err);
       });
 
@@ -43,15 +42,14 @@ class AuthService {
       return _userFromFirebaseUser(result.user);
     } catch (err) {
       print(err);
-      
-      return _errorMessage;
+      return err.message;
     }
   }
 
-  Future signOut() async{
-    try{
+  Future signOut() async {
+    try {
       return await _auth.signOut();
-    }catch(err){
+    } catch (err) {
       print(err);
       return null;
     }

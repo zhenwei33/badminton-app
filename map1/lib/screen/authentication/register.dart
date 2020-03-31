@@ -51,27 +51,11 @@ class _RegisterState extends State<Register> {
                     children: <Widget>[
                       TextFormField(
                         decoration:
-                            customInputDecoration.copyWith(hintText: "Name"),
+                            customInputDecoration.copyWith(hintText: "Username"),
                         validator: ((val) =>
-                            val.isEmpty ? 'Please enter your name' : null),
+                            val.isEmpty ? 'Please enter your username' : null),
                         onChanged: (val) {
                           setState(() => _username = val);
-                        },
-                      ),
-                      SizedBox(height: 20.0), // spacing box, removable
-                      TextFormField(
-                        decoration:
-                            customInputDecoration.copyWith(hintText: "Matrics"),
-                        validator: ((val) {
-                          final matricsNumber =
-                              RegExp(r'[A-Z]{1}[0-9]{2}[A-Z]{2}[0-9]{4}');
-                          if (matricsNumber.hasMatch(val)) {
-                            return null;
-                          }
-                          return 'Please enter a valid matrics number';
-                        }),
-                        onChanged: (val) {
-                          setState(() => _matrics = val);
                         },
                       ),
                       SizedBox(height: 20.0), // spacing box, removable
@@ -128,7 +112,6 @@ class _RegisterState extends State<Register> {
                             dynamic result =
                                 await _authService.registerWtihEmailAndPassword(
                                     _username,
-                                    _matrics,
                                     _contact,
                                     _email,
                                     _password);

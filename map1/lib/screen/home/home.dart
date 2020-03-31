@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:map1/model/user.dart';
+import 'package:map1/services/database.dart';
 import 'package:map1/shared/route_names.dart';
+import 'package:provider/provider.dart';
 import 'package:map1/services/auth.dart';
 import 'package:map1/shared/constant.dart';
 import 'package:map1/screen/home/page1/page1.dart';
@@ -10,73 +13,75 @@ import 'package:map1/screen/home/page4/page4.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final UserData userData = Provider.of<UserData>(context) ?? null;
     return DefaultTabController(
-        length: 4,
-        child: Scaffold(
-            extendBodyBehindAppBar: true,
-            bottomNavigationBar: BottomAppBar(
-                color: Colors.transparent,
-                child: Container(
-                    height: 70,
-                    child: TabBar(
-                      unselectedLabelColor: blue2,
-                      labelColor: blue,
-                      indicatorColor: Colors.transparent,
-                      tabs: <Widget>[
-                        Tab(
-                          child: FlatButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, page4);
-                              print('YADADADA');
-                            },
-                            child: null,
-                          ),
-                          icon: Icon(
-                            Icons.home,
-                          ),
-                          // onPressed: () async {
-                          //   //Temporary logout
-                          //   AuthService auth = AuthService();
-                          //   await auth.signOut();
-                          // },
+      length: 4,
+      child: Scaffold(
+          extendBodyBehindAppBar: true,
+          bottomNavigationBar: BottomAppBar(
+              color: Colors.transparent,
+              child: Container(
+                  height: 70,
+                  child: TabBar(
+                    unselectedLabelColor: blue2,
+                    labelColor: blue,
+                    indicatorColor: Colors.transparent,
+                    tabs: <Widget>[
+                      Tab(
+                        child: FlatButton(
+                          onPressed: () {
+                            print(
+                                userData == null ? userData.username : 'Error');
+                          },
+                          child: null,
                         ),
-                        Tab(
-                          child: FlatButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, page1);
-                              print('YADADADA');
-                            },
-                            child: null,
-                          ),
-                          icon: Icon(
-                            Icons.add,
-                          ),
+                        icon: Icon(
+                          Icons.home,
                         ),
-                        Tab(
-                          child: FlatButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, page2);
-                              print('YADADADA');
-                            },
-                            child: null,
-                          ),
-                          icon: Icon(
-                            Icons.person,
-                          ),
+                        // onPressed: () async {
+                        //   //Temporary logout
+                        //   AuthService auth = AuthService();
+                        //   await auth.signOut();
+                        // },
+                      ),
+                      Tab(
+                        child: FlatButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, page1);
+                            print('YADADADA');
+                          },
+                          child: null,
                         ),
-                        Tab(
-                          child: FlatButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, page3);
-                              print('YADADADA');
-                            },
-                            child: null,
-                          ),
-                          icon: Icon(
-                            Icons.chat,
-                          ),
-                        )
-                      ],
-                    )))));
+                        icon: Icon(
+                          Icons.add,
+                        ),
+                      ),
+                      Tab(
+                        child: FlatButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, page2);
+                            print('YADADADA');
+                          },
+                          child: null,
+                        ),
+                        icon: Icon(
+                          Icons.person,
+                        ),
+                      ),
+                      Tab(
+                        child: FlatButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, page3);
+                            print('YADADADA');
+                          },
+                          child: null,
+                        ),
+                        icon: Icon(
+                          Icons.chat,
+                        ),
+                      )
+                    ],
+                  )))),
+    );
   }
 }

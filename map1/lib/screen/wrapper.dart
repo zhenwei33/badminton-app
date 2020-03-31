@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:map1/screen/authentication/authentication.dart';
 import 'package:map1/screen/home/home.dart';
+import 'package:map1/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:map1/model/user.dart';
 
@@ -10,9 +11,13 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    
-    return user == null
-        ? Authentication()
-        : Home();
+
+    if (user == null) {
+      return Authentication();
+    } else {
+      final databaseService = DatabaseService(uid: user.uid);
+      return StreamProvider<UserData>.value(
+          value: databaseService.userData, child: Home());
+    }
   }
 }
