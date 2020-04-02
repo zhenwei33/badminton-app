@@ -11,19 +11,23 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthService().user,
+    return MultiProvider(
+      providers: [
+        StreamProvider<User>.value(
+          value: AuthService().user,
+        ),
+      ],
       child: MaterialApp(
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          supportedLocales: [
-            const Locale('en', 'US'), // English
-          ],
-          debugShowCheckedModeBanner: false,
-          onGenerateRoute: Routes.generateRoute,
-          home: Wrapper()),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', 'US'), // English
+        ],
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: Routes.generateRoute,
+        home: Wrapper()),
     );
   }
 }

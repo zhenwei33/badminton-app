@@ -3,6 +3,7 @@ import 'package:map1/screen/home/page1/page1.dart';
 import 'package:map1/screen/home/page2/page2.dart';
 import 'package:map1/screen/home/page3/page3.dart';
 import 'package:map1/screen/home/page4/page4.dart';
+import 'package:map1/screen/home/user_profile_page/user_profile.dart';
 import 'package:map1/shared/route_names.dart';
 import 'package:map1/screen/home/home.dart';
 
@@ -19,6 +20,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => Page3());
       case page4:
         return MaterialPageRoute(builder: (_) => Page4());
+      case profile_page:
+        return MaterialPageRoute(builder: (_) => UserProfile());
       default:
         return _errorRoute();
     }

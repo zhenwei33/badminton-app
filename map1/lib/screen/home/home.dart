@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:map1/route/Routes.dart';
 import 'package:map1/shared/route_names.dart';
 import 'package:map1/services/auth.dart';
 import 'package:map1/shared/constant.dart';
@@ -6,6 +7,7 @@ import 'package:map1/screen/home/page1/page1.dart';
 import 'package:map1/screen/home/page2/page2.dart';
 import 'package:map1/screen/home/page3/page3.dart';
 import 'package:map1/screen/home/page4/page4.dart';
+import 'package:map1/screen/home/user_profile_page/user_profile.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -54,11 +56,11 @@ class Home extends StatelessWidget {
                         ),
                         Tab(
                           child: FlatButton(
+                            padding: EdgeInsets.all(0),
                             onPressed: () {
-                              Navigator.pushNamed(context, page2);
-                              print('YADADADA');
+                              Navigator.pushNamed(context, profile_page);
                             },
-                            child: null,
+                            child: Text(''),
                           ),
                           icon: Icon(
                             Icons.person,

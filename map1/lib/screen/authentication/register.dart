@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/shared/constant.dart';
-import 'package:map1/shared/splashScreen.dart';
+import 'package:map1/shared/loading.dart';
 import 'package:map1/services/auth.dart';
 
 class Register extends StatefulWidget {
@@ -15,7 +15,7 @@ class _RegisterState extends State<Register> {
   bool _loading = false;
 
   String _username = '';
-  String _matrics = '';
+  String _idNo = '';
   String _contact = '';
   String _email = '';
   String _password = '';
@@ -61,17 +61,19 @@ class _RegisterState extends State<Register> {
                       SizedBox(height: 20.0), // spacing box, removable
                       TextFormField(
                         decoration:
-                            customInputDecoration.copyWith(hintText: "Matrics"),
+                            customInputDecoration.copyWith(hintText: "IC No."),
                         validator: ((val) {
-                          final matricsNumber =
-                              RegExp(r'[A-Z]{1}[0-9]{2}[A-Z]{2}[0-9]{4}');
-                          if (matricsNumber.hasMatch(val)) {
+                          // final idNumber =
+                          //     RegExp(r'[A-Z]{1}[0-9]{2}[A-Z]{2}[0-9]{4}');
+                          // Kee Chung
+                          final idNumber = RegExp(r'[0-9]{12}');
+                          if (idNumber.hasMatch(val)) {
                             return null;
                           }
-                          return 'Please enter a valid matrics number';
+                          return 'Please enter a valid idNo number';
                         }),
                         onChanged: (val) {
-                          setState(() => _matrics = val);
+                          setState(() => _idNo = val);
                         },
                       ),
                       SizedBox(height: 20.0), // spacing box, removable
@@ -128,9 +130,9 @@ class _RegisterState extends State<Register> {
                             dynamic result =
                                 await _authService.registerWtihEmailAndPassword(
                                     _username,
-                                    _matrics,
-                                    _contact,
                                     _email,
+                                    _idNo,
+                                    _contact,
                                     _password);
                             if (result is! User) {
                               _errorMessage = result.toString();
