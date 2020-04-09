@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:map1/screen/home/user_profile_page/profile_image.dart';
 import 'package:map1/services/auth.dart';
+import 'package:map1/services/utility.dart';
 import 'package:map1/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/services/database.dart';
-import 'package:map1/services/upload_profile.dart';
 import 'package:map1/screen/home/user_profile_page/profile_settings.dart';
 
 class UserProfile extends StatefulWidget {

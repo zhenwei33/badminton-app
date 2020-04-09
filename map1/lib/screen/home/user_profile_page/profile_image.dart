@@ -1,11 +1,8 @@
-import 'dart:io';
+import 'package:flutter/material.dart';
 import 'dart:typed_data';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/services/database.dart';
-import 'package:map1/services/utility.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:map1/shared/loading.dart';
 
@@ -68,31 +65,4 @@ class ProfileImage extends StatelessWidget {
       }
     );
   }
-}
-
-// upload profile image to Firebase Storage
-class UploadProfile {
-
-  // set up the profile image
-  Future setUpProfile(BuildContext context, String profileUrl) async {
-    final user = Provider.of<User>(context, listen: false);
-    File _image = await Utility.getImage() as File;
-    String uidFileName = user.uid.toString();
-    if(_image != null){
-      if(profileUrl != null || profileUrl !=''){
-        Utility.deleteImage(profileUrl);
-      }
-      String downloadUrl = await Utility.uploadImage(context, _image, uidFileName);
-      await DatabaseService(uid: user.uid).updateUserProfile(downloadUrl);
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Profile Picture Updated')
-        )
-      );
-    } else {
-      return Container();
-    }
-      
-  }
-
 }
