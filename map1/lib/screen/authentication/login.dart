@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:map1/model/user.dart';
-import 'package:map1/screen/authentication/register.dart';
+// import 'package:map1/screen/authentication/register.dart';
 import 'package:map1/shared/constant.dart';
-import 'package:map1/shared/splashScreen.dart';
+import 'package:map1/shared/loading.dart';
 import 'package:map1/services/auth.dart';
 
 class Login extends StatefulWidget {
@@ -29,12 +29,12 @@ class _LoginState extends State<Login> {
         ? Loading()
         : Scaffold(
             appBar: AppBar(
-              title: Text('Something'),
+              title: Text('Sign in to Sporty'),
               actions: <Widget>[
                 FlatButton.icon(
                   icon: Icon(Icons.account_circle),
                   label: Text(
-                    'Sign In',
+                    'Sign Up',
                   ),
                   onPressed: (() => widget.toggleView()),
                 )
@@ -84,13 +84,12 @@ class _LoginState extends State<Login> {
                             });
                             dynamic result = await _authService
                                 .signInWtihEmailAndPassword(_email, _password);
-                            if (result is User) {
+                            if (result == null) {
                               setState(() {
+                                _errorMessage = 'Could not Sign in with those credentials';
                                 _loading = false;
                               });
-                            } else {
-                              _errorMessage = result;
-                            }
+                            } 
                           }
                         },
                       ),

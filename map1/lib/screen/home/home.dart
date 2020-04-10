@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:map1/route/Routes.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/services/database.dart';
 import 'package:map1/route/route_names.dart';
@@ -9,6 +10,7 @@ import 'package:map1/screen/home/page1/page1.dart';
 import 'package:map1/screen/home/page2/page2.dart';
 import 'package:map1/screen/home/page3/page3.dart';
 import 'package:map1/screen/home/page4/page4.dart';
+import 'package:map1/screen/home/user_profile_page/user_profile.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -38,12 +40,17 @@ class Home extends StatelessWidget {
                         icon: Icon(
                           Icons.home,
                         ),
-                        // onPressed: () async {
-                        //   //Temporary logout
-                        //   AuthService auth = AuthService();
-                        //   await auth.signOut();
-                        // },
-                      ),
+                        Tab(
+                          child: FlatButton(
+                            padding: EdgeInsets.all(0),
+                            onPressed: () {
+                              Navigator.pushNamed(context, profile_page);
+                            },
+                            child: Text(''),
+                          ),
+                          icon: Icon(
+                            Icons.person,
+                          ),
                       Tab(
                         child: FlatButton(
                           onPressed: () {

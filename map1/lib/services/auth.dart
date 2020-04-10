@@ -15,8 +15,8 @@ class AuthService {
         : null;
   }
 
-  Future registerWtihEmailAndPassword(
-      String username, String contact, String email, String password) async {
+  Future registerWtihEmailAndPassword(String username, String email, String idNo,
+      String contact, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -25,7 +25,9 @@ class AuthService {
       final uid = firebaseUser.uid;
 
       DatabaseService databaseService = DatabaseService(uid: uid);
-      databaseService.createUser(username, contact).catchError((err) {
+      
+      databaseService.updateUserProfile('');
+      databaseService.createUser(username, email, idNo, contact).catchError((err) {
         print(err);
       });
 
@@ -42,7 +44,10 @@ class AuthService {
       return _userFromFirebaseUser(result.user);
     } catch (err) {
       print(err);
-      return err.message;
+      _errorMessage = err.toString();
+      return null;
+
+      //return err.message; //For displaying error messages
     }
   }
 
