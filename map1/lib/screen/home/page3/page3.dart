@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:map1/shared/constant.dart';
+import 'package:map1/screen/home/page3/schedule.dart';
 
 class Page3 extends StatelessWidget {
   @override
@@ -33,34 +34,58 @@ class Page3 extends StatelessWidget {
                   Container(
                       height: 300,
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25),
                       child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: 1,
                           itemBuilder: (context, index) {
                             return Row(
-                              
-                              children: <Widget>[
-                              Container(
-                                height: 65,
-                                width: 65,
-                                decoration: BoxDecoration(
-                                    color: blue,
-                                    borderRadius: BorderRadius.circular(15)),
-                              ),
-                              Container(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  FlatButton(
+                                    padding: EdgeInsets.all(0),
 
-                                padding: EdgeInsets.only(left: 25),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text("Booking Schedule", style: bigBlueRegText,),
-                                    SizedBox(height: 5,),
-                                    Text("2 bookings ongoing", style: smallLightBlueRegText,)
-                                  ],
-                                ),
-                              )
-                            ]);
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Schedule()),
+                                      );
+                                    },
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          height: 65,
+                                          width: 65,
+                                          decoration: BoxDecoration(
+                                              color: blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                        ),
+                                        Container(
+                                          width: 250,
+                                          padding: EdgeInsets.only(left: 25),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                "Booking Schedule",
+                                                style: bigBlueRegText,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "2 bookings ongoing",
+                                                style: smallLightBlueRegText,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ]);
                           }))
                 ],
               ),

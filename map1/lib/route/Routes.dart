@@ -4,7 +4,8 @@ import 'package:map1/screen/home/page2/page2.dart';
 import 'package:map1/screen/home/page3/page3.dart';
 import 'package:map1/screen/home/page4/page4.dart';
 import 'package:map1/screen/home/user_profile_page/user_profile.dart';
-import 'route_names.dart';
+import 'package:map1/route/route_names.dart';
+import 'package:map1/screen/home/home.dart';
 import 'package:map1/test.dart';
 
 class Routes {
