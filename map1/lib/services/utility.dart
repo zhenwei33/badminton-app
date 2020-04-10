@@ -31,7 +31,7 @@ class Utility {
   }
 
   // upload the image to the firebase storage
-  static Future<String> uploadImage(BuildContext context, File _image, String uidFileName) async {
+  static Future<String> uploadImage(File _image, String uidFileName) async {
     // String sfileName = uidFileName + basename(_image.runtimeType.toString());
     String fileName = uidFileName + '.' + _image.path.split('.').last;
     StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('profile_images').child(fileName);
@@ -49,25 +49,13 @@ class Utility {
 class UploadProfile {
 
   // set up the profile image
-  Future setUpProfile(BuildContext context, String profileUrl) async {
-    final user = Provider.of<User>(context, listen: false);
-    File _image = await Utility.getImage() as File;
-    String uidFileName = user.uid.toString();
-    if(_image != null){
-      if(profileUrl != null || profileUrl !=''){
-        Utility.deleteImage(profileUrl);
-      }
-      String downloadUrl = await Utility.uploadImage(context, _image, uidFileName);
-      await DatabaseService(uid: user.uid).updateUserProfile(downloadUrl);
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Profile Picture Updated')
-        )
-      );
-    } else {
-      return Container();
-    }
-      
+  Future setUpProfile(File _image, String uid, String profileUrl) async {
+    // String uidFileName = uid;
+    if(profileUrl != null || profileUrl !=''){
+      Utility.deleteImage(profileUrl);
+    }  
+      String downloadUrl = await Utility.uploadImage(_image, uid);
+      await DatabaseService(uid: uid).updateUserProfile(downloadUrl); 
   }
 
 }

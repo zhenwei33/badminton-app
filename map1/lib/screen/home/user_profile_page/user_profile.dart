@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:map1/screen/home/user_profile_page/profile_image.dart';
@@ -15,6 +17,8 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+
+  File _image;
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final AuthService _auth = AuthService();
@@ -74,8 +78,18 @@ class _UserProfileState extends State<UserProfile> {
                             padding: EdgeInsets.only(top: 60.0),
                             child: IconButton(
                               icon: Icon(Icons.photo_camera, size: 30.0), 
-                              onPressed: (){
-                                UploadProfile().setUpProfile(context, userData.profileUrl);
+                              onPressed: () async{
+                                _image = await Utility.getImage() as File;
+                                if( _image != null){
+                                  await UploadProfile().setUpProfile(_image, user.uid, userData.profileUrl);
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Profile Picture Updated')
+                                    )
+                                  );
+                                }else{
+                                  
+                                }
                               }
                             ),
                           ),
