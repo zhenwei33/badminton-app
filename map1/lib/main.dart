@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
           // Example() to view Dark Theme
           // home: Conversation()),
           // home: Wrapper()),
-      ),
-    );
+      );
   }
 }
