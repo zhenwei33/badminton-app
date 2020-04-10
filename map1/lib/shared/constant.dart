@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const String googleMapApiKey = 'AIzaSyDx_kQQlUUtJygLo2GvspnmMPO3I9O-neA';
+
 Color darkGreyColor = Color(0xFF212128);
 Color blue = Color(0xFF2699FB);
 

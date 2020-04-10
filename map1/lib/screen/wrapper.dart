@@ -4,6 +4,7 @@ import 'package:map1/screen/home/home.dart';
 import 'package:map1/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:map1/model/user.dart';
+import 'package:map1/test.dart';
 
 class Wrapper extends StatelessWidget {
   //conditional return
@@ -16,8 +17,12 @@ class Wrapper extends StatelessWidget {
       return Authentication();
     } else {
       final databaseService = DatabaseService(uid: user.uid);
+      
       return StreamProvider<UserData>.value(
-          value: databaseService.userData, child: Home());
+        value: databaseService.userData,
+        // child: Home(),
+        child: Testing(),
+      );
     }
   }
 }
