@@ -4,7 +4,9 @@ const morgan = require('morgan');
 
 app.use(morgan('dev'));
 
-app.post('/register', (req, res) => {
-    JSON.parse(req.body);
+app.post('chat', (req, res) => {
+    var message = JSON.parse(req.body);
+    console.log(message);
 });
+
 module.exports = app;

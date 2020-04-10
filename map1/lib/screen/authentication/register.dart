@@ -51,9 +51,9 @@ class _RegisterState extends State<Register> {
                     children: <Widget>[
                       TextFormField(
                         decoration:
-                            customInputDecoration.copyWith(hintText: "Name"),
+                            customInputDecoration.copyWith(hintText: "Username"),
                         validator: ((val) =>
-                            val.isEmpty ? 'Please enter your name' : null),
+                            val.isEmpty ? 'Please enter your username' : null),
                         onChanged: (val) {
                           setState(() => _username = val);
                         },
@@ -130,6 +130,7 @@ class _RegisterState extends State<Register> {
                             dynamic result =
                                 await _authService.registerWtihEmailAndPassword(
                                     _username,
+                                    _contact,
                                     _email,
                                     _idNo,
                                     _contact,
