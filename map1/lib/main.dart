@@ -16,12 +16,8 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        StreamProvider<User>.value(
-          value: AuthService().user,
-        ),
-      ],
+    return StreamProvider<User>.value(
+      value: AuthService().user,
       child: MaterialApp(
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
@@ -33,11 +29,10 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           onGenerateRoute: Routes.generateRoute,
           home: Wrapper()),
-          // home: SettingsPage()
-          // Example() to view Dark Theme
-          // home: Conversation()),
-          // home: Wrapper()),
-      ),
+      // home: SettingsPage()),
+      // Example() to view Dark Theme
+      // home: Conversation()),
+      // home: Wrapper()),
     );
   }
 }

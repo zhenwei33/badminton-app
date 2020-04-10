@@ -5,7 +5,7 @@ import 'package:map1/animator.dart';
 import 'package:map1/model/court.dart';
 import 'package:map1/services/auth.dart';
 import 'package:map1/services/database.dart';
-import 'package:map1/shared/splashScreen.dart';
+import 'package:map1/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'model/user.dart';
 import 'package:map1/services/geolocation.dart';

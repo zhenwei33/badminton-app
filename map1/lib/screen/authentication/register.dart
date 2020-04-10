@@ -130,7 +130,6 @@ class _RegisterState extends State<Register> {
                             dynamic result =
                                 await _authService.registerWtihEmailAndPassword(
                                     _username,
-                                    _contact,
                                     _email,
                                     _idNo,
                                     _contact,
