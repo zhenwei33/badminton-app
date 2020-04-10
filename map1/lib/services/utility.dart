@@ -3,10 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
-import 'package:map1/model/user.dart';
 import 'package:map1/services/database.dart';
-import 'package:provider/provider.dart';
 
 class Utility {
 
@@ -43,13 +40,8 @@ class Utility {
     return downloadAddress;
   }
 
-}
-
-// upload profile image to Firebase Storage
-class UploadProfile {
-
   // set up the profile image
-  Future setUpProfile(File _image, String uid, String profileUrl) async {
+  static Future setUpProfile(File _image, String uid, String profileUrl) async {
     // String uidFileName = uid;
     if(profileUrl != null || profileUrl !=''){
       Utility.deleteImage(profileUrl);

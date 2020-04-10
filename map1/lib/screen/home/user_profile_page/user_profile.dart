@@ -81,7 +81,7 @@ class _UserProfileState extends State<UserProfile> {
                               onPressed: () async{
                                 _image = await Utility.getImage() as File;
                                 if( _image != null){
-                                  await UploadProfile().setUpProfile(_image, user.uid, userData.profileUrl);
+                                  await Utility.setUpProfile(_image, user.uid, userData.profileUrl);
                                   Scaffold.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('Profile Picture Updated')
