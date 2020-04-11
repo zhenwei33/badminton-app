@@ -87,8 +87,6 @@ class _UserProfileState extends State<UserProfile> {
                                       content: Text('Profile Picture Updated')
                                     )
                                   );
-                                }else{
-                                  
                                 }
                               }
                             ),
@@ -149,10 +147,8 @@ class _UserProfileState extends State<UserProfile> {
                                 _showSettingsPanel();
                               },
                               child: Container(
-                                child: Icon(
-                                  Icons.edit,
-                                  color: Colors.blueAccent,
-                                  
+                                child: SizedBox(
+                                  width: 25,
                                 ),
                               ),
                             ),

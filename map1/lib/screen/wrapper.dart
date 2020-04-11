@@ -20,8 +20,8 @@ class Wrapper extends StatelessWidget {
       
       return StreamProvider<UserData>.value(
         value: databaseService.userData,
-        // child: Home(),
-        child: Testing(),
+        child: Home(),
+        // child: Testing(),
       );
     }
   }
