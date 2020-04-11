@@ -24,7 +24,7 @@ class Payment extends StatelessWidget {
                 bottomRight: Radius.circular(25))),
         title: Text(
           "PAYMENT",
-          style: appbarTitle,
+          style: whiteBold_14,
         ),
         bottom: PreferredSize(
           preferredSize: Size(0, 200),
@@ -103,7 +103,7 @@ class Payment extends StatelessWidget {
               color: blue,
               width: double.infinity,
               child: FlatButton(
-                child: Text("PAY NOW", style: appbarTitle),
+                child: Text("PAY NOW", style: whiteBold_14),
                 onPressed: () {},
               ),
             )

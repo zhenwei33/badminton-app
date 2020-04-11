@@ -26,7 +26,7 @@ class DateTimeStart extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Text("Date", style: blueBoldText)
+                  Text("Date", style: blueBold_14)
                 ],
               ),
               FlatButton(
@@ -37,7 +37,7 @@ class DateTimeStart extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "09:00 AM",
-                      style: blueRegText,
+                      style: blueReg_14,
                     ),
                     Icon(
                       Icons.arrow_drop_down,
@@ -74,7 +74,7 @@ class DateTimeStart extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Text("Time start", style: blueBoldText)
+                  Text("Time start", style: blueBold_14)
                 ],
               ),
               FlatButton(
@@ -85,7 +85,7 @@ class DateTimeStart extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "09:00 AM",
-                      style: blueRegText,
+                      style: blueReg_14,
                     ),
                     Icon(
                       Icons.arrow_drop_down,

@@ -44,7 +44,7 @@ class ArticleCard extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 title,
-                                style: articleTitle,
+                                style: whiteReg_18,
                                 overflow: TextOverflow.fade,
                                 maxLines: 1,
                                 softWrap: false,

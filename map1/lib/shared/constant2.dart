@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const String googleMapApiKey = 'AIzaSyDx_kQQlUUtJygLo2GvspnmMPO3I9O-neA';
+
 Color darkGreyColor = Color(0xFF212128);
 Color blue = Color(0xFF2699FB);
 
@@ -12,45 +14,6 @@ Color teal = Color(0xFF80FCE5);
 
 Color lightBlue = Color(0xFFBCE0FD);
 
-//WHITE
-TextStyle whiteReg_30 = TextStyle(
-  fontFamily: 'Roboto',
-  fontSize: 30,
-  fontWeight: FontWeight.normal,
-  color: Colors.white
-);
-
-TextStyle whiteReg_18 = TextStyle(
-  fontFamily: 'Roboto',
-  fontSize: 18,
-  fontWeight: FontWeight.normal,
-  color: white
-);
-
-TextStyle whiteReg_16 = TextStyle(
-  fontFamily: 'Roboto',
-  fontSize: 16,
-  fontWeight: FontWeight.normal,
-  color: Colors.white
-);
-
-TextStyle whiteBold_14 = TextStyle(
-  fontFamily: 'Roboto',
-  fontSize: 14,
-  fontWeight: FontWeight.bold,
-  color: Colors.white
-);
-
-TextStyle whiteReg_14 = TextStyle(
-  fontFamily: 'Roboto',
-  fontSize: 14,
-  fontWeight: FontWeight.normal,
-  color: Colors.white
-);
-
-
-//BLUE
-//========================================================
 TextStyle heading = TextStyle(
   fontFamily: 'Roboto',
   fontSize: 30,
@@ -58,77 +21,75 @@ TextStyle heading = TextStyle(
   color: blue
 );
 
-TextStyle blueBold_20 = TextStyle(
+TextStyle articleTitle = TextStyle(
   fontFamily: 'Roboto',
-  fontSize: 20,
-  fontWeight: FontWeight.bold,
-  color: blue
-);
-
-TextStyle blueReg_20 = TextStyle(
-  fontFamily: 'Roboto',
-  fontSize: 20,
+  fontSize: 18,
   fontWeight: FontWeight.normal,
-  color: blue
+  color: white
 );
 
-TextStyle blueBold_14 = TextStyle(
-  fontFamily: 'Roboto',
-  fontSize: 14,
-  fontWeight: FontWeight.bold,
-  color: blue
-);
-
-TextStyle blueReg_16 = TextStyle(
+TextStyle announcementTitle = TextStyle(
   fontFamily: 'Roboto',
   fontSize: 16,
   fontWeight: FontWeight.normal,
   color: blue
 );
 
-TextStyle blueReg_14 = TextStyle(
+TextStyle blueBoldText = TextStyle(
+  fontFamily: 'Roboto',
+  fontSize: 14,
+  fontWeight: FontWeight.bold,
+  color: blue
+);
+
+TextStyle blueRegText = TextStyle(
   fontFamily: 'Roboto',
   fontSize: 14,
   fontWeight: FontWeight.normal,
   color: blue
 );
 
-TextStyle blueReg_12 = TextStyle(
+TextStyle bigBlueRegText = TextStyle(
   fontFamily: 'Roboto',
-  fontSize: 12,
+  fontSize: 20,
   fontWeight: FontWeight.normal,
   color: blue
 );
 
+TextStyle smallLightBlueRegText = TextStyle(
+  fontFamily: 'Roboto',
+  fontSize: 12,
+  fontWeight: FontWeight.normal,
+  color: lightBlue
+);
 
-//LIGHT BLUE
-//========================================================
-TextStyle lightBlueReg_18 = TextStyle(
+TextStyle lightBlueRegText = TextStyle(
   fontFamily: 'Roboto',
   fontSize: 18,
   fontWeight: FontWeight.normal,
   color: lightBlue
 );
 
-TextStyle lightBlueReg_12 = TextStyle(
-  fontFamily: 'Roboto',
-  fontSize: 12,
-  fontWeight: FontWeight.normal,
-  color: lightBlue
-);
-
-
-//GREY
-//========================================================
-TextStyle greyReg_12 = TextStyle(
+TextStyle announcementTime = TextStyle(
   fontFamily: 'Roboto',
   fontSize: 12,
   fontWeight: FontWeight.normal,
   color: Colors.grey
 );
-//========================================================
 
+TextStyle appbarTitle = TextStyle(
+  fontFamily: 'Roboto',
+  fontSize: 14,
+  fontWeight: FontWeight.bold,
+  color: Colors.white
+);
 
+TextStyle courtTitle = TextStyle(
+  fontFamily: 'Roboto',
+  fontSize: 30,
+  fontWeight: FontWeight.normal,
+  color: Colors.white
+);
 InputDecoration customInputDecoration = InputDecoration(
   filled: true,
   fillColor: Colors.indigoAccent[100],

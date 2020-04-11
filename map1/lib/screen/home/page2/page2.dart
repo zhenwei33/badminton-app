@@ -19,7 +19,7 @@ class Page2 extends StatelessWidget {
         title: Center(
             child: Text(
           "BOOKING",
-          style: appbarTitle,
+          style: whiteBold_14,
         )),
         bottom: PreferredSize(
           preferredSize: Size(0, 150),
@@ -41,7 +41,7 @@ class Page2 extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       "Court B",
-                      style: courtTitle,
+                      style: whiteReg_30,
                     ),
                   ),
                 )
@@ -77,7 +77,7 @@ class Page2 extends StatelessWidget {
                 color: blue,
                 child: Text(
                   "CONFIRM",
-                  style: appbarTitle,
+                  style: whiteBold_14,
                 ),
                 onPressed: () {
                   Navigator.push(

@@ -26,7 +26,7 @@ class _DurationSliderState extends State<DurationSlider> {
               SizedBox(
                 width: 10,
               ),
-              Text("Duration Hour(s)", style: blueBoldText)
+              Text("Duration Hour(s)", style: blueBold_14)
             ],
           ),
           SliderTheme(

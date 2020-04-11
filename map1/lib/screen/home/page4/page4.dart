@@ -55,7 +55,7 @@ class Page4 extends StatelessWidget {
                           child: TextField(
                             decoration: InputDecoration(
                                 hintText: "Say something...",
-                                hintStyle: lightBlueRegText,
+                                hintStyle: lightBlueReg_18,
                                 border: InputBorder.none),
                           ),
                         ),

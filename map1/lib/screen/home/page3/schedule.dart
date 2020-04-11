@@ -6,7 +6,7 @@ import 'package:table_calendar/table_calendar.dart';
 final Map<DateTime, List> _holidays = {
   DateTime(2019, 1, 1): ['Training with Tobi'],
   DateTime(2019, 1, 6): ['Training with Kano'],
-  DateTime(2019, 2, 14): ['Minato Aqua stream'],
+  DateTime(2019, 2, 14): ['Minato'],
   DateTime(2019, 4, 21): ['Easter Sunday'],
   DateTime(2019, 4, 22): ['Easter Monday'],
 };
@@ -39,8 +39,8 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
         'Event C0'
       ],
       _selectedDay.subtract(Duration(days: 4)): [
-        '湊あくあ stream　',
-        'Kano 鹿乃'
+        'Training with Ali',
+        'Training'
       ],
     };
 
@@ -93,7 +93,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                 bottomRight: Radius.circular(25))),
         title: Text(
           "SCHEDULE",
-          style: appbarTitle,
+          style: whiteBold_14,
         ),
         bottom: PreferredSize(
           preferredSize: Size(0, 370),

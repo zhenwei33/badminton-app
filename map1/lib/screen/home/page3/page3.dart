@@ -20,7 +20,7 @@ class Page3 extends StatelessWidget {
               title: Center(
                   child: Text(
                 "MY PROFILE",
-                style: appbarTitle,
+                style: whiteBold_14,
               )),
               bottom: PreferredSize(
                   preferredSize: Size(0, 100), child: Container()),
@@ -70,14 +70,14 @@ class Page3 extends StatelessWidget {
                                             children: <Widget>[
                                               Text(
                                                 "Booking Schedule",
-                                                style: bigBlueRegText,
+                                                style: blueReg_20,
                                               ),
                                               SizedBox(
                                                 height: 5,
                                               ),
                                               Text(
                                                 "2 bookings ongoing",
-                                                style: smallLightBlueRegText,
+                                                style: lightBlueReg_12,
                                               )
                                             ],
                                           ),
@@ -129,7 +129,7 @@ class Page3 extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Text(
                         "Ding",
-                        style: courtTitle,
+                        style: whiteReg_30,
                       ),
                     ),
                   )

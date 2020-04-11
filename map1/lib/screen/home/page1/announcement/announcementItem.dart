@@ -24,7 +24,7 @@ class AnnouncementItem extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 0, bottom: 0),
                 child: Text(
                   "This is just a sample text to look fancy " + title,
-                  style: announcementTitle,
+                  style: blueReg_16,
                 ),
               ),
             ),
@@ -32,7 +32,7 @@ class AnnouncementItem extends StatelessWidget {
               alignment: Alignment.bottomRight,
                 child: Text(
                   "30m",
-                  style: announcementTime,
+                  style: greyReg_12,
               )
             )
           ],
