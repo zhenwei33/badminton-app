@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:map1/screen/home/user_profile_page/user_profile.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -24,12 +25,17 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: EdgeInsets.all(16.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
             Widget>[
-          SizedBox(height: 30.0),
+          SizedBox(height: 100.0),
           ListTile(
             leading:
                 Icon(Icons.verified_user, size: 50), // profile image() widget
             title: Text('Edit Profile', style: TextStyle(fontSize: 30.0)),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserProfile()),
+              );
+            },
           ),
           SizedBox(height: 30.0),
           // Save API as what Desmond said when login
