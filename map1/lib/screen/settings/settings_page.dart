@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:map1/screen/admin_home/admin.dart';
+import 'package:map1/screen/chatbot/chatbot.dart';
 import 'package:map1/screen/home/user_profile_page/user_profile.dart';
 import 'package:map1/services/auth.dart';
 
@@ -33,7 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             leading:
                 Icon(Icons.verified_user, size: 50), // profile image() widget
-            title: Text('Edit Profile', style: TextStyle(fontSize: 30.0)),
+            title: Text('Settings', style: TextStyle(fontSize: 30.0)),
             onTap: () {
               Navigator.push(
                 context,
@@ -98,12 +99,34 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           SizedBox(height: 5.0),
           ListTile(
+            title: Text('Edit user profile'),
+            subtitle: Text('Edit username'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserProfile()),
+              );
+            },
+          ),
+          SizedBox(height: 5.0),
+          ListTile(
             title: Text('Go to admin page'),
-            subtitle: Text('Just to display admin page, later will be discarded from user UI'),
+            subtitle: Text('Just to display admin page, later will be removed from normal user view'),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AdminDashboard()),
+              );
+            },
+          ),
+          SizedBox(height: 5.0),
+          ListTile(
+            title: Text('Go to chatbot page'),
+            subtitle: Text('Under maintenance'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Conversation()),
               );
             },
           ),
