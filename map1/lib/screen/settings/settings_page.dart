@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:map1/screen/admin_home/admin.dart';
 import 'package:map1/screen/home/user_profile_page/user_profile.dart';
+import 'package:map1/services/auth.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -7,6 +9,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+
+  final AuthService _auth = AuthService();
   bool defaultRemember = false;
   bool defaultDark = false;
   bool defaultNotification = true;
@@ -92,10 +96,24 @@ class _SettingsPageState extends State<SettingsPage> {
             subtitle: Text('Save your favourite badminton court as default'),
             onTap: () {},
           ),
+          SizedBox(height: 5.0),
+          ListTile(
+            title: Text('Go to admin page'),
+            subtitle: Text('Just to display admin page, later will be discarded from user UI'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdminDashboard()),
+              );
+            },
+          ),
+          SizedBox(height: 5.0),
           ListTile(
             title: Text('Logout'),
             subtitle: Text('Logout from the apps'),
-            onTap: () {},
+            onTap: () async {
+              await _auth.signOut();
+            },
           ),
         ]),
       ),
