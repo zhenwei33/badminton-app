@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:map1/model/court.dart';
-import 'package:map1/screen/home/court_page/badminton_hall_list.dart';
+import 'package:map1/screen/home/court_page/badminton_hall_list_builder.dart';
 import 'package:map1/screen/home/court_page/hall_details.dart';
 import 'package:map1/screen/home/search_bar.dart';
 import 'package:map1/services/database.dart';
@@ -13,7 +13,8 @@ class BadmintonHalls extends StatelessWidget {
     final hall = Provider.of<List<BadmintonHall>>(context);
     
     List<String> searchItem = [];
-    for(var x=0; x<hall.length; x++){
+    var streamlength = hall.length;
+    for(var x=0; x<streamlength; x++){
       searchItem.add(hall[x].name);
     }
 
@@ -29,15 +30,17 @@ class BadmintonHalls extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.search), 
               onPressed: () async {
-                final String result = await showSearch(
+                String result = await showSearch(
                   context: context, 
                   delegate: DataSearch(searchItem),
                 );
-                for(var x=0; x<hall.length; x++){
+                for(var x=0; x<streamlength; x++){
                   if(result == searchItem[x]){
+                    final badmintonHalls = Provider.of<List<BadmintonHall>>(context,listen: false) ?? [];
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HallDetails()),
+                      MaterialPageRoute(builder: (context) => HallDetails(badmintonHall: badmintonHalls[x])
+                      ),
                     );
                   }
                 }
@@ -51,7 +54,7 @@ class BadmintonHalls extends StatelessWidget {
           //   backgroundBlendMode: BlendMode.color,
 
           // ),
-          child: BadmintonHallList()
+          child: BadmintonHallListBuilder()
         ),
       ),
     );

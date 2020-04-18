@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:map1/model/court.dart';
 import 'package:map1/route/Routes.dart';
 import 'package:map1/screen/authentication/authentication.dart';
+import 'package:map1/screen/home/court_page/badminton_halls.dart';
 import 'package:map1/screen/home/home.dart';
 import 'package:map1/screen/home/search_bar.dart';
 import 'package:map1/services/database.dart';
@@ -31,7 +32,7 @@ class Wrapper extends StatelessWidget {
             value: databaseService.userData,
           ),
         ],
-        child: BadmintonHallList(),
+        child: BadmintonHalls(),
         // child: Testing(),,
       );
       

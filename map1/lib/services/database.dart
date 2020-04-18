@@ -66,6 +66,11 @@ class DatabaseService{
     print('yadada');
     return snapshot.documents.map((doc) {
       // print(doc.data['operationHours']);
+      double tempPrice = 0.0;
+      if(doc.data['pricePerHour'] != null){
+        tempPrice = doc.data['pricePerHour'].toDouble();
+      }
+
       return BadmintonHall(
         hid: doc.documentID,
         name: doc.data['name'],
@@ -77,7 +82,7 @@ class DatabaseService{
         operationHours: doc.data['operationHours'],
         operationHoursInString: doc.data['operationHoursInString'],
         slot: doc.data['slot'],
-        pricePerHour: double.parse(doc.data['pricePerHour']),
+        pricePerHour: tempPrice,
         imageUrl: doc.data['imageUrl']
       );
     }).toList();

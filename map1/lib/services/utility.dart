@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:map1/services/database.dart';
 
 class Utility {
@@ -48,6 +47,14 @@ class Utility {
     }  
       String downloadUrl = await Utility.uploadImage(_image, uid);
       await DatabaseService(uid: uid).updateUserProfile(downloadUrl); 
+  }
+
+  // Calls the server to securely obtain an unguessable download Url
+  static Future getUrlAsync (String hid) async {
+    // Points to the root reference
+    StorageReference storageRef = FirebaseStorage.instance.ref();
+    StorageReference dateRef = storageRef.child('badminton_hall_images').child('$hid.jpeg');
+    print(await dateRef.getDownloadURL());
   }
 
 }

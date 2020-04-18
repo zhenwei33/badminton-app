@@ -135,8 +135,8 @@ class Card extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Text(hall.name),
-                      Text(json['distance']['text']),
-                      Text(json['duration']['text']),
+                      // Text(json['distance']['text']),
+                      // Text(json['duration']['text']),
                     ],
                   ),
                   onPressed: (() {
