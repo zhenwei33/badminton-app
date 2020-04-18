@@ -6,19 +6,29 @@ class BadmintonHall {
   final String hid;
   final String name;
   final String address;
+  final String contact;
   final GeoPoint geoPoint; 
   final String description;
-  final Map operationHours;
-  final double slotSize;
+  final Map<String, dynamic> operationHours;
+  final String operationHoursInString;
+  final String breakingHours;
+  final int slot;
+  final double pricePerHour;
+  final String imageUrl;
 
   BadmintonHall(
       {this.hid,
       this.geoPoint,
       this.name,
       this.address,
+      this.contact,
       this.description,
       this.operationHours,
-      this.slotSize});
+      this.operationHoursInString,
+      this.breakingHours,
+      this.slot,
+      this.pricePerHour,
+      this.imageUrl});
   
   double get latitude{
     return geoPoint.latitude ?? -1;

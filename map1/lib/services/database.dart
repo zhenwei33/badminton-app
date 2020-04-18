@@ -65,14 +65,20 @@ class DatabaseService{
   List<BadmintonHall> _hallListFromSnapshot(QuerySnapshot snapshot) {
     print('yadada');
     return snapshot.documents.map((doc) {
+      // print(doc.data['operationHours']);
       return BadmintonHall(
         hid: doc.documentID,
         name: doc.data['name'],
         address: doc.data['address'],
+        contact: doc.data['contact'],
         geoPoint: doc.data['location'],
         description: doc.data['description'],
+        breakingHours: doc.data['breakingHours'],
         operationHours: doc.data['operationHours'],
-        slotSize: doc.data['slotSize'],
+        operationHoursInString: doc.data['operationHoursInString'],
+        slot: doc.data['slot'],
+        pricePerHour: double.parse(doc.data['pricePerHour']),
+        imageUrl: doc.data['imageUrl']
       );
     }).toList();
   }
@@ -87,6 +93,7 @@ class DatabaseService{
   Stream<List<BadmintonHall>> get getBadmintonHalls {
     return hallReference.snapshots().map(_hallListFromSnapshot);
   }
+
 }
 
 //   UserData _userDataFromSnapshots(DocumentSnapshot snapshot) {

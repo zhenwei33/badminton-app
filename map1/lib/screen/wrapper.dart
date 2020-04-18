@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:map1/model/court.dart';
 import 'package:map1/route/Routes.dart';
 import 'package:map1/screen/authentication/authentication.dart';
 import 'package:map1/screen/home/home.dart';
+import 'package:map1/screen/home/search_bar.dart';
 import 'package:map1/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/test.dart';
+
+import 'home/court_page/hall_details.dart';
 
 class Wrapper extends StatelessWidget {
   //conditional return
@@ -18,11 +22,20 @@ class Wrapper extends StatelessWidget {
     } else {
       final databaseService = DatabaseService(uid: user.uid);
       
-      return StreamProvider<UserData>.value(
-        value: databaseService.userData,
-        child: Home(),
-        // child: Testing(),
+      return MultiProvider(
+        providers: [
+          StreamProvider<List<BadmintonHall>>.value(
+            value: databaseService.getBadmintonHalls,
+          ),
+          StreamProvider<UserData>.value(
+            value: databaseService.userData,
+          ),
+        ],
+        child: BadmintonHallList(),
+        // child: Testing(),,
       );
+      
+        
     }
   }
 }
