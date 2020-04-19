@@ -1,7 +1,4 @@
-import 'dart:typed_data';
 import 'dart:ui';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:map1/model/court.dart';
 
@@ -192,7 +189,7 @@ class HallDetails extends StatelessWidget {
                           ),
 
                           TextSpan(
-                            text: '\n ${badmintonHall.slot} courts available \n',
+                            text: '\n ${badmintonHall.slot['slotSize']} courts available \n',
                             style: TextStyle(
                               fontSize: 18.0, 
                               fontWeight: FontWeight.w500, 
@@ -252,15 +249,19 @@ class HallDetails extends StatelessWidget {
                                 )
                               ]
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Book a court',
-                                style: TextStyle(
-                                  color: Colors.black
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(8),
+                              onTap: null,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Book a court',
+                                  style: TextStyle(
+                                    color: Colors.black
+                                    ),
                                   ),
                                 ),
-                              ),
+                            ),
                           ),
                         ),
                       ],

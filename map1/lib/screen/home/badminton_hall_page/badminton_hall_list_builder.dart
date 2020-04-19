@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:map1/model/court.dart';
-import 'package:map1/screen/home/court_page/hall_details.dart';
+import 'package:map1/screen/home/badminton_hall_page/hall_details.dart';
 import 'package:provider/provider.dart';
 
 class BadmintonHallListBuilder extends StatefulWidget {

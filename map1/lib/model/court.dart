@@ -12,7 +12,7 @@ class BadmintonHall {
   final Map<String, dynamic> operationHours;
   final String operationHoursInString;
   final String breakingHours;
-  final int slot;
+  final Map<String, dynamic> slot;
   final double pricePerHour;
   final String imageUrl;
 
