@@ -9,9 +9,11 @@ class AuthService {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
-  User _userFromFirebaseUser(FirebaseUser firebaseUser) {
+  // convert firebase user to User
+  // only signin will supply isAdmin parameter
+  User _userFromFirebaseUser(FirebaseUser firebaseUser, [bool isAdmin = false]) {
     return firebaseUser != null
-        ? User(uid: firebaseUser.uid, email: firebaseUser.email)
+        ? User(uid: firebaseUser.uid, email: firebaseUser.email, isAdmin: isAdmin)
         : null;
   }
 
@@ -41,7 +43,14 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      return _userFromFirebaseUser(result.user);
+
+      final FirebaseUser firebaseUser = result.user;
+      final uid = firebaseUser.uid;
+
+      DatabaseService databaseService = DatabaseService(uid: uid);
+      bool isAdmin = await databaseService.checkUserRole();
+
+      return _userFromFirebaseUser(firebaseUser, isAdmin);
     } catch (err) {
       print(err.message);
       return null;
