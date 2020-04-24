@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:map1/model/court.dart';
+import 'package:map1/screen/home/badminton_hall_page/court_view.dart';
 
 class HallDetails extends StatelessWidget {
   
@@ -164,7 +165,7 @@ class HallDetails extends StatelessWidget {
                             )
                           ),
                           TextSpan(
-                            text: '${badmintonHall.operationHoursInString}, break at ${badmintonHall.breakingHours} \n',
+                            text: '${badmintonHall.operationHoursInString} \n',
                             style: TextStyle(
                               fontSize: 18.0, 
                               fontWeight: FontWeight.w500, 
@@ -225,7 +226,7 @@ class HallDetails extends StatelessWidget {
                                   style: TextStyle(fontSize: 18.0),
                                 ),
                                 TextSpan(
-                                  text: 'RM${badmintonHall.pricePerHour.toStringAsFixed(2)}/hour',
+                                  text: 'RM ${badmintonHall.pricePerHour.toStringAsFixed(2)}/hour',
                                   style: TextStyle(
                                     fontSize: 26.0,
                                     fontWeight: FontWeight.w500,
@@ -251,7 +252,13 @@ class HallDetails extends StatelessWidget {
                             ),
                             child: InkWell(
                               borderRadius: BorderRadius.circular(8),
-                              onTap: null,
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => CourtView(badmintonHall: badmintonHall)
+                                  ),
+                                );
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(

@@ -4,23 +4,20 @@ import 'package:map1/screen/home/badminton_hall_page/badminton_hall_list_builder
 import 'package:map1/screen/home/badminton_hall_page/hall_details.dart';
 import 'package:map1/screen/home/search_bar.dart';
 import 'package:map1/services/database.dart';
+import 'package:map1/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class BadmintonHalls extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
-    
+
     final hall = Provider.of<List<BadmintonHall>>(context);
-    
-    List<String> searchItem = [];
-    var streamlength = hall.length;
-    for(var x=0; x<streamlength; x++){
-      searchItem.add(hall[x].name);
-    }
 
     return StreamProvider<List<BadmintonHall>>.value(
       value: DatabaseService().getBadmintonHalls,
-      child: Scaffold(
+      child: hall==null ? Loading() :
+      Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
           title: Text('Badminton Hall'),
@@ -30,6 +27,13 @@ class BadmintonHalls extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.search), 
               onPressed: () async {
+
+                List<String> searchItem = [];
+                var streamlength = hall.length;
+                for(var x=0; x<streamlength; x++){
+                  searchItem.add(hall[x].name);
+                }
+
                 String result = await showSearch(
                   context: context, 
                   delegate: DataSearch(searchItem),

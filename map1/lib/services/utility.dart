@@ -56,5 +56,5 @@ class Utility {
     StorageReference dateRef = storageRef.child('badminton_hall_images').child('$hid.jpeg');
     print(await dateRef.getDownloadURL());
   }
-
+  
 }

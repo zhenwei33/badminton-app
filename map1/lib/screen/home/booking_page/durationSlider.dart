@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:map1/shared/constant.dart';
 
+// duration slider class is not used, but the left 2 class are used
 class DurationSlider extends StatefulWidget {
   @override
   _DurationSliderState createState() => _DurationSliderState();
