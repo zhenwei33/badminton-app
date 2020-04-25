@@ -100,6 +100,29 @@ class DatabaseService{
     return hallReference.snapshots().map(_hallListFromSnapshot);
   }
 
+  BadmintonHall _badmintonHallDataFromSnapshot(DocumentSnapshot doc) {
+    return BadmintonHall(
+        hid: doc.documentID,
+        name: doc.data['name'],
+        address: doc.data['address'],
+        contact: doc.data['contact'],
+        geoPoint: doc.data['location'],
+        description: doc.data['description'],
+        breakingHours: doc.data['breakingHours'],
+        operationHours: doc.data['operationHours'],
+        operationHoursInString: doc.data['operationHoursInString'],
+        slot: doc.data['slot'],
+        pricePerHour: doc.data['pricePerHour'],
+        imageUrl: doc.data['imageUrl']
+      );
+  }
+
+  // get current userData doc stream
+  Stream<BadmintonHall> getABadmintonHall(String hid) {
+    return hallReference.document(hid).snapshots()
+      .map(_badmintonHallDataFromSnapshot);
+  }
+
   CollectionReference bookingReference = Firestore.instance.collection('booking');
 
   Future createBooking(
@@ -141,7 +164,7 @@ class DatabaseService{
   Future cancelBooking(String bookingId) async{
     var document = bookingReference.document(bookingId);
     return await document.updateData({
-      'bookedStatus' : 'pending for cancel'
+      'bookingStatus' : 'pending'
     });
   }
 
