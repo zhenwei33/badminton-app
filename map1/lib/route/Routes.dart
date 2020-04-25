@@ -23,7 +23,7 @@ class Routes {
       case court:
         final argument = settings.arguments;
         return MaterialPageRoute(builder: (_) => Test2(
-          hid: argument ?? -1,
+          hid: argument,
         ));
       case profile_page:
         return MaterialPageRoute(builder: (_) => UserProfile());

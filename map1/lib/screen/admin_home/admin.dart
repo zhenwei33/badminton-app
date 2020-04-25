@@ -3,15 +3,20 @@ import 'package:map1/screen/admin_home/adminChart.dart';
 import 'package:map1/screen/admin_home/adminAnnouncement/adminAnnouncement.dart';
 import 'package:map1/screen/admin_home/adminCourt/adminCourt.dart';
 import 'package:map1/shared/constant.dart';
+import 'package:map1/model/user.dart';
+import 'package:provider/provider.dart';
+import 'package:map1/shared/loading.dart';
 
 class AdminDashboard extends StatefulWidget {
-  _HomePageState createState() => _HomePageState();
+  _AdminDashboardState createState() => _AdminDashboardState();
 }
 
-class _HomePageState extends State<AdminDashboard> {
+class _AdminDashboardState extends State<AdminDashboard> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final adminData = Provider.of<AdminData>(context) ?? null;
+
+    return adminData == null ? Loading(): Scaffold(
         body: Container(
       padding: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 40),
       child: Column(

@@ -93,6 +93,30 @@ class _LoginState extends State<Login> {
                           }
                         },
                       ),
+                      SizedBox(height: 20.0),
+                      RaisedButton(
+                        color: Colors.limeAccent, //dummy value
+                        child: Text(
+                          'Sign In As Admin',
+                          style:
+                              heading, //dummy, can create new text style in constant.dart
+                        ),
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            setState(() {
+                              _loading = true;
+                            });
+                            dynamic result = await _authService
+                                .signInWtihEmailAndPasswordAsAdmin(_email, _password);
+                            if (result == null) {
+                              setState(() {
+                                _errorMessage = 'Could not Sign in with those credentials';
+                                _loading = false;
+                              });
+                            } 
+                          }
+                        },
+                      ),
                       Text(
                         _errorMessage,
                         style: TextStyle(
