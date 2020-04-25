@@ -9,23 +9,20 @@ class DatabaseService {
 
   CollectionReference userReference = Firestore.instance.collection('user');
   CollectionReference adminReference = Firestore.instance.collection('admin');
-  CollectionReference userRoleReference = Firestore.instance.collection('user_role');
-  CollectionReference hallReference = Firestore.instance.collection('badminton_hall');
+  CollectionReference userRoleReference =
+      Firestore.instance.collection('user_role');
+  CollectionReference hallReference =
+      Firestore.instance.collection('badminton_hall');
   CollectionReference courtReference = Firestore.instance.collection('courts');
-  CollectionReference announcementReference = Firestore.instance.collection('announcement');
-
-  Future checkUserRole() async {
-    userRoleReference.document(uid).snapshots().map((snapshot) {
-      return snapshot.data['isAdmin'];
-    });
-  }
+  CollectionReference announcementReference =
+      Firestore.instance.collection('announcement');
 
   // create user with details
   Future createUser(
       String username, String email, String idNo, String contact) async {
-    await userRoleReference.document(uid).setData({
-      'isAdmin':'false',
-    });
+    // await userRoleReference.document(uid).setData({
+    //   'isAdmin': 'false',
+    // });
 
     return await userReference.document(uid).setData({
       'username': username,
@@ -33,6 +30,14 @@ class DatabaseService {
       'idNo': idNo,
       'contact': contact,
     });
+  }
+
+  Future checkUserIsAdmin() async {
+    return await adminReference
+        .document(uid)
+        .get()
+        .then((snapshot) => snapshot.exists ? true : false)
+        .catchError((error) => 'ERROR: At Admin Checking');
   }
 
   // update user data
@@ -115,12 +120,13 @@ class DatabaseService {
   }
 
   Stream<AdminData> get adminData {
-    return adminReference.document('2EpxxhNc3BBNrwptW2bX').snapshots().map(_adminDataFromSnapshot);
+    return adminReference.document(uid).snapshots().map(_adminDataFromSnapshot);
   }
 
-  List<AnnouncementData> _announcementDataFromSnapshot(QuerySnapshot snapshot){
-    return snapshot.documents.map((doc){
+  List<AnnouncementData> _announcementDataFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
       return AnnouncementData(
+        aid: doc.documentID,
         date: DateTime.parse(doc.data['date'].toDate().toString()),
         hid: doc.data['hid'],
         title: doc.data['title'],
@@ -128,11 +134,59 @@ class DatabaseService {
     }).toList();
   }
 
-  Stream<List<AnnouncementData>> get announcementData{
+  Stream<List<AnnouncementData>> get announcementData {
     return announcementReference.snapshots().map(_announcementDataFromSnapshot);
   }
 
-  Stream<List<AnnouncementData>> announcementFromHall(String hid){
-    return announcementReference.where('hid', isEqualTo: hid).snapshots().map(_announcementDataFromSnapshot);
+  Stream<List<AnnouncementData>> announcementFromHall(String hid) {
+    return announcementReference
+        .where('hid', isEqualTo: hid)
+        .snapshots()
+        .map(_announcementDataFromSnapshot);
+  }
+
+  Future deleteAnnouncement(String aid, String hid) async {
+    try {
+      await announcementReference.document(aid).get().then((doc) {
+        if (doc.data['hid'] != hid) {
+          throw Exception('Hall ID differs from Announcement\'s hid');
+        }
+        announcementReference.document(aid).delete();
+      });
+    } catch (exception) {
+      return exception.toString();
+    }
+  }
+
+  Future saveAnnouncementChanges(String aid, String hid, String title) async {
+    try {
+      return await announcementReference.document(aid).get().then((doc) async {
+        if (doc.data['hid'] != hid) {
+          throw Exception('Hall ID differs from Announcement\'s hid');
+        }
+        return await announcementReference.document(aid).updateData({
+          'date': DateTime.now(),
+          'title': title,
+        }).then((_) {
+          return 'ok';
+        });
+      });
+    } catch (exception) {
+      return exception.toString();
+    }
+  }
+
+  Future insertAnnouncement(String hid, String title) async {
+    try {
+      return await announcementReference.document().setData({
+        'date': DateTime.now(),
+        'title': title,
+        'hid': hid,
+      }).then((_) {
+        return 'ok';
+      });
+    } catch (exception) {
+      return exception.toString();
+    }
   }
 }

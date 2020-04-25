@@ -6,12 +6,40 @@ import 'package:provider/provider.dart';
 import 'package:map1/model/announcement.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/shared/loading.dart';
+import 'addAnnouncementModal.dart';
 
-class AdminAnnouncement extends StatelessWidget {
+class AdminAnnouncement extends StatefulWidget {
+  @override
+  _AdminAnnouncementState createState() => _AdminAnnouncementState();
+}
+
+class _AdminAnnouncementState extends State<AdminAnnouncement> {
+
   @override
   Widget build(BuildContext context) {
     final adminData = Provider.of<AdminData>(context);
     final databaseService = DatabaseService(uid: adminData.uid);
+
+    void _showAddAnnouncementModal() {
+      showModalBottomSheet( 
+        isDismissible: true,
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+        ),
+        context: context,
+        builder: (context) {
+          // Eenble bottom modal to be pushed up when keyboard is actiated
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: AddAnouncementModal(),
+            ),
+          );
+        },
+      );
+    }
 
     return StreamBuilder(
         stream: databaseService.announcementFromHall(adminData.hid),
@@ -60,7 +88,7 @@ class AdminAnnouncement extends StatelessWidget {
                               itemCount: announcementData.length,
                               itemBuilder: (context, index) {
                                 return AdminAnnouncementItem(
-                                    title: announcementData[index].title);
+                                    announcementData: announcementData[index],);
                               }),
                         ),
                         Container(
@@ -68,10 +96,10 @@ class AdminAnnouncement extends StatelessWidget {
                           height: 55,
                           child: FlatButton(
                             color: blue,
-                            onPressed: () {},
                             child: Text("Add announcement", style: whiteReg_18),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
+                            onPressed: () => _showAddAnnouncementModal(),
                           ),
                         )
                       ],

@@ -1,33 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:map1/model/announcement.dart';
+import 'package:map1/model/user.dart';
+import 'package:map1/screen/admin_home/adminAnnouncement/testingwidget.dart';
 import 'package:map1/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:map1/model/user.dart';
 
-class AnnouncementSettings extends StatefulWidget {
-  final DatabaseService databaseService;
-  final AnnouncementData announcementData;
-  final ValueChanged<String> onSaved;
-  AnnouncementSettings({this.announcementData, this.databaseService, this.onSaved});
-
+class AddAnouncementModal extends StatefulWidget {
   @override
-  _AnnouncementSettingsState createState() => _AnnouncementSettingsState();
+  AddAnouncementModalState createState() => AddAnouncementModalState();
 }
 
-class _AnnouncementSettingsState extends State<AnnouncementSettings> {
-  String _title;
+class AddAnouncementModalState extends State<AddAnouncementModal> {
   final _key = GlobalKey<FormState>();
-
-  @override
-  void initState(){
-    _title = widget.announcementData.title;
-  }
+  String _title, _error;
 
   @override
   Widget build(BuildContext context) {
-    String _error = '';
-    final adminData = Provider.of<AdminData>(context);
-
     return Column(
       children: <Widget>[
         Row(
@@ -68,8 +56,11 @@ class _AnnouncementSettingsState extends State<AnnouncementSettings> {
                   Expanded(
                     flex: 6,
                     child: TextFormField(
-                      initialValue: widget.announcementData.title ?? '',
-                      validator: ((val) => val.length == 0 ? 'The announcement cannot be blank' : null),
+                      decoration:
+                          InputDecoration(hintText: 'Announcement Title'),
+                      validator: ((val) => val.length == 0
+                          ? 'The announcement cannot be blank'
+                          : null),
                       maxLength: 200,
                       onChanged: ((val) => _title = val),
                     ),
@@ -77,15 +68,20 @@ class _AnnouncementSettingsState extends State<AnnouncementSettings> {
                 ]),
                 FlatButton(
                   color: Colors.blueAccent,
-                  child: Text('Save'),
-                  onPressed: () async{
-                    _error = await widget.databaseService.saveAnnouncementChanges(widget.announcementData.aid, adminData.hid, _title);
-                    setState((){
-                      if(_error == 'ok')
-                        widget.onSaved(_title);
-                    });
-                    Navigator.pop(context);
-                  },
+                  child: Text('Publish'),
+                  onPressed: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => TestingWidget(title: _title)),
+                  ),
+                  // onPressed: () async{
+                  //   _error = await databaseService.insertAnnouncement(adminData.hid, _title);
+                  //   setState((){
+                  //     if(_error == 'ok')
+                  //       widget.onPublished();
+                  //   });
+                  //   Navigator.pop(context);
+                  // },
                 ),
               ],
             ),

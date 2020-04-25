@@ -18,73 +18,45 @@ class Wrapper extends StatelessWidget {
     } else {
       final databaseService = DatabaseService(uid: user.uid);
 
-      return MultiProvider(
-        providers: [
-          StreamProvider<UserData>.value(value: databaseService.userData),
-          StreamProvider<List<AnnouncementData>>.value(
-              value: databaseService.announcementData),
-          StreamProvider<AdminData>.value(
-            value: databaseService.adminData,
-          )
-        ],
-        child: MaterialApp(
-            localizationsDelegates: [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: [
-              const Locale('en', 'US'), // English
-            ],
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: Routes.generateRoute,
-            home: Home()),
-      );
-
-      // if (user.isAdmin) {
-      //   return MultiProvider(
-      //     providers: [
-      //       StreamProvider<UserData>.value(value: databaseService.userData),
-      //       StreamProvider<List<AnnouncementData>>.value(
-      //           value: databaseService.announcementData),
-      //       StreamProvider<AdminData>.value(
-      //         value: databaseService.adminData,
-      //       )
-      //     ],
-      //     child: MaterialApp(
-      //         localizationsDelegates: [
-      //           GlobalMaterialLocalizations.delegate,
-      //           GlobalWidgetsLocalizations.delegate,
-      //         ],
-      //         supportedLocales: [
-      //           const Locale('en', 'US'), // English
-      //         ],
-      //         debugShowCheckedModeBanner: false,
-      //         onGenerateRoute: Routes.generateRoute,
-      //         home: Home()),
-      //   );
-      // } else {
-      //   return MultiProvider(
-      //     providers: [
-      //       StreamProvider<UserData>.value(value: databaseService.userData),
-      //       StreamProvider<List<AnnouncementData>>.value(
-      //           value: databaseService.announcementData),
-      //       StreamProvider<AdminData>.value(
-      //         value: databaseService.adminData,
-      //       )
-      //     ],
-      //     child: MaterialApp(
-      //         localizationsDelegates: [
-      //           GlobalMaterialLocalizations.delegate,
-      //           GlobalWidgetsLocalizations.delegate,
-      //         ],
-      //         supportedLocales: [
-      //           const Locale('en', 'US'), // English
-      //         ],
-      //         debugShowCheckedModeBanner: false,
-      //         onGenerateRoute: Routes.generateRoute,
-      //         home: Home()),
-      //   );
-      // }
+      // To-do: make admin routes
+      if (user.isAdmin) {
+        return StreamProvider<AdminData>.value(
+          value: databaseService.adminData,
+          child: MaterialApp(
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: [
+                const Locale('en', 'US'), // English
+              ],
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: Routes.generateRoute,
+              home: AdminDashboard()),
+        );
+      } else {
+        return MultiProvider(
+          providers: [
+            StreamProvider<UserData>.value(value: databaseService.userData),
+            StreamProvider<List<AnnouncementData>>.value(
+                value: databaseService.announcementData),
+            StreamProvider<AdminData>.value(
+              value: databaseService.adminData,
+            )
+          ],
+          child: MaterialApp(
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: [
+                const Locale('en', 'US'), // English
+              ],
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: Routes.generateRoute,
+              home: Home()),
+        );
+      }
     }
   }
 }
