@@ -145,3 +145,6 @@ InputDecoration customInputDecoration = InputDecoration(
     )
   )
 );
+
+
+TextStyle eventText = TextStyle(color: blue, fontWeight: FontWeight.normal);

@@ -1,53 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:map1/model/schedule.dart';
+import 'package:map1/services/database.dart';
 import 'package:map1/shared/constant.dart';
+import 'package:map1/shared/loading.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:provider/provider.dart';
+import 'package:map1/model/user.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:map1/screen/home/page3/scheduleModal.dart';
 
-final Map<DateTime, List> _holidays = {
-  DateTime(2019, 1, 1): ['Training with Tobi'],
-  DateTime(2019, 1, 6): ['Training with Kano'],
-  DateTime(2019, 2, 14): ['Minato'],
-  DateTime(2019, 4, 21): ['Easter Sunday'],
-  DateTime(2019, 4, 22): ['Easter Monday'],
-};
-
-class Schedule extends StatefulWidget {
+class Schedule extends StatelessWidget {
   @override
-  _ScheduleState createState() => _ScheduleState();
+  Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+    final databaseService = DatabaseService(uid: user.uid);
+
+    return StreamBuilder(
+        stream: databaseService.scheduleItems(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Loading();
+          else {
+            final events = snapshot.data;
+            return Calendar(
+              events: events,
+              databaseService: databaseService,
+            );
+          }
+        });
+  }
 }
 
-class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
-  Map<DateTime, List> _events;
+class Calendar extends StatefulWidget {
+  final Map<DateTime, List> events;
+  final DatabaseService databaseService;
+  Calendar({this.events, this.databaseService});
+
+  @override
+  CalendarState createState() => CalendarState();
+}
+
+class CalendarState extends State<Calendar> with TickerProviderStateMixin {
   List _selectedEvents;
   DateTime _selectedEventsDate;
   AnimationController _animationController;
   CalendarController _calendarController;
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    final _selectedDay = DateTime.now();
-
-    _events = {
-      _selectedDay.subtract(Duration(days: 20)): [
-        'Training with Bee',
-        'Event B0',
-      ],
-      _selectedDay.subtract(Duration(days: 10)): [
-        'Training with Tobi',
-        'Event B0',
-        'Event C0'
-      ],
-      _selectedDay.subtract(Duration(days: 4)): [
-        'Training with Ali',
-        'Training'
-      ],
-    };
-
-    _selectedEvents = _events[_selectedDay] ?? [];
-    _selectedEventsDate = _selectedDay ?? null;
+    // Reset timestamp to 00:00:00
     _calendarController = CalendarController();
-
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -56,22 +66,21 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
     _animationController.forward();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final str = DateFormat('yyyyMMdd').format(DateTime.now()).toString();
+    final _selectedDay = DateTime.parse(str);
+
+    _selectedEvents = widget.events[_selectedDay] ?? [];
+    _selectedEventsDate = _selectedDay;
+  }
+
   void _onDaySelected(DateTime day, List events) {
-    print('CALLBACK: _onDaySelected');
     setState(() {
-      _selectedEvents = events;
       _selectedEventsDate = day;
+      _selectedEvents = events;
     });
-  }
-
-  void _onVisibleDaysChanged(
-      DateTime first, DateTime last, CalendarFormat format) {
-    print('CALLBACK: _onVisibleDaysChanged');
-  }
-
-  void _onCalendarCreated(
-      DateTime first, DateTime last, CalendarFormat format) {
-    print('CALLBACK: _onCalendarCreated');
   }
 
   @override
@@ -79,37 +88,6 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
     _animationController.dispose();
     _calendarController.dispose();
     super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: blue,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(25),
-                bottomRight: Radius.circular(25))),
-        title: Text(
-          "SCHEDULE",
-          style: whiteBold_14,
-        ),
-        bottom: PreferredSize(
-          preferredSize: Size(0, 370),
-          child: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: 380,
-              child: _buildTableCalendar()),
-        ),
-      ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(height: 20),
-          Expanded(flex: 1, child: _buildEventList()),
-        ],
-      ),
-    );
   }
 
   Widget _buildTableCalendar() {
@@ -120,8 +98,8 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
           weekendStyle:
               TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       calendarController: _calendarController,
-      events: _events,
-      holidays: _holidays,
+      events: widget.events,
+      holidays: {},
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
         selectedStyle: TextStyle(color: blue),
@@ -145,69 +123,117 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
         ),
       ),
       onDaySelected: _onDaySelected,
-      onVisibleDaysChanged: _onVisibleDaysChanged,
-      onCalendarCreated: _onCalendarCreated,
-    );
-  }
-
-  Widget _buildEventsMarker(DateTime date, List events) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        color: _calendarController.isSelected(date)
-            ? Colors.brown[500]
-            : _calendarController.isToday(date)
-                ? Colors.brown[300]
-                : Colors.blue[400],
-      ),
-      width: 16.0,
-      height: 16.0,
-      child: Center(
-        child: Text(
-          '${events.length}',
-          style: TextStyle().copyWith(
-            color: Colors.white,
-            fontSize: 12.0,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHolidaysMarker() {
-    return Icon(
-      Icons.add_box,
-      size: 20.0,
-      color: Colors.blueGrey[800],
+      onVisibleDaysChanged: null,
+      onCalendarCreated: null,
     );
   }
 
   Widget _buildEventList() {
-    return ListView(
+    return ListView.builder(
       padding: EdgeInsets.only(left: 10, right: 10),
-      children: _selectedEvents
-          .map((event) => Container(
-                decoration: BoxDecoration(
-                  color: blue1,
-                  //border: Border.all(width: 0.8),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: ListTile(
-                  title: Text(
-                    event.toString(),
-                    style: eventText,
+      itemCount: _selectedEvents.length,
+      itemBuilder: (context, index) {
+        return Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          actionExtentRatio: 0.25,
+          child: ListTile(
+            title: Text(
+              _selectedEvents[index].title,
+              style: eventText,
+            ),
+            subtitle: Text(
+              _selectedEvents[index].subtitle,
+              style: eventText,
+            ),
+            trailing: Text(_selectedEvents[index].time),
+          ),
+          secondaryActions: <Widget>[
+            IconSlideAction(
+                caption: 'Edit',
+                color: Colors.lightBlueAccent,
+                icon: Icons.edit,
+                onTap: () async {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => ScheduleModal(
+                                date: _selectedEventsDate,
+                                scheduleItem: _selectedEvents[index],
+                              )));
+                }),
+            IconSlideAction(
+                caption: 'Delete',
+                color: Colors.redAccent,
+                icon: Icons.delete,
+                onTap: () async {
+                  await widget.databaseService.deleteSchedule(
+                      DateFormat('yyyyMMdd')
+                          .format(_selectedEventsDate)
+                          .toString(),
+                      _selectedEvents[index]);
+                  setState(() {
+                    _selectedEvents = widget.events[_selectedEventsDate] ?? [];
+                  });
+                }),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: blue,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(25),
+                bottomRight: Radius.circular(25))),
+        title: Text(
+          "Calendar",
+          style: whiteBold_14,
+        ),
+        bottom: PreferredSize(
+          preferredSize: Size(0, 300),
+          child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 300,
+              child: _buildTableCalendar()),
+        ),
+      ),
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 20),
+          Expanded(
+              flex: 1,
+              child: Container(
+                child: Column(children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: Text('Schedule'),
                   ),
-                  subtitle: Text("Court B | 09:00 AM | 1 hour", style: eventText,),
-                  trailing: Text(DateFormat('dd-MM-yyyy').format(_selectedEventsDate).toString()),
-                  //onTap: () => print('$event tapped!'),
-                ),
-              ))
-          .toList(),
+                  Expanded(
+                    flex: 9,
+                    child: _buildEventList(),
+                  )
+                ]),
+              )),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () async {
+          await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ScheduleModal(
+                        date: _selectedEventsDate,
+                        scheduleItem: null,
+                      )));
+        },
+      ),
     );
   }
 }
-
-TextStyle eventText = TextStyle(color: blue, fontWeight: FontWeight.normal);

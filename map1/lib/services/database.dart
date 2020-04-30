@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:map1/model/schedule.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/model/court.dart';
 import 'package:map1/model/announcement.dart';
@@ -188,5 +189,99 @@ class DatabaseService {
     } catch (exception) {
       return exception.toString();
     }
+  }
+
+  Map<DateTime, List<dynamic>> _scheduleListFromSnapshot(
+      QuerySnapshot snapshot) {
+    try {
+      final finalList = snapshot.documents.map((data) {
+        final events = data['events'];
+        List list = new List();
+        list.add(DateTime.parse(data.documentID));
+        List smallList = new List();
+        for (int i = 0; i < events.length; i++) {
+          smallList.add(new ScheduleItem(
+            sid: i,
+            title: events[i]['title'],
+            subtitle: events[i]['subtitle'],
+            time: events[i]['time'],
+          ));
+        }
+        list.add(smallList);
+        return list;
+      }).toList();
+
+      return Map.fromIterable(finalList, key: (v) => v[0], value: (v) => v[1]);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Stream<Map<DateTime, List<dynamic>>> scheduleItems() {
+    // To-do :
+    // Query schedule based on month
+    return userReference
+        .document(uid)
+        .collection('schedule')
+        .snapshots()
+        .map(_scheduleListFromSnapshot);
+  }
+
+  Future addSchedule(
+      String date, String title, String subtitle, String time) async {
+    Map<String, String> map = {
+      'title': title,
+      'subtitle': subtitle,
+      'time': time,
+    };
+    return await userReference
+        .document(uid)
+        .collection('schedule')
+        .document(date)
+        .setData({
+          'events': FieldValue.arrayUnion([map])
+        }, merge: true)
+        .then((_) => 'ok')
+        .catchError((err) => print(err));
+  }
+
+  Future updateSchedule(
+      String date, int sid, String title, String subtitle, String time) async {
+    var array;
+    await userReference
+        .document(uid)
+        .collection('schedule')
+        .document(date)
+        .get()
+        .then((data) {
+      array = data['events'];
+      array[sid]['title'] = title;
+      array[sid]['subtitle'] = subtitle;
+      array[sid]['time'] = time;
+    }).catchError((err) => print(err));
+
+    return await userReference
+        .document(uid)
+        .collection('schedule')
+        .document(date)
+        .setData({
+      'events': array,
+    }).catchError((err) => err);
+  }
+
+  Future deleteSchedule(String date, ScheduleItem item) async {
+    await userReference
+        .document(uid)
+        .collection('schedule')
+        .document(date)
+        .setData({
+      'events': FieldValue.arrayRemove([{
+        'title': item.title,
+        'subtitle': item.subtitle,
+        'time': item.time,
+      }])
+    }, merge:true).catchError((err){
+      print(err);
+    });
   }
 }

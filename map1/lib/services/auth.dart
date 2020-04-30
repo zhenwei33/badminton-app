@@ -10,7 +10,7 @@ class AuthService {
   }
 
   // convert firebase user to User
-  // only signin will supply isAdmin parameter
+  // only signInAsAdmin will supply isAdmin parameter
   User _userFromFirebaseUser(FirebaseUser firebaseUser,
       {bool isAdmin = false}) {
     return firebaseUser != null
