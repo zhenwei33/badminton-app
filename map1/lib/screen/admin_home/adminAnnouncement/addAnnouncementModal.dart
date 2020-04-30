@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:map1/model/announcement.dart';
 import 'package:map1/model/user.dart';
-import 'package:map1/screen/admin_home/adminAnnouncement/testingwidget.dart';
 import 'package:map1/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:map1/shared/loading.dart';
 
 class AddAnouncementModal extends StatefulWidget {
   @override
@@ -72,7 +71,7 @@ class AddAnouncementModalState extends State<AddAnouncementModal> {
                   onPressed: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => TestingWidget(title: _title)),
+                        builder: (_) => BackgroundProcess(title: _title)),
                   ),
                   // onPressed: () async{
                   //   _error = await databaseService.insertAnnouncement(adminData.hid, _title);
@@ -89,5 +88,43 @@ class AddAnouncementModalState extends State<AddAnouncementModal> {
         ),
       ],
     );
+  }
+}
+
+class BackgroundProcess extends StatefulWidget {
+  final String title;
+  BackgroundProcess({this.title});
+  @override
+  _BackgroundProcessState createState() => _BackgroundProcessState();
+}
+
+class _BackgroundProcessState extends State<BackgroundProcess> {
+  bool _hasInitialized = false;
+  String insertStatus = '';
+
+  @override
+  void initState(){
+    super.initState();
+    _hasInitialized = true;
+  }
+  @override
+  void didChangeDependencies(){
+    super.didChangeDependencies();
+    if(_hasInitialized){
+      final adminData = Provider.of<AdminData>(context);
+      final databaseService = DatabaseService(uid: adminData.uid);
+      
+      databaseService
+          .insertAnnouncement(adminData.hid, widget.title)
+          .then((status) {
+        setState(() {
+          insertStatus = status;
+        });
+      });
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return insertStatus == null ? Loading() : Navigator.pop(context);
   }
 }
