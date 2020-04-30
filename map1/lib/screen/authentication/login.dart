@@ -27,106 +27,140 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return _loading
         ? Loading()
-        : Scaffold(
-            appBar: AppBar(
-              title: Text('Sign in to Sporty'),
-              actions: <Widget>[
-                FlatButton.icon(
-                  icon: Icon(Icons.account_circle),
-                  label: Text(
-                    'Sign Up',
-                  ),
-                  onPressed: (() => widget.toggleView()),
-                )
-              ],
-            ), // modifiable with custom appbar
-            body: Container(
-              padding:
-                  EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0), // dummy values
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration:
-                            customInputDecoration.copyWith(hintText: "Email"),
-                        validator: ((val) =>
-                            val.isEmpty ? 'Please enter an email' : null),
-                        onChanged: (val) {
-                          setState(() => _email = val);
-                        },
-                      ),
-                      SizedBox(height: 20.0), // spacing box, removable
-                      TextFormField(
-                        decoration: customInputDecoration.copyWith(
-                            hintText: "Password"),
-                        obscureText: true,
-                        validator: ((val) => val.length < 8
-                            ? 'Password must be 8 digits long'
-                            : null),
-                        onChanged: (val) {
-                          setState(() => _password = val);
-                        },
-                      ),
-                      SizedBox(height: 20.0),
-                      RaisedButton(
-                        color: Colors.limeAccent, //dummy value
-                        child: Text(
-                          'Sign In',
-                          style:
-                              heading, //dummy, can create new text style in constant.dart
+        : Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/bg2.jpg"), fit: BoxFit.cover),
+            ),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Container(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.1,
+                      bottom: MediaQuery.of(context).size.height * 0.1,
+                      left: MediaQuery.of(context).size.width * 0.1,
+                      right: MediaQuery.of(context).size.width * 0.1),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              height: 200,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage("assets/text.png"))),
+                            ),
+                            TextFormField(
+                              style: TextStyle(color: Colors.white),
+                              validator: ((val) =>
+                                  val.isEmpty ? 'Please enter an email' : null),
+                              onChanged: (val) {
+                                setState(() {
+                                  _email = val;
+                                });
+                              },
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.black.withOpacity(0.2),
+                                  hintText: "Email",
+                                  hintStyle: TextStyle(color: Colors.white),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: BorderSide.none)),
+                            ),
+                            SizedBox(height: 20),
+                            TextFormField(
+                              style: TextStyle(color: Colors.white),
+                              validator: ((val) => val.length < 8
+                                  ? 'Password length must be 8 digits long'
+                                  : null),
+                              onChanged: (val) {
+                                setState(() {
+                                  _password = val;
+                                });
+                              },
+                              obscureText: true,
+                              keyboardType: TextInputType.visiblePassword,
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.black.withOpacity(0.2),
+                                  hintText: "Password",
+                                  hintStyle: TextStyle(color: Colors.white),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: BorderSide.none)),
+                            ),
+                            SizedBox(height: 30),
+                            RaisedButton(
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 30, right: 30),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              color:
+                                  Colors.white.withOpacity(0.8), //dummy value
+                              child: Text('Sign In',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color:
+                                          darkBlue) //dummy, can create new text style in constant.dart
+                                  ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() {
+                                    _loading = true;
+                                  });
+                                  dynamic result = await _authService
+                                      .signInWtihEmailAndPassword(
+                                          _email, _password);
+                                  if (result == null) {
+                                    setState(() {
+                                      _errorMessage =
+                                          'Could not Sign in with those credentials';
+                                      _loading = false;
+                                    });
+                                  }
+                                }
+                              },
+                            ),
+                            // Text(
+                            //   _errorMessage,
+                            //   style: TextStyle(
+                            //     color: Colors.red[100],
+                            //   ),
+                            // ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  _errorMessage,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                _errorMessage.length > 0 ? 
+                                Icon(Icons.error, color: Colors.red,) : Container()
+                              ],
+                            ),
+                            FlatButton(
+                              //icon: Icon(Icons.account_circle),
+                              child: Text(
+                                "Don't have an account yet?",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline),
+                              ),
+                              onPressed: (() => widget.toggleView()),
+                            )
+                          ],
                         ),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            setState(() {
-                              _loading = true;
-                            });
-                            dynamic result = await _authService
-                                .signInWtihEmailAndPassword(_email, _password);
-                            if (result == null) {
-                              setState(() {
-                                _errorMessage = 'Could not Sign in with those credentials';
-                                _loading = false;
-                              });
-                            } 
-                          }
-                        },
                       ),
-                      SizedBox(height: 20.0),
-                      RaisedButton(
-                        color: Colors.limeAccent, //dummy value
-                        child: Text(
-                          'Sign In As Admin',
-                          style:
-                              heading, //dummy, can create new text style in constant.dart
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            setState(() {
-                              _loading = true;
-                            });
-                            dynamic result = await _authService
-                                .signInWtihEmailAndPasswordAsAdmin(_email, _password);
-                            if (result == null) {
-                              setState(() {
-                                _errorMessage = 'Could not Sign in with those credentials';
-                                _loading = false;
-                              });
-                            } 
-                          }
-                        },
-                      ),
-                      Text(
-                        _errorMessage,
-                        style: TextStyle(
-                          color: Colors.red[100],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                    ),
+                  )),
             ),
           );
   }

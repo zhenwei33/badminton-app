@@ -8,6 +8,8 @@ Color blue1 = Color(0xFFDBF5FF);
 Color blue2 = Color(0xFFC6F0FF);
 Color blue3 = Color(0xFFB7EDFF);
 //Color blue4 = Color(0xFFB7EDFF);
+
+Color darkBlue = Color(0xFF87a4cc);
 Color teal = Color(0xFF80FCE5);
 
 Color lightBlue = Color(0xFFBCE0FD);
