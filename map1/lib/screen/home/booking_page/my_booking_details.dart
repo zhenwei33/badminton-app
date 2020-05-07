@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:map1/model/booking.dart';
 import 'package:map1/model/court.dart';
@@ -127,11 +128,31 @@ class MyBookingDetails extends StatelessWidget {
                 ),
               ),
               onPressed: (){
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => 
-                    ChangeBookingTime(booking: booking, badmintonHall: badmintonHall)
-                  )
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) =>AlertDialog(
+                    backgroundColor: Colors.redAccent,
+                    elevation: 5.0,
+                    title: Text('Please note that there are some restrictions on changing the booking time\n'),
+                    content: Text('**The booking time duration cannot be changed**\n\n'
+                                  '**The new booking date can only be within one week of the original booking date**'
+                    ),
+                    actions: 
+                    [
+                      FlatButton(
+                        onPressed:(){
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (context) => 
+                              ChangeBookingTime(booking: booking, badmintonHall: badmintonHall)
+                            )
+                          );
+                        },
+                        child: Text('OK', style: TextStyle(color: Colors.black),)
+                      )
+                    ]
+                  ),
                 );
               }, 
             ),

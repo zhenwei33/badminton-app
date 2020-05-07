@@ -11,7 +11,6 @@ class BadmintonHall {
   final String description;
   final Map<String, dynamic> operationHours;
   final String operationHoursInString;
-  final String breakingHours;
   final Map<String, dynamic> slot;
   final double pricePerHour;
   final String imageUrl;
@@ -25,7 +24,6 @@ class BadmintonHall {
       this.description,
       this.operationHours,
       this.operationHoursInString,
-      this.breakingHours,
       this.slot,
       this.pricePerHour,
       this.imageUrl});

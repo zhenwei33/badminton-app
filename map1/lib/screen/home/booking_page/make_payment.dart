@@ -159,6 +159,13 @@ class MakePayment extends StatelessWidget {
                     child: FlatButton(
                       child: Text("PAY NOW", style: whiteBold_14),
                       onPressed: () {
+                        DatabaseService databaseService = DatabaseService(uid: user.uid);
+                          databaseService.createBooking(user.uid, badmintonHall.hid, 
+                          badmintonHall.name, slotNumber, selectedBookingDate, 
+                          selectedBookingTime, selectedBookingHour, 
+                          badmintonHall.pricePerHour*selectedBookingHour, 'invoiceId', 
+                          selectedBookingDate, 'paid');
+                          
                         showDialog(
                           context: context,
                           builder: (_) =>AlertDialog(
@@ -168,13 +175,7 @@ class MakePayment extends StatelessWidget {
                             content: Text('Your booking is created, redirect to your booking history'),
                             actions: [FlatButton(
                               onPressed:(){
-                                DatabaseService databaseService = DatabaseService(uid: user.uid);
-                                databaseService.createBooking(user.uid, badmintonHall.hid, 
-                                  badmintonHall.name, slotNumber, selectedBookingDate, 
-                                  selectedBookingTime, selectedBookingHour, 
-                                  badmintonHall.pricePerHour*selectedBookingHour, 'invoiceId', 
-                                  selectedBookingDate, 'paid');
-                                Navigator.pop(context);
+                                Navigator.pushNamed(context, my_booking);
                               },
                               child: Text('OK')
                               )

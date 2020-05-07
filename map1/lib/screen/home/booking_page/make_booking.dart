@@ -23,16 +23,6 @@ class MakeBooking extends StatefulWidget {
 class _MakeBookingState extends State<MakeBooking> {
   String _error;
 
-  String get getError{
-    return this._error;
-  }
-
-  set setError(String err){
-    setState(() {
-      this._error = err;
-    });    
-  }
-
   static DateTime _date = DateTime.now();
 
   static String bookedDateSlash = 
@@ -41,77 +31,33 @@ class _MakeBookingState extends State<MakeBooking> {
   '/${_date.year.toString()}';
 
   var selectedDropdownItem;
-  var hourRating = 0.0;
+  int hourRating = 0;
+
+  int startTime = 0;
+  int endTime = 0;
+  List<int> _timeSlot = [];
+  List<DropdownMenuItem<String>> _timeSlotInString = [];
 
   @override
   Widget build(BuildContext context) {
 
-    int startTime = int.parse(widget.badmintonHall.operationHoursInString.substring(0,4));
-    int endTime = int.parse(widget.badmintonHall.operationHoursInString.substring(5));
-    // print('$startTime-$endTime');
-    
-    List<int> timeSlot = [];
-    for(var x = startTime; x<endTime; x=x+100){
-      timeSlot.add(x);
-    }
-
-    List<String> timeSlotInString = [];
-    for(var x = 0; x<timeSlot.length; x++){
-      if(timeSlot[x].toString().length == 3){
-        timeSlotInString.add('0${timeSlot[x]}');
-      }
-      else{
-        timeSlotInString.add('${timeSlot[x]}');
-      }
-    }
-    
     List<String> weekDay = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
     List<String> workingWeekDay = [];
     for(var x=0; x<weekDay.length; x++){
       if(widget.badmintonHall.operationHours[weekDay[x]] != null){
-        // print(weekDay[x]);
         workingWeekDay.add(weekDay[x]);
       }
     }
-
-                        // print(widget.badmintonHall.hid);
-                        // print(widget.slotNumber);
-                        // print(DateFormat('yyyy-MM-dd').format(DateTime.parse(_date.toString())));
-                        // print(selectedDropdownItem);
-                        // print(hourRating.round());
-                        // print(bookingOnThatDay);
-                        // print(workingWeekDay);
 
     Future<String> _navigateValidator(
       String hallId, int slotNumber, String bookedDate, 
       String bookingTime, int bookingHour, 
       List<Booking> courtBooking, List<String> workingWeekDay, 
       ) async {
-      // String thatday = DateFormat('yyyy-mm-dd').format(DateTime.parse('2020-05-20'));
-      // List<Booking> courtBooking;
 
         // check booking time date picker is selected
         if(bookedDate == null){
           this._error = 'Please select a date to book';
-          return null;
-        }
-
-        // selectedDropdownItem
-        if(bookingTime == null){
-          this._error = 'Please select a time slot';
-          return null;
-        } 
-          // the badminton hall is closed after this time
-          else if(bookingTime == timeSlot.last.toString()){
-            if(bookingHour>1){
-              this._error = 'The badminton hall is closed after ${(timeSlot.last+100)}';
-              return null;
-            }
-        }
-
-        // check booking hour
-        if(bookingHour<=0){
-          this._error = 'Please book at least 1 hour';
           return null;
         }
 
@@ -129,6 +75,63 @@ class _MakeBookingState extends State<MakeBooking> {
         }
         if(include == true){
           this._error = errMessage;
+          return null;
+        }
+
+        // double check booking time date picker is selected
+        // else selectedDropdownItem will change
+        if(selectedDropdownItem == null){
+          this._error = 'Please select a date to book';
+          return null;
+        }
+
+        // selectedDropdownItem
+        if(bookingTime == null){
+          this._error = 'Please select a time slot';
+          return null;
+        } 
+
+        // the badminton hall is closed after this time
+        if(bookingTime == _timeSlot.last.toString()){
+          if(bookingHour>1){
+            this._error = 'The badminton hall is closed after $endTime';
+            return null;
+          }
+        }
+        if(hourRating == 2){
+          if(int.parse(bookingTime)+200 > endTime){
+            this._error = 'The badminton hall is closed after $endTime';
+              return null;
+          }
+        } else if(hourRating == 3){
+          if(int.parse(bookingTime)+300 > endTime){
+            this._error = 'The badminton hall is closed after $endTime';
+              return null;
+          }
+        }
+
+        // Check today time slot before now()
+        else if(bookedDate == DateFormat('yyyy-MM-dd').format(DateTime.now())){
+          String timeBound = DateFormat('kk').format(DateTime.now()) + '00';
+
+            // today is over
+            if(int.parse(timeBound) > _timeSlot.last){
+              this._error = 'Please select another date, today is end';
+                return null;
+            }
+
+            // not sure correct or not
+            if(int.parse(timeBound) < _timeSlot.last && int.parse(timeBound) > int.parse(bookingTime)){
+              if((int.parse(timeBound) + 100) >= int.parse(bookingTime)){
+                this._error = 'Please select a time after ${(int.parse(timeBound) + 100)} for today';
+                return null;
+              } 
+            } 
+        }
+
+        // check booking hour
+        if(bookingHour<=0){
+          this._error = 'Please book at least 1 hour';
           return null;
         }
 
@@ -308,12 +311,64 @@ class _MakeBookingState extends State<MakeBooking> {
                             borderRadius: 5.0,
                           );
                           if(picked != null) {
-                            setState(() {
-                              _date = picked;
-                              bookedDateSlash = '${_date.day.toString()}' +
-                              '/${_date.month.toString()}' +
-                              '/${_date.year.toString()}';
-                            });
+                            String bookedWeekDay = DateFormat('EEEE').format(picked);
+                            
+                            // if week day does not exist
+                            if(widget.badmintonHall.operationHours[bookedWeekDay] != null){
+                              String todayStartTime = widget.badmintonHall.operationHours[bookedWeekDay][0].toString() + '00';
+                              String todayEndTime = widget.badmintonHall.operationHours[bookedWeekDay][1].toString() + '00';
+                              if(todayEndTime.length == 1)
+                                todayEndTime = '0' + todayEndTime + '00';
+                              else if(todayEndTime.length == 2)
+                                todayEndTime = todayEndTime + '00';
+
+                              List<int> temptimeSlot = [];
+                              List<DropdownMenuItem<String>> temptimeSlotInString = [];
+                              
+                              for(var x = int.parse(todayStartTime); x<int.parse(todayEndTime); x=x+100){
+                                temptimeSlot.add(x);
+                              }
+
+                              for(var x = 0; x<temptimeSlot.length; x++){
+                                if(temptimeSlot[x].toString().length == 3){
+                                  temptimeSlotInString.add(
+                                    DropdownMenuItem(
+                                      value: '0${temptimeSlot[x]}',
+                                      child: Text('0${temptimeSlot[x]}')
+                                    )
+                                  );
+                                }
+                                else{
+                                  temptimeSlotInString.add(
+                                    DropdownMenuItem(
+                                      value: '${temptimeSlot[x]}',
+                                      child: Text('${temptimeSlot[x]}')
+                                    )
+                                  );
+                                }
+                              }
+
+                              setState(() {
+                                _date = picked;
+                                _timeSlot = temptimeSlot;
+                                _timeSlotInString = temptimeSlotInString;
+                                selectedDropdownItem = temptimeSlotInString[0].value;
+                                // to check which week day, and set start time and end time
+                                startTime = int.parse(todayStartTime);
+                                endTime = int.parse(todayEndTime);
+                                bookedDateSlash = '${_date.day.toString()}' +
+                                '/${_date.month.toString()}' +
+                                '/${_date.year.toString()}';
+
+                              });
+                            } else {
+                              setState(() {
+                                _date = picked;
+                                bookedDateSlash = '${_date.day.toString()}' +
+                                '/${_date.month.toString()}' +
+                                '/${_date.year.toString()}';
+                              });
+                            }
                           } 
                         },
                       )
@@ -339,10 +394,8 @@ class _MakeBookingState extends State<MakeBooking> {
                           Text("Time start", style: blueBold_14)
                         ],
                       ),
-                      FlatButton(
-                        onPressed:(){},
+                      Padding(
                         padding: EdgeInsets.all(10),
-                        shape: Border.all(width: 2, color: blue2),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             hint: Text('Start from', style: blueReg_14,),
@@ -353,12 +406,7 @@ class _MakeBookingState extends State<MakeBooking> {
                             ),
                             isDense: true,
                             value: selectedDropdownItem,
-                            items: timeSlotInString.map((String value){
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                            items: _timeSlotInString,
                             onChanged: (String newValue) {
                               setState(() { selectedDropdownItem = newValue; });
                             },
@@ -418,7 +466,7 @@ class _MakeBookingState extends State<MakeBooking> {
                       divisions: 3,
                       onChanged: (val) {
                         setState(() {
-                          hourRating = val;
+                          hourRating = val.toInt();
                         });
                       },
                     ),

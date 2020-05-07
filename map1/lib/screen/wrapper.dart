@@ -3,6 +3,7 @@ import 'package:map1/model/booking.dart';
 import 'package:map1/model/court.dart';
 import 'package:map1/route/Routes.dart';
 import 'package:map1/screen/authentication/authentication.dart';
+import 'package:map1/screen/home/badminton_hall_page/badminton_halls.dart';
 import 'package:map1/screen/home/booking_page/my_bookings.dart';
 import 'package:map1/screen/home/home.dart';
 import 'package:map1/services/database.dart';
@@ -64,7 +65,7 @@ class Wrapper extends StatelessWidget {
               ],
               debugShowCheckedModeBanner: false,
               onGenerateRoute: Routes.generateRoute,
-              home: Home()),
+              home: MyBookings()),
         );
       }
     }

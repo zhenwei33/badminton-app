@@ -11,7 +11,6 @@ class HallDetails extends StatelessWidget {
   Widget decideHallImage(String hallImageUrl) {
     try{
       if(hallImageUrl != null){
-        print('ya, got image');
         return Image.network(hallImageUrl, height: 400, width: double.infinity, fit: BoxFit.fill);
       } 
       
@@ -40,17 +39,7 @@ class HallDetails extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-
-    // Uint8List imageFile;
-    // StorageReference photosReference = FirebaseStorage.instance.ref().child('badminton_hall_images');
-    // const int MAX_SIZE = 5*1024*1024;
-
-    // photosReference.child('default.jpeg').getData(MAX_SIZE).then((data){
-    //     imageFile = data;
-    // }).catchError((onError){
-    //   print(onError);
-    // });
+  Widget build(BuildContext context) {    
 
     List<String> week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     String offDay = "Off-day: ";

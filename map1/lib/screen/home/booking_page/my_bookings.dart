@@ -20,6 +20,7 @@ class MyBookings extends StatelessWidget {
       Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
+          leading: Container(),
           title: Text('My Booking List'),
           backgroundColor: blue,
           elevation: 0.0,

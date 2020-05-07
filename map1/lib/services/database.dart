@@ -100,7 +100,6 @@ class DatabaseService {
         contact: doc.data['contact'],
         geoPoint: doc.data['location'],
         description: doc.data['description'],
-        breakingHours: doc.data['breakingHours'],
         operationHours: doc.data['operationHours'],
         operationHoursInString: doc.data['operationHoursInString'],
         slot: doc.data['slot'],
@@ -131,7 +130,6 @@ class DatabaseService {
         contact: doc.data['contact'],
         geoPoint: doc.data['location'],
         description: doc.data['description'],
-        breakingHours: doc.data['breakingHours'],
         operationHours: doc.data['operationHours'],
         operationHoursInString: doc.data['operationHoursInString'],
         slot: doc.data['slot'],
@@ -224,6 +222,7 @@ class DatabaseService {
 
   Stream<List<Booking>> getMyBooking(String uid) {
     return bookingReference
+      .orderBy('bookedDate', descending: true)
       .where('uid', isEqualTo: uid)
       .snapshots()
       .map(_myBookingFromSnapshot);
