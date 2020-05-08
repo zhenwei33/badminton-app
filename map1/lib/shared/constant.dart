@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 
 Color darkGreyColor = Color(0xFF212128);
-Color blue = Color(0xFF2699FB);
+//Color blue = Color(0xFF2699FB);
+Color blue = Color(0xFF5b77a5);
 
 Color white = Color(0xFFF2FBFF);
 Color blue1 = Color(0xFFDBF5FF);
 Color blue2 = Color(0xFFC6F0FF);
-Color blue3 = Color(0xFFB7EDFF);
+
+Color blue3 = Color(0xFF8cb9ce);
+
+Color blue4 = Color(0xFF8cb9ce);
+// Color blue3 = Color(0xFFB7EDFF);
 //Color blue4 = Color(0xFFB7EDFF);
 
 Color darkBlue = Color(0xFF87a4cc);
 Color teal = Color(0xFF80FCE5);
 
-Color lightBlue = Color(0xFFBCE0FD);
+// Color lightBlue = Color(0xFFBCE0FD);
+Color lightBlue = blue4.withOpacity(0.7);
 
 //WHITE
 TextStyle whiteReg_30 = TextStyle(

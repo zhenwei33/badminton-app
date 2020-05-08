@@ -16,12 +16,14 @@ class Wrapper extends StatelessWidget {
     final user = Provider.of<User>(context);
     if (user == null) {
       return MaterialApp(
-          home: SplashScreen.navigate(
-        name: 'assets/splash.flr',
-        next: (context) => Authentication(),
-        until: () => Future.delayed(Duration(seconds: 5)),
-        startAnimation: 'minton',
-      ));
+        // home: Authentication()
+        home: SplashScreen.navigate(
+          name: 'assets/splash.flr',
+          next: (context) => Authentication(),
+          until: () => Future.delayed(Duration(seconds: 5)),
+          startAnimation: 'minton',
+        )
+        );
     } else {
       final databaseService = DatabaseService(uid: user.uid);
 
@@ -39,12 +41,14 @@ class Wrapper extends StatelessWidget {
               ],
               debugShowCheckedModeBanner: false,
               onGenerateRoute: Routes.generateRoute,
+              // home: AdminDashboard(),
               home: SplashScreen.navigate(
                 name: 'assets/splash.flr',
                 next: (context) => AdminDashboard(),
                 until: () => Future.delayed(Duration(seconds: 5)),
                 startAnimation: 'minton',
-              )),
+              )
+              ),
         );
       } else {
         return MultiProvider(
@@ -66,12 +70,14 @@ class Wrapper extends StatelessWidget {
               ],
               debugShowCheckedModeBanner: false,
               onGenerateRoute: Routes.generateRoute,
+              // home: Home(),
               home: SplashScreen.navigate(
                 name: 'assets/splash.flr',
                 next: (context) => Home(),
                 until: () => Future.delayed(Duration(seconds: 5)),
                 startAnimation: 'minton',
-              )),
+              )
+              ),
         );
       }
     }

@@ -3,12 +3,7 @@ import 'package:map1/shared/constant.dart';
 import 'package:map1/screen/home/page1/announcement/announcementItem.dart';
 import 'package:map1/screen/home/page1/article/carousel.dart';
 
-class Page1 extends StatefulWidget {
-  @override
-  _Page1State createState() => _Page1State();
-}
-
-class _Page1State extends State<Page1> {
+class Page1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

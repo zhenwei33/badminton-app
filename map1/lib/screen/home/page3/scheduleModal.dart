@@ -66,7 +66,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
                         final hour = time.hour;
                         final minute = time.minute;
 
-                        setState(() => _time = '$hour:$minute');
+                        if (this.mounted) {setState(() => _time = '$hour:$minute');}
                       });
                     },
                   ),
