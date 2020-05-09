@@ -5,6 +5,7 @@ import 'package:map1/model/user.dart';
 import 'package:map1/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:map1/shared/constant.dart';
 
 class ScheduleModal extends StatefulWidget {
   final DateTime date;
@@ -27,11 +28,35 @@ class _ScheduleModalState extends State<ScheduleModal> {
     final user = Provider.of<UserData>(context);
     final databaseService = DatabaseService(uid: user.uid);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            widget.scheduleItem == null ? 'Add Schedule' : 'Edit Schedule'),
-      ),
+      appBar:
+          // AppBar(
+          //   title: Text(
+          //       widget.scheduleItem == null ? 'Add Schedule' : 'Edit Schedule'),
+          // ),
+          AppBar(
+              centerTitle: true,
+              flexibleSpace: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(25),
+                        bottomRight: Radius.circular(25)),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [blue, blue4])),
+              ),
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25))),
+              title: Text(
+                widget.scheduleItem == null ? 'Add Schedule' : 'Edit Schedule',
+                style: whiteBold_14,
+              )),
       body: Container(
+        padding: EdgeInsets.all(20),
         child: Form(
           key: _key,
           child: Column(
@@ -67,12 +92,57 @@ class _ScheduleModalState extends State<ScheduleModal> {
                         final hour = time.hour;
                         final minute = time.minute;
 
-                        if (this.mounted) {setState(() => _time = '$hour:$minute');}
+                        if (this.mounted) {
+                          setState(() => _time = '$hour:$minute');
+                        }
                       });
                     },
                   ),
                 ),
               ),
+<<<<<<< HEAD
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    color: blue,
+                    textColor: Colors.white,
+                    child: Text('Save'),
+                    onPressed: () async {
+                      if (widget.scheduleItem == null) {
+                        await databaseService.addSchedule(
+                            DateFormat('yyyyMMdd')
+                                .format(widget.date)
+                                .toString(),
+                            _title,
+                            _subtitle,
+                            _time);
+                        Navigator.pop(context);
+                      } else {
+                        await databaseService.updateSchedule(
+                            DateFormat('yyyyMMdd')
+                                .format(widget.date)
+                                .toString(),
+                            widget.scheduleItem.sid,
+                            _title,
+                            _subtitle,
+                            _time);
+                        print('somehow not popping');
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  FlatButton(
+                    color: blue,
+                    textColor: Colors.white,
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              )
+=======
               _processing
                   ? CircularProgressIndicator()
                   : Column(
@@ -114,6 +184,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
                         },
                       ),
                     ])
+>>>>>>> e71d67fae234d047b14ebbfe452add8127b462aa
             ],
           ),
         ),

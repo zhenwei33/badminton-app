@@ -168,10 +168,100 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
                                 date: _selectedEventsDate,
                                 scheduleItem: null,
                               )));
+<<<<<<< HEAD
+                }),
+            IconSlideAction(
+                caption: 'Delete',
+                color: Colors.redAccent,
+                icon: Icons.delete,
+                onTap: () async {
+                  await widget.databaseService.deleteSchedule(
+                      DateFormat('yyyyMMdd')
+                          .format(_selectedEventsDate)
+                          .toString(),
+                      _selectedEvents[index]);
+                  setState(() {
+                    _selectedEvents = widget.events[_selectedEventsDate] ?? [];
+                  });
+                }),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        flexibleSpace: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25)),
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [blue, blue4])),
+        ),
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(25),
+                bottomRight: Radius.circular(25))),
+        title: Text(
+          "Calendar",
+          style: whiteBold_14,
+        ),
+        bottom: PreferredSize(
+          preferredSize: Size(0, 300),
+          child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 330,
+              child: _buildTableCalendar()),
+        ),
+      ),
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 20),
+          Expanded(
+              flex: 1,
+              child: Container(
+                child: Column(children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: Text('Schedule'),
+                  ),
+                  Expanded(
+                    flex: 9,
+                    child: _buildEventList(),
+                  )
+                ]),
+              )),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: blue,
+        child: Icon(Icons.add),
+        onPressed: () async {
+          await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ScheduleModal(
+                        date: _selectedEventsDate,
+                        scheduleItem: null,
+                      )));
+        },
+      ),
+    );
+=======
                 },
               ),
             );
           }
         });
+>>>>>>> e71d67fae234d047b14ebbfe452add8127b462aa
   }
 }
