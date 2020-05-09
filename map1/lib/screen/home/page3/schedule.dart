@@ -72,20 +72,22 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
         selectedStyle: TextStyle(color: blue),
-        selectedColor: blue3,
+        selectedColor: blue2,
         weekdayStyle: TextStyle(
             color: Colors.white.withOpacity(0.7), fontWeight: FontWeight.bold),
         weekendStyle: TextStyle(
             color: Colors.white.withOpacity(1), fontWeight: FontWeight.bold),
-        todayColor: Colors.pink,
+        todayColor: blue2.withOpacity(0.6),
         markersColor: Colors.white,
         outsideDaysVisible: false,
       ),
       headerStyle: HeaderStyle(
+        leftChevronIcon: Icon(Icons.keyboard_arrow_left, color: Colors.white),
+        rightChevronIcon: Icon(Icons.keyboard_arrow_right, color: Colors.white),
+        titleTextStyle: whiteReg_18,
         centerHeaderTitle: true,
         formatButtonVisible: false,
-        formatButtonTextStyle:
-            TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
+        formatButtonTextStyle: whiteReg_16,
         formatButtonDecoration: BoxDecoration(
           color: Colors.pink,
           borderRadius: BorderRadius.circular(16.0),

@@ -12,7 +12,18 @@ class Page3 extends StatelessWidget {
         children: <Widget>[
           Scaffold(
             appBar: AppBar(
-              backgroundColor: blue,
+              flexibleSpace: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(25),
+                        bottomRight: Radius.circular(25)),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [blue, blue4])),
+              ),
+              backgroundColor: Colors.transparent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(25),
@@ -43,7 +54,6 @@ class Page3 extends StatelessWidget {
                                 children: <Widget>[
                                   FlatButton(
                                     padding: EdgeInsets.all(0),
-
                                     onPressed: () {
                                       Navigator.push(
                                         context,
@@ -54,6 +64,7 @@ class Page3 extends StatelessWidget {
                                     child: Row(
                                       children: <Widget>[
                                         Container(
+                                          child: Icon(Icons.book, color: Colors.white,),
                                           height: 65,
                                           width: 65,
                                           decoration: BoxDecoration(

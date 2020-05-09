@@ -31,7 +31,7 @@ class DateTimeStart extends StatelessWidget {
               ),
               FlatButton(
                 padding: EdgeInsets.all(10),
-                shape: Border.all(width: 2, color: blue2),
+                shape: Border.all(width: 2, color: blue4),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -79,7 +79,7 @@ class DateTimeStart extends StatelessWidget {
               ),
               FlatButton(
                 padding: EdgeInsets.all(10),
-                shape: Border.all(width: 2, color: blue2),
+                shape: Border.all(width: 2, color: blue4),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[

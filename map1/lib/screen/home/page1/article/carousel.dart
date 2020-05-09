@@ -57,7 +57,6 @@ class _CarouselState extends State<Carousel> with AutomaticKeepAliveClientMixin<
     
     News news = new News.fromJson(jsonResponse);
     List<Article> articles = news.articles;
-    print(articles.length);
     return articles;
   }
 
@@ -76,6 +75,7 @@ class _CarouselState extends State<Carousel> with AutomaticKeepAliveClientMixin<
             height: 234,
             // color: Colors.orange,
             child: ListView.builder(
+              padding: EdgeInsets.only(left: 10, right: 10),
               itemCount: 5,
               // itemCount: _articles.length,
               scrollDirection: Axis.horizontal,

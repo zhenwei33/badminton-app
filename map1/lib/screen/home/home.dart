@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         bottomNavigationBar: BottomAppBar(
-            color: Colors.transparent,
+            color: Colors.white,
             child: Container(
                 height: 70,
                 child: TabBar(

@@ -14,7 +14,7 @@ class Description extends StatelessWidget {
           hintText: "Description",
           border: InputBorder.none,
           hintStyle: TextStyle(
-            color: Color(0xFFBCE0FD)
+            color: blue4
           )
         ),
       ),

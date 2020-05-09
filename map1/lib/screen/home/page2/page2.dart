@@ -11,16 +11,33 @@ class Page2 extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        backgroundColor: blue,
+        flexibleSpace: Container(
+          //height: 50,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(25),
+                bottomRight: Radius.circular(25)),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                blue,
+                blue4
+              ]
+            )
+          ),
+        ),
+        backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(25),
                 bottomRight: Radius.circular(25))),
-        title: Center(
-            child: Text(
+        centerTitle: true,
+        title: Text(
           "BOOKING",
           style: whiteBold_14,
-        )),
+        ),
         bottom: PreferredSize(
           preferredSize: Size(0, 150),
           child: Container(
@@ -31,6 +48,10 @@ class Page2 extends StatelessWidget {
                   height: 100,
                   width: 100,
                   decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/court.jpg'),
+                      fit: BoxFit.cover
+                    ),
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15)),
                 ),
@@ -71,10 +92,20 @@ class Page2 extends StatelessWidget {
               height: 25,
             ),
             Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    blue,
+                    blue4
+                  ]
+                )
+              ),
               height: 50,
               width: double.infinity,
               child: FlatButton(
-                color: blue,
+                //color: blue,
                 child: Text(
                   "CONFIRM",
                   style: whiteBold_14,

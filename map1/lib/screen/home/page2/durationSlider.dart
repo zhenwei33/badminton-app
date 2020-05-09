@@ -43,7 +43,7 @@ class _DurationSliderState extends State<DurationSlider> {
               activeTickMarkColor: blue,
 
               thumbShape: CustomSliderThumbCircle(thumbRadius: 10, min: 0, max: 3),
-              overlayColor: blue.withOpacity(0.3),
+              overlayColor: blue.withOpacity(0.45),
               minThumbSeparation: 100,
             ),
             child: Slider(
