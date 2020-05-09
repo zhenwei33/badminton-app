@@ -113,7 +113,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
             final events = snapshot.data;
             final str = DateFormat('yyyyMMdd').format(_selectedEventsDate).toString();
             _selectedEventsDate = DateTime.parse(str);
-            _selectedEvents = events[_selectedEventsDate];
+            _selectedEvents = events[_selectedEventsDate] ?? [];
 
             return Scaffold(
               appBar: AppBar(
