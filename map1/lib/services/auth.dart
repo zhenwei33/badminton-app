@@ -50,7 +50,7 @@ class AuthService {
 
       final FirebaseUser firebaseUser = result.user;
 
-      return _userFromFirebaseUser(firebaseUser, isAdmin: true);
+      return _userFromFirebaseUser(firebaseUser);
     } catch (err) {
       print(err.message);
       return null;
@@ -63,14 +63,13 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-
       final FirebaseUser firebaseUser = result.user;
       final uid = firebaseUser.uid;
       final databaseService = DatabaseService(uid: uid);
 
       final bool isAdmin = await databaseService.checkUserIsAdmin();
-
-      return isAdmin ? _userFromFirebaseUser(firebaseUser) : null;
+      
+      return isAdmin ? _userFromFirebaseUser(firebaseUser, isAdmin: true) : null;
     } catch (err) {
       return err.toString();
       //return err.message; //For displaying error messages

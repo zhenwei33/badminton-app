@@ -23,6 +23,9 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _authService = AuthService();
 
+  //For testing purposes
+  bool _adminMode = false;
+
   @override
   Widget build(BuildContext context) {
     return _loading
@@ -155,6 +158,19 @@ class _LoginState extends State<Login> {
                                     decoration: TextDecoration.underline),
                               ),
                               onPressed: (() => widget.toggleView()),
+                            ),
+                            FlatButton(
+                              //icon: Icon(Icons.account_circle),
+                              child: Text(
+                                "Login as Admin",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline),
+                              ),
+                              onPressed: () async{
+                                dynamic result = await _authService
+                                .signInWtihEmailAndPasswordAsAdmin(_email, _password);
+                              },
                             )
                           ],
                         ),

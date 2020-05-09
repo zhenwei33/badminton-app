@@ -26,9 +26,11 @@ class Wrapper extends StatelessWidget {
         );
     } else {
       final databaseService = DatabaseService(uid: user.uid);
-
+      
       // To-do: make admin routes
-      if (user.isAdmin) {
+
+      //Temporary Code for admin access, should be changed
+      if (user.uid == 'J6u4BPWqE4OkmEjbbEaDg8OsUiu1') {
         return StreamProvider<AdminData>.value(
           value: databaseService.adminData,
           child: MaterialApp(
