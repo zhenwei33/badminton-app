@@ -236,6 +236,7 @@ class CalendarState extends State<Calendar> with TickerProviderStateMixin {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: blue,
         child: Icon(Icons.add),
         onPressed: () async {
           await Navigator.push(

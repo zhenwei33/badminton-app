@@ -4,12 +4,10 @@ import 'package:map1/shared/constant.dart';
 import '../../../../shared/constant.dart';
 
 TextStyle receiptText = TextStyle(
-  fontSize: 18,
-  color: blue,
-  fontWeight: FontWeight.normal,
-  fontFamily: 'Roboto'
-);
-
+    fontSize: 18,
+    color: blue,
+    fontWeight: FontWeight.normal,
+    fontFamily: 'Roboto');
 
 class Payment extends StatelessWidget {
   @override
@@ -17,7 +15,18 @@ class Payment extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: blue,
+        flexibleSpace: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25)),
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [blue, blue4])),
+        ),
+        backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(25),
@@ -100,7 +109,16 @@ class Payment extends StatelessWidget {
             ),
             SizedBox(height: 100),
             Container(
-              color: blue,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    blue,
+                    blue4
+                  ]
+                )
+              ),
               width: double.infinity,
               child: FlatButton(
                 child: Text("PAY NOW", style: whiteBold_14),
