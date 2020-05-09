@@ -73,14 +73,6 @@ class AddAnouncementModalState extends State<AddAnouncementModal> {
                     MaterialPageRoute(
                         builder: (_) => BackgroundProcess(title: _title)),
                   ),
-                  // onPressed: () async{
-                  //   _error = await databaseService.insertAnnouncement(adminData.hid, _title);
-                  //   setState((){
-                  //     if(_error == 'ok')
-                  //       widget.onPublished();
-                  //   });
-                  //   Navigator.pop(context);
-                  // },
                 ),
               ],
             ),

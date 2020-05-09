@@ -21,6 +21,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
   String _title;
   String _subtitle;
   String _time = '--:--:--';
+  bool _processing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +100,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
                   ),
                 ),
               ),
+<<<<<<< HEAD
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -140,6 +142,49 @@ class _ScheduleModalState extends State<ScheduleModal> {
                   ),
                 ],
               )
+=======
+              _processing
+                  ? CircularProgressIndicator()
+                  : Column(
+                    children: <Widget>[
+                      FlatButton(
+                        child: Text('Save'),
+                        onPressed: () async {
+                          setState(() {
+                            _processing = true;
+                          });
+                          if (widget.scheduleItem == null) {
+                            await databaseService.addSchedule(
+                                DateFormat('yyyyMMdd')
+                                    .format(widget.date)
+                                    .toString(),
+                                _title,
+                                _subtitle,
+                                _time);
+                          } else {
+                            await databaseService.updateSchedule(
+                                DateFormat('yyyyMMdd')
+                                    .format(widget.date)
+                                    .toString(),
+                                widget.scheduleItem.sid,
+                                _title,
+                                _subtitle,
+                                _time);
+                          }
+                          Navigator.pop(context);
+                          setState(() {
+                            _processing = false;
+                          });
+                        },
+                      ),
+                      FlatButton(
+                        child: Text('Cancel'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ])
+>>>>>>> e71d67fae234d047b14ebbfe452add8127b462aa
             ],
           ),
         ),
