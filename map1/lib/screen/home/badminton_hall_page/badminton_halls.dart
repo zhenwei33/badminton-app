@@ -4,6 +4,7 @@ import 'package:map1/screen/home/badminton_hall_page/badminton_hall_list_builder
 import 'package:map1/screen/home/badminton_hall_page/hall_details.dart';
 import 'package:map1/screen/home/search_bar.dart';
 import 'package:map1/services/database.dart';
+import 'package:map1/shared/constant.dart';
 import 'package:map1/shared/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -18,10 +19,10 @@ class BadmintonHalls extends StatelessWidget {
       value: DatabaseService().getBadmintonHalls,
       child: hall==null ? Loading() :
       Scaffold(
-        backgroundColor: Colors.brown[50],
+        backgroundColor: blue1,
         appBar: AppBar(
           title: Text('Badminton Hall'),
-          backgroundColor: Colors.brown[400],
+          backgroundColor: blue4,
           elevation: 0.0,
           actions: <Widget>[
             IconButton(

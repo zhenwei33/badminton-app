@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:map1/model/court.dart';
 import 'package:map1/screen/home/booking_page/make_booking.dart';
+import 'package:map1/shared/constant.dart';
 
 class CourtView extends StatelessWidget {
 
@@ -21,7 +22,7 @@ class CourtView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Book a court'),
-        backgroundColor: Colors.brown[400],
+        backgroundColor: blue4,
         elevation: 0.0,
       ),
       body: Container(

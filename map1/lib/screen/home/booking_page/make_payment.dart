@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:map1/model/court.dart';
 import 'package:map1/model/user.dart';
-import 'package:map1/route/route_names.dart';
+import 'package:map1/route/Routes.dart';
 import 'package:map1/services/database.dart';
 import 'package:map1/shared/constant.dart';
 import 'package:provider/provider.dart';

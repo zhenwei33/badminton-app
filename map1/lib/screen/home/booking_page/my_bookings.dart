@@ -6,6 +6,7 @@ import 'package:map1/services/database.dart';
 import 'package:map1/shared/constant.dart';
 import 'package:map1/shared/loading.dart';
 import 'package:provider/provider.dart';
+import 'package:map1/route/Routes.dart';
 
 class MyBookings extends StatelessWidget {
   @override
@@ -25,8 +26,33 @@ class MyBookings extends StatelessWidget {
           backgroundColor: blue,
           elevation: 0.0,
         ),
-        body: Container(
-          child: MyBookingListBuilder()
+        body: 
+        Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: MyBookingListBuilder()
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: RaisedButton(
+                color: blue,
+                child: Text(
+                  'Back to Home',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                ),
+                onPressed: (){
+                  Navigator.of(context).pushNamed(
+                    home
+                  );
+                }
+              ),
+            ),
+          ],
         ),
       )
     );

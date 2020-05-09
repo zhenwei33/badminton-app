@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:map1/model/court.dart';
 import 'package:map1/screen/home/badminton_hall_page/court_view.dart';
+import 'package:map1/shared/constant.dart';
 
 class HallDetails extends StatelessWidget {
   
@@ -200,7 +201,7 @@ class HallDetails extends StatelessWidget {
                         topLeft: Radius.circular(30.0),
                         topRight: Radius.circular(30.0)
                       ),
-                      color: Colors.blue[400],
+                      color: blue4,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

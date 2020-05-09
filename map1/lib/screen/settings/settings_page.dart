@@ -68,29 +68,40 @@ class _SettingsPageState extends State<SettingsPage> {
               }),
           // firebase notification
           SwitchListTile(
-              title: Text('Received Notification'),
-              subtitle: Text('Receive notification from the apps'),
-              activeColor: Colors.purple,
-              value: defaultNotification, // implement function
-              onChanged: (val) {
-                if(val == true){
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 60.0),
-                        child: Text(
-                          'Push Notification: You will now be notified whenever your booking is near'
-                        ),
-                      );
-                    },
-                  );
-                }
-                setState(() {
-                  defaultNotification = !defaultNotification;
-                });
-              }),
+            title: Text('Received Notification'),
+            subtitle: Text('Receive notification from the apps'),
+            activeColor: Colors.purple,
+            value: defaultNotification, // implement function
+            onChanged: (val) {
+              if(val == true){
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 60.0),
+                      child: Text(
+                        'Push Notification: You will now be notified whenever your booking is near'
+                      ),
+                    );
+                  },
+                );
+              }
+              setState(() {
+                defaultNotification = !defaultNotification;
+              });
+            }),
+          SizedBox(height: 5.0),
+          ListTile(
+            title: Text('My Booking'),
+            subtitle: Text('My Booking List'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Conversation()),
+              );
+            },
+          ),
           // permission, location, google maps(pub.dev)
           ListTile(
             title: Text('Favourite badminton court'),

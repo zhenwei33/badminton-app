@@ -8,6 +8,7 @@ import 'package:map1/services/database.dart';
 import 'package:map1/shared/constant.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:map1/shared/loading.dart';
+import 'package:map1/route/Routes.dart';
 
 class ChangeBookingTime extends StatefulWidget {
 
@@ -540,7 +541,7 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
                                     final snackBar = SnackBar(
                                       content: Text('Your booking time is changed, please remember'),
                                     );
-                                    Navigator.pop(context, Navigator.pop(context));
+                                    Navigator.pushNamed(context, my_booking);
                                     Scaffold.of(context).showSnackBar(snackBar);
                                   },
                                 ),

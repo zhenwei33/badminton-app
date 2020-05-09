@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:map1/model/user.dart';
+import 'package:map1/screen/home/badminton_hall_page/badminton_halls.dart';
 import 'package:map1/screen/settings/settings_page.dart';
 import 'package:provider/provider.dart';
 import 'package:map1/shared/constant.dart';
@@ -51,7 +52,7 @@ class Home extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
             Page1(), //Page1(),
-            Page2(), // Second Page
+            BadmintonHalls(), // Second Page
             Page3(), // Third Page
             SettingsPage(),
           ],
