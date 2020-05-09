@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:map1/screen/home/booking_page/my_bookings.dart';
 import 'package:map1/screen/home/page1/page1.dart';
 import 'package:map1/screen/home/page2/page2.dart';
 import 'package:map1/screen/home/page3/page3.dart';
@@ -35,6 +36,8 @@ class Routes {
         ));
       case profile_page:
         return MaterialPageRoute(builder: (_) => UserProfile());
+      case my_booking:
+        return MaterialPageRoute(builder: (_) => MyBookings());
       default:
         return _errorRoute();
     }

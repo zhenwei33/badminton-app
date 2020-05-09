@@ -1,6 +1,11 @@
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:map1/model/booking.dart';
+import 'package:map1/model/court.dart';
+import 'package:map1/route/Routes.dart';
 import 'package:map1/screen/authentication/authentication.dart';
+import 'package:map1/screen/home/badminton_hall_page/badminton_halls.dart';
+import 'package:map1/screen/home/booking_page/my_bookings.dart';
 import 'package:map1/screen/home/home.dart';
 import 'package:map1/services/database.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +13,6 @@ import 'package:map1/model/user.dart';
 import 'package:map1/model/announcement.dart';
 import 'package:map1/screen/admin_home/admin.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:map1/route/Routes.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -57,10 +61,17 @@ class Wrapper extends StatelessWidget {
           providers: [
             StreamProvider<UserData>.value(value: databaseService.userData),
             StreamProvider<List<AnnouncementData>>.value(
-                value: databaseService.announcementData),
+              value: databaseService.announcementData
+            ),
             StreamProvider<AdminData>.value(
-              value: databaseService.adminData,
-            )
+              value: databaseService.adminData
+            ),
+            StreamProvider<List<BadmintonHall>>.value(
+              value: databaseService.getBadmintonHalls,
+            ),
+            StreamProvider<List<Booking>>.value(
+              value: databaseService.getMyBooking(user.uid),
+            ),
           ],
           child: MaterialApp(
               localizationsDelegates: [
@@ -78,8 +89,8 @@ class Wrapper extends StatelessWidget {
                 next: (context) => Home(),
                 until: () => Future.delayed(Duration(seconds: 5)),
                 startAnimation: 'minton',
-              )
               ),
+            ),
         );
       }
     }

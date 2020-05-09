@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:map1/model/court.dart';
 import 'package:map1/shared/constant.dart';
 import 'package:map1/screen/home/page2/dateTimeStart.dart';
 import 'package:map1/screen/home/page2/durationSlider.dart';
@@ -6,6 +7,10 @@ import 'package:map1/screen/home/page2/description.dart';
 import 'package:map1/screen/home/page2/payment/payment.dart';
 
 class Page2 extends StatelessWidget {
+
+  final BadmintonHall badmintonHall;
+  Page2({this.badmintonHall});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

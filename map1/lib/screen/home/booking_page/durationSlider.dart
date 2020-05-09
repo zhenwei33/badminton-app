@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:map1/shared/constant.dart';
 
+// duration slider class is not used, but the left 2 class are used
 class DurationSlider extends StatefulWidget {
   @override
   _DurationSliderState createState() => _DurationSliderState();
@@ -43,7 +44,7 @@ class _DurationSliderState extends State<DurationSlider> {
               activeTickMarkColor: blue,
 
               thumbShape: CustomSliderThumbCircle(thumbRadius: 10, min: 0, max: 3),
-              overlayColor: blue.withOpacity(0.45),
+              overlayColor: blue.withOpacity(0.3),
               minThumbSeparation: 100,
             ),
             child: Slider(
