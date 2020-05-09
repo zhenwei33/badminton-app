@@ -29,10 +29,6 @@ class _ScheduleModalState extends State<ScheduleModal> {
     final databaseService = DatabaseService(uid: user.uid);
     return Scaffold(
       appBar:
-          // AppBar(
-          //   title: Text(
-          //       widget.scheduleItem == null ? 'Add Schedule' : 'Edit Schedule'),
-          // ),
           AppBar(
               centerTitle: true,
               flexibleSpace: Container(
@@ -100,49 +96,6 @@ class _ScheduleModalState extends State<ScheduleModal> {
                   ),
                 ),
               ),
-<<<<<<< HEAD
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  FlatButton(
-                    color: blue,
-                    textColor: Colors.white,
-                    child: Text('Save'),
-                    onPressed: () async {
-                      if (widget.scheduleItem == null) {
-                        await databaseService.addSchedule(
-                            DateFormat('yyyyMMdd')
-                                .format(widget.date)
-                                .toString(),
-                            _title,
-                            _subtitle,
-                            _time);
-                        Navigator.pop(context);
-                      } else {
-                        await databaseService.updateSchedule(
-                            DateFormat('yyyyMMdd')
-                                .format(widget.date)
-                                .toString(),
-                            widget.scheduleItem.sid,
-                            _title,
-                            _subtitle,
-                            _time);
-                        print('somehow not popping');
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                  FlatButton(
-                    color: blue,
-                    textColor: Colors.white,
-                    child: Text('Cancel'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              )
-=======
               _processing
                   ? CircularProgressIndicator()
                   : Column(
@@ -184,7 +137,6 @@ class _ScheduleModalState extends State<ScheduleModal> {
                         },
                       ),
                     ])
->>>>>>> e71d67fae234d047b14ebbfe452add8127b462aa
             ],
           ),
         ),
