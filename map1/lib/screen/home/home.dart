@@ -41,7 +41,7 @@ class Home extends StatelessWidget {
                     ),
                     Tab(
                       icon: Icon(
-                        Icons.person,
+                        Icons.settings,
                       ),
                     )
                   ],
@@ -51,8 +51,8 @@ class Home extends StatelessWidget {
           children: <Widget>[
             Page1(), //Page1(),
             BadmintonHalls(), // Second Page
-            Page4(), // Third Page
-            Page3(), 
+            Page3(), // Third Page
+            Page4(), 
           ],
         ),
       ),

@@ -5,7 +5,7 @@ import 'package:map1/screen/home/page1/page1.dart';
 import 'package:map1/screen/home/page2/page2.dart';
 import 'package:map1/screen/home/page3/page3.dart';
 import 'package:map1/screen/home/page4/page4.dart';
-import 'package:map1/screen/home/settings_page/settings_page.dart';
+import 'package:map1/screen/home/page4/profile_page/profile_page.dart';
 
 const String home = '/home';
 const String dashboard = '/dashboard';
@@ -31,7 +31,7 @@ class Routes {
       case page4:
         return MaterialPageRoute(builder: (_) => Page4());
       case profile_page:
-        return MaterialPageRoute(builder: (_) => SettingsPage());
+        return MaterialPageRoute(builder: (_) => ProfilePage());
       case my_booking:
         return MaterialPageRoute(builder: (_) => MyBookings());
       default:

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:map1/model/user.dart';
-import 'package:map1/screen/home/page4/booking/booking.dart';
-import 'package:map1/shared/constant.dart';
-import 'package:map1/screen/home/page4/schedule/schedule.dart';
-import 'package:provider/provider.dart';
+import 'package:map1/screen/home/page4/profile_page/profile_page.dart';
+import 'package:map1/services/auth.dart';
 
 class Page4 extends StatefulWidget {
   @override
@@ -11,104 +8,71 @@ class Page4 extends StatefulWidget {
 }
 
 class _Page4State extends State<Page4> {
+  final AuthService _auth = AuthService();
+  bool defaultNotification = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: blue4,
-        title: Text(
-            "My Bookings",
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
+        // EdgeInsets.all(16.0),
         child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FlatButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BookingSchedule()),
-                    );
-                  },
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        child: Icon(
-                          Icons.book,
-                          color: Colors.white,
-                        ),
-                        height: 65,
-                        width: 65,
-                        decoration: BoxDecoration(color: blue, borderRadius: BorderRadius.circular(15)),
-                      ),
-                      Container(
-                        width: 250,
-                        padding: EdgeInsets.only(left: 25),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Court Bookings",
-                              style: blueReg_20,
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FlatButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Schedule()),
-                    );
-                  },
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        child: Icon(
-                          Icons.book,
-                          color: Colors.white,
-                        ),
-                        height: 65,
-                        width: 65,
-                        decoration: BoxDecoration(color: blue, borderRadius: BorderRadius.circular(15)),
-                      ),
-                      Container(
-                        width: 250,
-                        padding: EdgeInsets.only(left: 25),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Normal Schedule",
-                              style: blueReg_20,
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 100.0),
+              ListTile(
+                leading: Icon(Icons.verified_user,
+                    size: 50), // profile image() widget
+                title: Text('Settings', style: TextStyle(fontSize: 30.0)),
+                onTap: null,
+              ),
+              SizedBox(height: 30.0),
+              SizedBox(height: 20.0),
+              // firebase notification (not impelemented)
+              SwitchListTile(
+                  title: Text('Received Notification'),
+                  subtitle: Text('Receive notification from the apps'),
+                  activeColor: Colors.purple,
+                  value: defaultNotification, // implement function
+                  onChanged: (val) {
+                    if (val == true) {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 60.0),
+                            child: Text(
+                                'Push Notification: You will now be notified whenever your booking is near'),
+                          );
+                        },
+                      );
+                    }
+                    setState(() {
+                      defaultNotification = !defaultNotification;
+                    });
+                  }),
+              SizedBox(height: 5.0),
+              ListTile(
+                title: Text('My Profile'),
+                subtitle: Text('Edit or view profile'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  );
+                },
+              ),
+              SizedBox(height: 5.0),
+              ListTile(
+                title: Text('Logout'),
+                subtitle: Text('Logout from the apps'),
+                onTap: () async {
+                  await _auth.signOut();
+                },
+              ),
+            ]),
       ),
     );
   }
