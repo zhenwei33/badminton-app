@@ -14,8 +14,7 @@ class AuthService {
   User _userFromFirebaseUser(FirebaseUser firebaseUser,
       {bool isAdmin = false}) {
     return firebaseUser != null
-        ? User(
-            uid: firebaseUser.uid, email: firebaseUser.email, isAdmin: isAdmin)
+        ? User(uid: firebaseUser.uid, email: firebaseUser.email, isAdmin: isAdmin)
         : null;
   }
 
@@ -68,8 +67,10 @@ class AuthService {
       final databaseService = DatabaseService(uid: uid);
 
       final bool isAdmin = await databaseService.checkUserIsAdmin();
-      
-      return isAdmin ? _userFromFirebaseUser(firebaseUser, isAdmin: true) : null;
+
+      return isAdmin
+          ? _userFromFirebaseUser(firebaseUser, isAdmin: true)
+          : null;
     } catch (err) {
       return err.toString();
       //return err.message; //For displaying error messages

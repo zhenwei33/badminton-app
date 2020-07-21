@@ -53,9 +53,6 @@ class ProfileImage extends StatelessWidget {
                 width: 200.0,
                 height: 200.0,
                 child: decideImage(userData.profileUrl, imageFile),
-                // child: (userData.profileUrl == 'profileUrl') ?
-                // Image.memory(imageFile, fit: BoxFit.cover) :
-                // Image.network(userData.profileUrl, fit: BoxFit.cover),
               )
             ),
           );

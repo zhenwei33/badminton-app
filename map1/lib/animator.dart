@@ -46,25 +46,3 @@ class _AnimatorState extends State<Animator> with SingleTickerProviderStateMixin
     );
   }
 }
-
-Timer timer;
-Duration duration = Duration();
-wait() {
-  if (timer == null || !timer.isActive) {
-    timer = Timer(Duration(microseconds: 120), () {
-      duration = Duration();
-    });
-  }
-  duration += Duration(milliseconds: 100);
-  return duration;
-}
-
-class WidgetAnimator extends StatelessWidget {
-  final Widget child;
-  WidgetAnimator(this.child);
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-    // Animator(child, wait())
-  }
-}

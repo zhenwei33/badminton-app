@@ -6,7 +6,6 @@ import 'package:map1/screen/home/page2/page2.dart';
 import 'package:map1/screen/home/page3/page3.dart';
 import 'package:map1/screen/home/page4/page4.dart';
 import 'package:map1/screen/home/user_profile_page/user_profile.dart';
-import 'package:map1/test.dart';
 
 const String home = '/home';
 const String dashboard = '/dashboard';
@@ -31,11 +30,6 @@ class Routes {
         return MaterialPageRoute(builder: (_) => Page3());
       case page4:
         return MaterialPageRoute(builder: (_) => Page4());
-      case court:
-        final argument = settings.arguments;
-        return MaterialPageRoute(builder: (_) => Test2(
-          hid: argument,
-        ));
       case profile_page:
         return MaterialPageRoute(builder: (_) => UserProfile());
       case my_booking:

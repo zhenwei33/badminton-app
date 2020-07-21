@@ -53,7 +53,6 @@ class BadmintonHalls extends StatelessWidget {
             ),
           ],
         ),
-        drawer: Drawer(),
         body: Container(
           // decoration: BoxDecoration(
           //   backgroundBlendMode: BlendMode.color,

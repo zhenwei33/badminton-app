@@ -6,12 +6,20 @@ import 'package:map1/model/court.dart';
 import 'package:map1/model/announcement.dart';
 
 class DatabaseService {
-  final String uid;
-  DatabaseService({this.uid});
+  static final DatabaseService _singleton = DatabaseService._internal();
 
-  CollectionReference userReference = Firestore.instance.collection('user');
+  String uid;
+
+  // Singleton
+  factory DatabaseService({uid}){
+    _singleton.uid = uid;
+    return _singleton;
+  }
+  DatabaseService._internal();
+
+  // Collection References
+  CollectionReference userReference = Firestore.instance.collection('user'); 
   CollectionReference adminReference = Firestore.instance.collection('admin');
-
   CollectionReference userRoleReference =
       Firestore.instance.collection('user_role');
   CollectionReference hallReference =
@@ -19,6 +27,7 @@ class DatabaseService {
   CollectionReference courtReference = Firestore.instance.collection('courts');
   CollectionReference announcementReference =
       Firestore.instance.collection('announcement');
+  CollectionReference bookingReference = Firestore.instance.collection('booking');
 
   // create user with details
   Future createUser(
@@ -145,7 +154,9 @@ class DatabaseService {
       .map(_badmintonHallDataFromSnapshot);
   }
 
-  CollectionReference bookingReference = Firestore.instance.collection('booking');
+  ////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////     Booking Logic Starts     /////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
   Future createBooking(
     String uid, String hallId, 
@@ -237,6 +248,33 @@ class DatabaseService {
       .snapshots()
       .map(_myBookingFromSnapshot);
   }
+
+  Map<DateTime, List<dynamic>> _bookingListFromSnapshot(QuerySnapshot snapshot) {
+    try {
+      final finalList = snapshot.documents.map((data) {
+        List map = new List();
+        map.add(DateTime.parse(data['bookedDate']));
+        
+        List bookings = new List();
+
+
+      }).toList();
+
+      return Map.fromIterable(finalList, key: (v) => v[0], value: (v) => v[1]);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Stream<Map<DateTime, List<dynamic>>> get bookingsInCalendarView{
+    
+    return bookingReference.where('uid', isEqualTo: uid).snapshots().map(_bookingListFromSnapshot);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////     Booking Logic Ends     //////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
   
 //   UserData _userDataFromSnapshots(DocumentSnapshot snapshot) {
 //     return UserData(
@@ -269,6 +307,11 @@ class DatabaseService {
     return adminReference.document(uid).snapshots().map(_adminDataFromSnapshot);
   }
 
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////   Announcement Logic Starts    ////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+  
+  // Get annoucement data from query snapshot
   List<AnnouncementData> _announcementDataFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return AnnouncementData(
@@ -280,17 +323,19 @@ class DatabaseService {
     }).toList();
   }
 
+  // Announcement getter
   Stream<List<AnnouncementData>> get announcementData {
     return announcementReference.snapshots().map(_announcementDataFromSnapshot);
   }
 
+  // Get announcement data from hall id
   Stream<List<AnnouncementData>> announcementFromHall(String hid) {
     return announcementReference
         .where('hid', isEqualTo: hid)
         .snapshots()
         .map(_announcementDataFromSnapshot);
   }
-
+  // Delete announcement
   Future deleteAnnouncement(String aid, String hid) async {
     try {
       await announcementReference.document(aid).get().then((doc) {
@@ -304,6 +349,7 @@ class DatabaseService {
     }
   }
 
+  // Update announcement
   Future saveAnnouncementChanges(String aid, String hid, String title) async {
     try {
       return await announcementReference.document(aid).get().then((doc) async {
@@ -322,6 +368,7 @@ class DatabaseService {
     }
   }
 
+  // Add announcement
   Future insertAnnouncement(String hid, String title) async {
     try {
       return await announcementReference.document().setData({
@@ -336,26 +383,42 @@ class DatabaseService {
     }
   }
 
+  ////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////   Announcement Logic Ends    /////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////    Schedule Logic Starts    //////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
   Map<DateTime, List<dynamic>> _scheduleListFromSnapshot(
       QuerySnapshot snapshot) {
     try {
       final finalList = snapshot.documents.map((data) {
+        // array of events
         final events = data['events'];
-        List list = new List();
-        list.add(DateTime.parse(data.documentID));
-        List smallList = new List();
+
+        // List of datetime and scheduleItems(events) 
+        List row = new List();
+        List scheduleItems = new List();
+        
+        row.add(DateTime.parse(data.documentID));
+        
+        // loop through array and initialize schedule items
         for (int i = 0; i < events.length; i++) {
-          smallList.add(new ScheduleItem(
+          scheduleItems.add(new ScheduleItem(
             sid: i,
             title: events[i]['title'],
             subtitle: events[i]['subtitle'],
             time: events[i]['time'],
           ));
         }
-        list.add(smallList);
-        return list;
+        row.add(scheduleItems);
+        return row;
       }).toList();
-
+      // Uncomment line below to see the data structure in debug console
+      // print("Final List looks like \n $finalList");
       return Map.fromIterable(finalList, key: (v) => v[0], value: (v) => v[1]);
     } catch (e) {
       print(e);
@@ -365,6 +428,8 @@ class DatabaseService {
   Stream<Map<DateTime, List<dynamic>>> scheduleItems() {
     // To-do :
     // Query schedule based on month
+    
+    // Get schedule subcollection
     return userReference
         .document(uid)
         .collection('schedule')
@@ -429,4 +494,8 @@ class DatabaseService {
       print(err);
     });
   }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////    Schedule Logic Ends   /////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 }

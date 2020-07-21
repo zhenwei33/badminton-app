@@ -1,42 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:map1/model/announcement.dart';
 import 'package:map1/shared/constant.dart';
 
 class AnnouncementItem extends StatelessWidget {
-  final String title;
-  AnnouncementItem({this.title});
+  final AnnouncementData data;
+  AnnouncementItem({this.data});
+
+  String _timePassed() {
+    final announcedDate = data.date;
+    final now = DateTime.now();
+    final differenceInDays = now.difference(announcedDate).inDays;
+    if (differenceInDays == 0) {
+      final differenceInMinutes = now.difference(announcedDate).inMinutes;
+      final hours = differenceInMinutes / 60;
+      final minutes = differenceInMinutes % 60;
+
+      return 'Posted ${hours.toInt()}h ${minutes}m ago';
+    } else if (differenceInDays < 7) {
+      final differenceInMinutes = now.difference(announcedDate).inMinutes;
+      final days = differenceInDays;
+      final hours = differenceInMinutes % 60;
+
+      return 'Posted ${days.toInt()}d ${hours}h ago';
+    }
+    final week = differenceInDays / 7;
+    final days = differenceInDays % 7;
+
+    return 'Posted ${week.toInt()}w ${days}d ago';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 0, bottom: 13, left: 20, right: 20),
+      padding: const EdgeInsets.only(bottom: 13, left: 20, right: 20),
       child: Container(
-        height: 60,
         width: MediaQuery.of(context).size.width - 40,
         decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(15)
-        ),
-        child: Row(
-          children: <Widget>[
-            Flexible(
-              fit: FlexFit.loose,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 0, bottom: 0),
+            color: blue2, borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 4,
                 child: Text(
-                  "This is just a sample text to look fancy " + title,
+                  data.title,
                   style: blueReg_16,
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-                child: Text(
-                  "30m",
-                  style: greyReg_12,
+              Expanded(
+                flex: 2,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    _timePassed(),
+                    style: greyReg_12,
+                    textAlign: TextAlign.right,
+                  ),
+                ),
               )
-            )
-          ],
-        )
+            ],
+          ),
+        ),
       ),
     );
   }

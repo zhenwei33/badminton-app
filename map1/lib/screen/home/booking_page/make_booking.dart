@@ -269,7 +269,7 @@ class _MakeBookingState extends State<MakeBooking> {
                 Container(
                   // color: teal,
                   height: 80,
-                  width: 160,
+                  width: 150,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -283,7 +283,7 @@ class _MakeBookingState extends State<MakeBooking> {
                           SizedBox(
                             width: 10,
                           ),
-                          Text("Date", style: blueBold_14)
+                          Text("Date", style: blueBold_14),
                         ],
                       ),
                       FlatButton(
@@ -299,7 +299,7 @@ class _MakeBookingState extends State<MakeBooking> {
                             Icon(
                               Icons.arrow_drop_down,
                               color: blue,
-                            )
+                            ),
                           ],
                         ),
                         onPressed: () async {
@@ -325,7 +325,7 @@ class _MakeBookingState extends State<MakeBooking> {
                               List<int> temptimeSlot = [];
                               List<DropdownMenuItem<String>> temptimeSlotInString = [];
                               
-                              for(var x = int.parse(todayStartTime); x<int.parse(todayEndTime); x=x+100){
+                              for(var x = int.parse(todayStartTime); x < int.parse(todayEndTime); x=x+100){
                                 temptimeSlot.add(x);
                               }
 
@@ -391,7 +391,7 @@ class _MakeBookingState extends State<MakeBooking> {
                           SizedBox(
                             width: 10,
                           ),
-                          Text("Time start", style: blueBold_14)
+                          Text("Time start", style: blueBold_14),
                         ],
                       ),
                       Padding(

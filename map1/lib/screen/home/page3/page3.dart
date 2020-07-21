@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:map1/shared/constant.dart';
-import 'package:map1/screen/home/page3/schedule.dart';
+import 'package:map1/screen/home/page3/schedule/schedule.dart';
+import 'package:map1/model/user.dart';
+import 'package:provider/provider.dart';
 
 class Page3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserData>(context, listen:false);
+
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -43,61 +47,103 @@ class Page3 extends StatelessWidget {
                     height: 80,
                   ),
                   Container(
-                      height: 300,
                       width: double.infinity,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  FlatButton(
-                                    padding: EdgeInsets.all(0),
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Schedule()),
-                                      );
-                                    },
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          child: Icon(Icons.book, color: Colors.white,),
-                                          height: 65,
-                                          width: 65,
-                                          decoration: BoxDecoration(
-                                              color: blue,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                        ),
-                                        Container(
-                                          width: 250,
-                                          padding: EdgeInsets.only(left: 25),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                "Booking Schedule",
-                                                style: blueReg_20,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                "2 bookings ongoing",
-                                                style: lightBlueReg_12,
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              FlatButton(
+                                padding: EdgeInsets.all(0),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Schedule()),
+                                  );
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      child: Icon(
+                                        Icons.book,
+                                        color: Colors.white,
+                                      ),
+                                      height: 65,
+                                      width: 65,
+                                      decoration: BoxDecoration(
+                                          color: blue,
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                     ),
-                                  )
-                                ]);
-                          }))
+                                    Container(
+                                      width: 250,
+                                      padding: EdgeInsets.only(left: 25),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            "Court Bookings",
+                                            style: blueReg_20,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                FlatButton(
+                                  padding: EdgeInsets.all(0),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Schedule()),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Icon(
+                                          Icons.book,
+                                          color: Colors.white,
+                                        ),
+                                        height: 65,
+                                        width: 65,
+                                        decoration: BoxDecoration(
+                                            color: blue,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                      ),
+                                      Container(
+                                        width: 250,
+                                        padding: EdgeInsets.only(left: 25),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              "Normal Schedule",
+                                              style: blueReg_20,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ]),
+                        ],
+                      ))
                 ],
               ),
             ),
@@ -121,7 +167,7 @@ class Page3 extends StatelessWidget {
                         height: 115,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: ExactAssetImage("assets/images/man-1.png"),
+                              image: NetworkImage(userData.profileUrl),
                               fit: BoxFit.cover),
                           borderRadius: new BorderRadius.all(
                               new Radius.circular(115 / 2)),
@@ -139,7 +185,7 @@ class Page3 extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Ding",
+                        userData.username,
                         style: whiteReg_30,
                       ),
                     ),
