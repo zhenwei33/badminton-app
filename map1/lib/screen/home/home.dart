@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/screen/home/badminton_hall_page/badminton_halls.dart';
-import 'package:map1/screen/settings/settings_page.dart';
+import 'package:map1/screen/home/settings_page/settings_page.dart';
 import 'package:provider/provider.dart';
 import 'package:map1/shared/constant.dart';
 import 'page1/page1.dart';
-import 'page2/page2.dart';
 import 'page3/page3.dart';
-import 'page4/page4.dart';
-import 'user_profile_page/user_profile.dart';
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
