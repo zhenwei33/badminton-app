@@ -9,58 +9,53 @@ import 'package:map1/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class BadmintonHalls extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     final hall = Provider.of<List<BadmintonHall>>(context);
 
     return StreamProvider<List<BadmintonHall>>.value(
       value: DatabaseService().getBadmintonHalls,
-      child: hall==null ? Loading() :
-      Scaffold(
-        backgroundColor: blue1,
-        appBar: AppBar(
-          title: Text('Badminton Hall'),
-          backgroundColor: blue4,
-          elevation: 0.0,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search), 
-              onPressed: () async {
+      child: hall == null
+          ? Loading()
+          : WillPopScope(
+              onWillPop: () async => false,
+              child: Scaffold(
+                backgroundColor: blue1,
+                appBar: AppBar(
+                  leading: Container(),
+                  title: Text('Badminton Hall'),
+                  backgroundColor: blue4,
+                  elevation: 0.0,
+                  actions: <Widget>[
+                    IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () async {
+                          List<String> searchItem = [];
+                          var streamlength = hall.length;
+                          for (var x = 0; x < streamlength; x++) {
+                            searchItem.add(hall[x].name);
+                          }
 
-                List<String> searchItem = [];
-                var streamlength = hall.length;
-                for(var x=0; x<streamlength; x++){
-                  searchItem.add(hall[x].name);
-                }
-
-                String result = await showSearch(
-                  context: context, 
-                  delegate: DataSearch(searchItem),
-                );
-                for(var x=0; x<streamlength; x++){
-                  if(result == searchItem[x]){
-                    final badmintonHalls = Provider.of<List<BadmintonHall>>(context,listen: false) ?? [];
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HallDetails(badmintonHall: badmintonHalls[x])
-                      ),
-                    );
-                  }
-                }
-              }
+                          String result = await showSearch(
+                            context: context,
+                            delegate: DataSearch(searchItem),
+                          );
+                          for (var x = 0; x < streamlength; x++) {
+                            if (result == searchItem[x]) {
+                              final badmintonHalls = Provider.of<List<BadmintonHall>>(context, listen: false) ?? [];
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => HallDetails(badmintonHall: badmintonHalls[x])),
+                              );
+                            }
+                          }
+                        }),
+                  ],
+                ),
+                body: Container(
+                    child: BadmintonHallListBuilder()),
+              ),
             ),
-          ],
-        ),
-        body: Container(
-          // decoration: BoxDecoration(
-          //   backgroundBlendMode: BlendMode.color,
-
-          // ),
-          child: BadmintonHallListBuilder()
-        ),
-      ),
     );
   }
 }
