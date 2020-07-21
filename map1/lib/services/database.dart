@@ -11,27 +11,23 @@ class DatabaseService {
   String uid;
 
   // Singleton
-  factory DatabaseService({uid}){
+  factory DatabaseService({uid}) {
     _singleton.uid = uid;
     return _singleton;
   }
   DatabaseService._internal();
 
   // Collection References
-  CollectionReference userReference = Firestore.instance.collection('user'); 
+  CollectionReference userReference = Firestore.instance.collection('user');
   CollectionReference adminReference = Firestore.instance.collection('admin');
-  CollectionReference userRoleReference =
-      Firestore.instance.collection('user_role');
-  CollectionReference hallReference =
-      Firestore.instance.collection('badminton_hall');
+  CollectionReference userRoleReference = Firestore.instance.collection('user_role');
+  CollectionReference hallReference = Firestore.instance.collection('badminton_hall');
   CollectionReference courtReference = Firestore.instance.collection('courts');
-  CollectionReference announcementReference =
-      Firestore.instance.collection('announcement');
+  CollectionReference announcementReference = Firestore.instance.collection('announcement');
   CollectionReference bookingReference = Firestore.instance.collection('booking');
 
   // create user with details
-  Future createUser(
-      String username, String email, String idNo, String contact) async {
+  Future createUser(String username, String email, String idNo, String contact) async {
     // await userRoleReference.document(uid).setData({
     //   'isAdmin': 'false',
     // });
@@ -99,32 +95,28 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       // print(doc.data['operationHours']);
       double tempPrice = 0.0;
-      if(doc.data['pricePerHour'] != null){
+      if (doc.data['pricePerHour'] != null) {
         tempPrice = doc.data['pricePerHour'].toDouble();
       }
 
       return BadmintonHall(
-        hid: doc.documentID,
-        name: doc.data['name'],
-        address: doc.data['address'],
-        contact: doc.data['contact'],
-        geoPoint: doc.data['location'],
-        description: doc.data['description'],
-        operationHours: doc.data['operationHours'],
-        operationHoursInString: doc.data['operationHoursInString'],
-        slot: doc.data['slot'],
-        pricePerHour: tempPrice,
-        imageUrl: doc.data['imageUrl']
-      );
+          hid: doc.documentID,
+          name: doc.data['name'],
+          address: doc.data['address'],
+          contact: doc.data['contact'],
+          geoPoint: doc.data['location'],
+          description: doc.data['description'],
+          operationHours: doc.data['operationHours'],
+          operationHoursInString: doc.data['operationHoursInString'],
+          slot: doc.data['slot'],
+          pricePerHour: tempPrice,
+          imageUrl: doc.data['imageUrl']);
     }).toList();
   }
 
   // get court data stream
   Stream<List<Court>> getCourts(String hid) {
-    return courtReference
-        .where('hid', isEqualTo: hid)
-        .snapshots()
-        .map(_courtListFromSnapshot);
+    return courtReference.where('hid', isEqualTo: hid).snapshots().map(_courtListFromSnapshot);
   }
 
   // get hall data stream
@@ -144,130 +136,110 @@ class DatabaseService {
         operationHoursInString: doc.data['operationHoursInString'],
         slot: doc.data['slot'],
         pricePerHour: doc.data['pricePerHour'],
-        imageUrl: doc.data['imageUrl']
-      );
+        imageUrl: doc.data['imageUrl']);
   }
 
   // get current userData doc stream
   Stream<BadmintonHall> getABadmintonHall(String hid) {
-    return hallReference.document(hid).snapshots()
-      .map(_badmintonHallDataFromSnapshot);
+    return hallReference.document(hid).snapshots().map(_badmintonHallDataFromSnapshot);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
   /////////////////////////     Booking Logic Starts     /////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  Future createBooking(
-    String uid, String hallId, 
-    String hallName, int slotNumber, String bookedDate,
-    String startTime, int bookedHour, 
-    double amountPaid, String invoiceId, String paymentDate,
-    String bookingStatus
-  ) async{
+  Future createBooking(String uid, String hallId, String hallName, int slotNumber, String bookedDate, String startTime, int bookedHour,
+      double amountPaid, String invoiceId, String paymentDate, String bookingStatus) async {
     var document = bookingReference.document();
     return await document.setData({
-      'bookingId' : document.documentID,
-      'uid' : uid,
-      'hallId' : hallId,
-      'hallName' : hallName,
-      'slotNumber' : slotNumber,
-      'bookedDate' : bookedDate,
-      'startTime' : startTime,
-      'bookedHour' : bookedHour,
-      'amountPaid' : amountPaid,
-      'invoiceId' : invoiceId,
-      'paymentDate' : paymentDate,
-      'bookingStatus' : bookingStatus,
+      'bookingId': document.documentID,
+      'uid': uid,
+      'hallId': hallId,
+      'hallName': hallName,
+      'slotNumber': slotNumber,
+      'bookedDate': bookedDate,
+      'startTime': startTime,
+      'bookedHour': bookedHour,
+      'amountPaid': amountPaid,
+      'invoiceId': invoiceId,
+      'paymentDate': paymentDate,
+      'bookingStatus': bookingStatus,
     });
   }
 
-  Future changeBookingTime(
-    String bookingId,
-    String bookedDate, String startTime, int bookedHour
-  ) async{
+  Future changeBookingTime(String bookingId, String bookedDate, String startTime, int bookedHour) async {
     var document = bookingReference.document(bookingId);
-    return await document.updateData({
-      'bookedDate' : bookedDate,
-      'startTime' : startTime,
-      'bookedHour' : bookedHour
-    });
+    return await document.updateData({'bookedDate': bookedDate, 'startTime': startTime, 'bookedHour': bookedHour});
   }
 
-  Future cancelBooking(String bookingId) async{
+  Future cancelBooking(String bookingId) async {
     var document = bookingReference.document(bookingId);
-    return await document.updateData({
-      'bookingStatus' : 'pending'
-    });
+    return await document.updateData({'bookingStatus': 'pending'});
   }
 
-  Future deleteBooking(String bookingId) async{
+  Future deleteBooking(String bookingId) async {
     var document = bookingReference.document(bookingId);
     return await document.delete();
   }
 
   List<Booking> _myBookingFromSnapshot(QuerySnapshot snapshot) {
-    
     return snapshot.documents.map((doc) {
-
       double amountPaid = 0.0;
-      if(doc.data['amountPaid'] != null){
+      if (doc.data['amountPaid'] != null) {
         amountPaid = doc.data['amountPaid'].toDouble();
       }
 
       return Booking(
-        bookingId : doc.data['bookingId'],
-        uid : doc.data['uid'],
-        hallId : doc.data['hallId'],
-        hallName : doc.data['hallName'],
-        slotNumber : doc.data['slotNumber'],
-        bookedDate : doc.data['bookedDate'],
-        startTime : doc.data['startTime'],
-        bookedHour : doc.data['bookedHour'],
-        amountPaid : amountPaid,
-        invoiceId : doc.data['invoiceId'],
-        paymentDate : doc.data['paymentDate'],
-        bookingStatus : doc.data['bookingStatus'],
+        bookingId: doc.data['bookingId'],
+        uid: doc.data['uid'],
+        hallId: doc.data['hallId'],
+        hallName: doc.data['hallName'],
+        slotNumber: doc.data['slotNumber'],
+        bookedDate: doc.data['bookedDate'],
+        startTime: doc.data['startTime'],
+        bookedHour: doc.data['bookedHour'],
+        amountPaid: amountPaid,
+        invoiceId: doc.data['invoiceId'],
+        paymentDate: doc.data['paymentDate'],
+        bookingStatus: doc.data['bookingStatus'],
       );
     }).toList();
   }
 
   Stream<List<Booking>> getMyBooking(String uid) {
-    return bookingReference
-      .orderBy('bookedDate', descending: true)
-      .where('uid', isEqualTo: uid)
-      .snapshots()
-      .map(_myBookingFromSnapshot);
+    return bookingReference.orderBy('bookedDate', descending: true).where('uid', isEqualTo: uid).snapshots().map(_myBookingFromSnapshot);
   }
 
   Stream<List<Booking>> getCourtBookingListOnTheSameDay(String hallId, int slotNumber, String bookedDate) {
     return bookingReference
-      .where('hallId', isEqualTo: hallId)
-      .where('slotNumber', isEqualTo: slotNumber)
-      .where('bookedDate', isEqualTo: bookedDate)
-      .snapshots()
-      .map(_myBookingFromSnapshot);
+        .where('hallId', isEqualTo: hallId)
+        .where('slotNumber', isEqualTo: slotNumber)
+        .where('bookedDate', isEqualTo: bookedDate)
+        .snapshots()
+        .map(_myBookingFromSnapshot);
   }
 
   Map<DateTime, List<dynamic>> _bookingListFromSnapshot(QuerySnapshot snapshot) {
     try {
-      final finalList = snapshot.documents.map((data) {
-        List map = new List();
-        map.add(DateTime.parse(data['bookedDate']));
-        
-        List bookings = new List();
+      final bookings = _myBookingFromSnapshot(snapshot);
+      Map map = new Map<DateTime, List<dynamic>>();
 
+      bookings.forEach((element) {
+        final date = DateTime.parse(element.bookedDate);
 
-      }).toList();
+        if (map[date] == null)
+          map[date] = new List();
 
-      return Map.fromIterable(finalList, key: (v) => v[0], value: (v) => v[1]);
+        map[date].add(element);
+      });
+      print(map);
+      return map;
     } catch (e) {
       print(e);
     }
   }
 
-  Stream<Map<DateTime, List<dynamic>>> get bookingsInCalendarView{
-    
+  Stream<Map<DateTime, List<dynamic>>> get bookingsInCalendarView {
     return bookingReference.where('uid', isEqualTo: uid).snapshots().map(_bookingListFromSnapshot);
   }
 
@@ -275,7 +247,6 @@ class DatabaseService {
   //////////////////////////     Booking Logic Ends     //////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  
 //   UserData _userDataFromSnapshots(DocumentSnapshot snapshot) {
 //     return UserData(
 //       username: snapshot.data['username'] ?? 'TEENY PEENY',
@@ -310,7 +281,7 @@ class DatabaseService {
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////   Announcement Logic Starts    ////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
-  
+
   // Get annoucement data from query snapshot
   List<AnnouncementData> _announcementDataFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -330,11 +301,9 @@ class DatabaseService {
 
   // Get announcement data from hall id
   Stream<List<AnnouncementData>> announcementFromHall(String hid) {
-    return announcementReference
-        .where('hid', isEqualTo: hid)
-        .snapshots()
-        .map(_announcementDataFromSnapshot);
+    return announcementReference.where('hid', isEqualTo: hid).snapshots().map(_announcementDataFromSnapshot);
   }
+
   // Delete announcement
   Future deleteAnnouncement(String aid, String hid) async {
     try {
@@ -387,24 +356,22 @@ class DatabaseService {
   /////////////////////////   Announcement Logic Ends    /////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-
   ////////////////////////////////////////////////////////////////////////////////
   /////////////////////////    Schedule Logic Starts    //////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  Map<DateTime, List<dynamic>> _scheduleListFromSnapshot(
-      QuerySnapshot snapshot) {
+  Map<DateTime, List<dynamic>> _scheduleListFromSnapshot(QuerySnapshot snapshot) {
     try {
       final finalList = snapshot.documents.map((data) {
         // array of events
         final events = data['events'];
 
-        // List of datetime and scheduleItems(events) 
+        // List of datetime and scheduleItems(events)
         List row = new List();
         List scheduleItems = new List();
-        
+
         row.add(DateTime.parse(data.documentID));
-        
+
         // loop through array and initialize schedule items
         for (int i = 0; i < events.length; i++) {
           scheduleItems.add(new ScheduleItem(
@@ -428,17 +395,12 @@ class DatabaseService {
   Stream<Map<DateTime, List<dynamic>>> scheduleItems() {
     // To-do :
     // Query schedule based on month
-    
+
     // Get schedule subcollection
-    return userReference
-        .document(uid)
-        .collection('schedule')
-        .snapshots()
-        .map(_scheduleListFromSnapshot);
+    return userReference.document(uid).collection('schedule').snapshots().map(_scheduleListFromSnapshot);
   }
 
-  Future addSchedule(
-      String date, String title, String subtitle, String time) async {
+  Future addSchedule(String date, String title, String subtitle, String time) async {
     Map<String, String> map = {
       'title': title,
       'subtitle': subtitle,
@@ -455,42 +417,30 @@ class DatabaseService {
         .catchError((err) => print(err));
   }
 
-  Future updateSchedule(
-      String date, int sid, String title, String subtitle, String time) async {
+  Future updateSchedule(String date, int sid, String title, String subtitle, String time) async {
     var array;
-    await userReference
-        .document(uid)
-        .collection('schedule')
-        .document(date)
-        .get()
-        .then((data) {
+    await userReference.document(uid).collection('schedule').document(date).get().then((data) {
       array = data['events'];
       array[sid]['title'] = title;
       array[sid]['subtitle'] = subtitle;
       array[sid]['time'] = time;
     }).catchError((err) => print(err));
 
-    return await userReference
-        .document(uid)
-        .collection('schedule')
-        .document(date)
-        .setData({
+    return await userReference.document(uid).collection('schedule').document(date).setData({
       'events': array,
     }).catchError((err) => err);
   }
 
   Future deleteSchedule(String date, ScheduleItem item) async {
-    await userReference
-        .document(uid)
-        .collection('schedule')
-        .document(date)
-        .setData({
-      'events': FieldValue.arrayRemove([{
-        'title': item.title,
-        'subtitle': item.subtitle,
-        'time': item.time,
-      }])
-    }, merge:true).catchError((err){
+    await userReference.document(uid).collection('schedule').document(date).setData({
+      'events': FieldValue.arrayRemove([
+        {
+          'title': item.title,
+          'subtitle': item.subtitle,
+          'time': item.time,
+        }
+      ])
+    }, merge: true).catchError((err) {
       print(err);
     });
   }

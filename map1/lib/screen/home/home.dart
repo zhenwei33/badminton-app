@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/screen/home/badminton_hall_page/badminton_halls.dart';
-import 'package:map1/screen/home/settings_page/settings_page.dart';
+import 'package:map1/screen/home/page4/page4.dart';
 import 'package:provider/provider.dart';
 import 'package:map1/shared/constant.dart';
 import 'page1/page1.dart';
@@ -36,12 +36,12 @@ class Home extends StatelessWidget {
                     ),
                     Tab(
                       icon: Icon(
-                        Icons.person,
+                        Icons.calendar_today,
                       ),
                     ),
                     Tab(
                       icon: Icon(
-                        Icons.chat,
+                        Icons.person,
                       ),
                     )
                   ],
@@ -51,8 +51,8 @@ class Home extends StatelessWidget {
           children: <Widget>[
             Page1(), //Page1(),
             BadmintonHalls(), // Second Page
-            Page3(), // Third Page
-            SettingsPage(),
+            Page4(), // Third Page
+            Page3(), 
           ],
         ),
       ),
