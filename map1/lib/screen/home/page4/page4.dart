@@ -13,8 +13,6 @@ class Page4 extends StatefulWidget {
 class _Page4State extends State<Page4> {
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserData>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: blue4,

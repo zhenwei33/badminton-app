@@ -224,6 +224,7 @@ class DatabaseService {
       final bookings = _myBookingFromSnapshot(snapshot);
       Map map = new Map<DateTime, List<dynamic>>();
 
+      // Create map from list of bookings based on date
       bookings.forEach((element) {
         final date = DateTime.parse(element.bookedDate);
 

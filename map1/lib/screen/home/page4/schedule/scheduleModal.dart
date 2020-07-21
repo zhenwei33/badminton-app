@@ -33,19 +33,24 @@ class _ScheduleModalState extends State<ScheduleModal> {
           flexibleSpace: Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25)),
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [blue, blue4])),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(25),
+                bottomRight: Radius.circular(25),
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [blue, blue4],
+              ),
+            ),
           ),
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(25),
-                  bottomRight: Radius.circular(25))),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+            ),
+          ),
           title: Text(
             widget.scheduleItem == null ? 'Add Schedule' : 'Edit Schedule',
             style: whiteBold_14,
@@ -57,19 +62,13 @@ class _ScheduleModalState extends State<ScheduleModal> {
           child: Column(
             children: <Widget>[
               TextFormField(
-                decoration: InputDecoration(
-                    hintText: widget.scheduleItem == null
-                        ? 'Add Title...'
-                        : widget.scheduleItem.title),
+                decoration: InputDecoration(hintText: widget.scheduleItem == null ? 'Add Title...' : widget.scheduleItem.title),
                 onChanged: (val) => _title = val,
               ),
               TextFormField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                decoration: InputDecoration(
-                    hintText: widget.scheduleItem == null
-                        ? 'Add Subtitle ...'
-                        : widget.scheduleItem.subtitle),
+                decoration: InputDecoration(hintText: widget.scheduleItem == null ? 'Add Subtitle ...' : widget.scheduleItem.subtitle),
                 onChanged: (val) => _subtitle = val,
               ),
               Center(
@@ -79,18 +78,21 @@ class _ScheduleModalState extends State<ScheduleModal> {
                   child: FlatButton(
                     child: Text(_time),
                     onPressed: () {
-                      DatePicker.showTimePicker(context,
-                          showSecondsColumn: false,
-                          showTitleActions: true,
-                          currentTime: DateTime.now(),
-                          locale: LocaleType.en, onConfirm: (time) {
-                        final hour = time.hour;
-                        final minute = time.minute;
+                      DatePicker.showTimePicker(
+                        context,
+                        showSecondsColumn: false,
+                        showTitleActions: true,
+                        currentTime: DateTime.now(),
+                        locale: LocaleType.en,
+                        onConfirm: (time) {
+                          final hour = time.hour;
+                          final minute = time.minute;
 
-                        if (this.mounted) {
-                          setState(() => _time = '$hour:$minute');
-                        }
-                      });
+                          if (this.mounted) {
+                            setState(() => _time = '$hour:$minute');
+                          }
+                        },
+                      );
                     },
                   ),
                 ),
@@ -106,13 +108,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
                           });
                           if (widget.scheduleItem == null) {
                             await databaseService
-                                .addSchedule(
-                                    DateFormat('yyyyMMdd')
-                                        .format(widget.date)
-                                        .toString(),
-                                    _title,
-                                    _subtitle,
-                                    _time)
+                                .addSchedule(DateFormat('yyyyMMdd').format(widget.date).toString(), _title, _subtitle, _time)
                                 .then((_) {
                               Navigator.pop(context);
                               setState(() {
@@ -122,13 +118,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
                           } else {
                             await databaseService
                                 .updateSchedule(
-                                    DateFormat('yyyyMMdd')
-                                        .format(widget.date)
-                                        .toString(),
-                                    widget.scheduleItem.sid,
-                                    _title,
-                                    _subtitle,
-                                    _time)
+                                    DateFormat('yyyyMMdd').format(widget.date).toString(), widget.scheduleItem.sid, _title, _subtitle, _time)
                                 .then((_) {
                               Navigator.pop(context);
                               setState(() {

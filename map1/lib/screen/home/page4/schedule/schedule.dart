@@ -62,10 +62,8 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
   Widget _buildTableCalendar(events) {
     return TableCalendar(
       daysOfWeekStyle: DaysOfWeekStyle(
-          weekdayStyle:
-              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          weekendStyle:
-              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          weekdayStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          weekendStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       calendarController: _calendarController,
       events: events,
       holidays: {},
@@ -74,10 +72,8 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
       calendarStyle: CalendarStyle(
         selectedStyle: TextStyle(color: blue),
         selectedColor: blue2,
-        weekdayStyle: TextStyle(
-            color: Colors.white.withOpacity(0.7), fontWeight: FontWeight.bold),
-        weekendStyle: TextStyle(
-            color: Colors.white.withOpacity(1), fontWeight: FontWeight.bold),
+        weekdayStyle: TextStyle(color: Colors.white.withOpacity(0.7), fontWeight: FontWeight.bold),
+        weekendStyle: TextStyle(color: Colors.white.withOpacity(1), fontWeight: FontWeight.bold),
         todayColor: blue2.withOpacity(0.6),
         markersColor: Colors.white,
         outsideDaysVisible: false,
@@ -112,8 +108,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
             return Loading();
           else {
             final events = snapshot.data;
-            final str =
-                DateFormat('yyyyMMdd').format(_selectedEventsDate).toString();
+            final str = DateFormat('yyyyMMdd').format(_selectedEventsDate).toString();
             _selectedEventsDate = DateTime.parse(str);
             _selectedEvents = events[_selectedEventsDate] ?? [];
 
@@ -121,10 +116,7 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
               appBar: AppBar(
                 centerTitle: true,
                 backgroundColor: blue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(25),
-                        bottomRight: Radius.circular(25))),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25))),
                 title: Text(
                   "Calendar",
                   style: whiteBold_14,
