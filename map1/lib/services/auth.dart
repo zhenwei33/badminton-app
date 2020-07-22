@@ -6,23 +6,25 @@ class AuthService {
   final _auth = FirebaseAuth.instance;
 
   Stream<User> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+    return _auth.onAuthStateChanged.asyncMap((firebaseUser) async {
+      if (firebaseUser == null) return null;
+
+      final databaseService = new DatabaseService(uid: firebaseUser.uid);
+      final bool isAdmin = await databaseService.checkUserIsAdmin();
+      
+      return _userFromFirebaseUser(firebaseUser, isAdmin: isAdmin);
+    });
   }
 
   // convert firebase user to User
   // only signInAsAdmin will supply isAdmin parameter
-  User _userFromFirebaseUser(FirebaseUser firebaseUser,
-      {bool isAdmin = false}) {
-    return firebaseUser != null
-        ? User(uid: firebaseUser.uid, email: firebaseUser.email, isAdmin: isAdmin)
-        : null;
+  User _userFromFirebaseUser(FirebaseUser firebaseUser, {bool isAdmin = false}) {
+    return firebaseUser != null ? User(uid: firebaseUser.uid, email: firebaseUser.email, isAdmin: isAdmin) : null;
   }
 
-  Future registerWtihEmailAndPassword(String username, String email,
-      String idNo, String contact, String password) async {
+  Future registerWtihEmailAndPassword(String username, String email, String idNo, String contact, String password) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
 
       final FirebaseUser firebaseUser = result.user;
       final uid = firebaseUser.uid;
@@ -30,9 +32,7 @@ class AuthService {
       DatabaseService databaseService = DatabaseService(uid: uid);
 
       databaseService.updateUserProfile('');
-      databaseService
-          .createUser(username, email, idNo, contact)
-          .catchError((err) {
+      databaseService.createUser(username, email, idNo, contact).catchError((err) {
         print(err);
       });
 
@@ -44,8 +44,7 @@ class AuthService {
 
   Future signInWtihEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       final FirebaseUser firebaseUser = result.user;
 
@@ -53,27 +52,6 @@ class AuthService {
     } catch (err) {
       print(err.message);
       return null;
-      //return err.message; //For displaying error messages
-    }
-  }
-
-  Future signInWtihEmailAndPasswordAsAdmin(
-      String email, String password) async {
-    try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      final FirebaseUser firebaseUser = result.user;
-      final uid = firebaseUser.uid;
-      final databaseService = DatabaseService(uid: uid);
-
-      final bool isAdmin = await databaseService.checkUserIsAdmin();
-
-      return isAdmin
-          ? _userFromFirebaseUser(firebaseUser, isAdmin: true)
-          : null;
-    } catch (err) {
-      return err.toString();
-      //return err.message; //For displaying error messages
     }
   }
 
@@ -84,8 +62,4 @@ class AuthService {
       return err.toString();
     }
   }
-  // To-Do : custom auth
-  // User createAccount(String matrics, String password) async{
-
-  // }
 }

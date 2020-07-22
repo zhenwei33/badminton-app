@@ -44,8 +44,8 @@ class DatabaseService {
     return await adminReference
         .document(uid)
         .get()
-        .then((snapshot) => snapshot.exists ? true : false)
-        .catchError((error) => 'ERROR: At Admin Checking');
+        .then((snapshot) => snapshot.exists)
+        .catchError((error) => print('ERROR: At Admin Checking'));
   }
 
   // update user data
@@ -100,17 +100,18 @@ class DatabaseService {
       }
 
       return BadmintonHall(
-          hid: doc.documentID,
-          name: doc.data['name'],
-          address: doc.data['address'],
-          contact: doc.data['contact'],
-          geoPoint: doc.data['location'],
-          description: doc.data['description'],
-          operationHours: doc.data['operationHours'],
-          operationHoursInString: doc.data['operationHoursInString'],
-          slot: doc.data['slot'],
-          pricePerHour: tempPrice,
-          imageUrl: doc.data['imageUrl']);
+        hid: doc.documentID,
+        name: doc.data['name'],
+        address: doc.data['address'],
+        contact: doc.data['contact'],
+        geoPoint: doc.data['location'],
+        description: doc.data['description'],
+        operationHours: doc.data['operationHours'],
+        operationHoursInString: doc.data['operationHoursInString'],
+        slot: doc.data['slot'],
+        pricePerHour: tempPrice,
+        imageUrl: doc.data['imageUrl'],
+      );
     }).toList();
   }
 
@@ -182,7 +183,7 @@ class DatabaseService {
     return await document.delete();
   }
 
-  List<Booking> _myBookingFromSnapshot(QuerySnapshot snapshot) {
+  List<Booking> _bookingsFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       double amountPaid = 0.0;
       if (doc.data['amountPaid'] != null) {
@@ -207,7 +208,7 @@ class DatabaseService {
   }
 
   Stream<List<Booking>> getMyBooking(String uid) {
-    return bookingReference.orderBy('bookedDate', descending: true).where('uid', isEqualTo: uid).snapshots().map(_myBookingFromSnapshot);
+    return bookingReference.orderBy('bookedDate', descending: true).where('uid', isEqualTo: uid).snapshots().map(_bookingsFromSnapshot);
   }
 
   Stream<List<Booking>> getCourtBookingListOnTheSameDay(String hallId, int slotNumber, String bookedDate) {
@@ -216,20 +217,19 @@ class DatabaseService {
         .where('slotNumber', isEqualTo: slotNumber)
         .where('bookedDate', isEqualTo: bookedDate)
         .snapshots()
-        .map(_myBookingFromSnapshot);
+        .map(_bookingsFromSnapshot);
   }
 
-  Map<DateTime, List<dynamic>> _bookingListFromSnapshot(QuerySnapshot snapshot) {
+  Map<DateTime, List<dynamic>> _bookingMapsFromSnapshot(QuerySnapshot snapshot) {
     try {
-      final bookings = _myBookingFromSnapshot(snapshot);
+      final bookings = _bookingsFromSnapshot(snapshot);
       Map map = new Map<DateTime, List<dynamic>>();
 
       // Create map from list of bookings based on date
       bookings.forEach((element) {
         final date = DateTime.parse(element.bookedDate);
 
-        if (map[date] == null)
-          map[date] = new List();
+        if (map[date] == null) map[date] = new List();
 
         map[date].add(element);
       });
@@ -241,31 +241,17 @@ class DatabaseService {
   }
 
   Stream<Map<DateTime, List<dynamic>>> get bookingsInCalendarView {
-    return bookingReference.where('uid', isEqualTo: uid).snapshots().map(_bookingListFromSnapshot);
+    return bookingReference.where('uid', isEqualTo: uid).snapshots().map(_bookingMapsFromSnapshot);
+  }
+
+  Stream<List<Booking>> getBookingsFromHallId(String hid){
+    return bookingReference.where('hallId', isEqualTo: hid).snapshots().map(_bookingsFromSnapshot);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
   //////////////////////////     Booking Logic Ends     //////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-//   UserData _userDataFromSnapshots(DocumentSnapshot snapshot) {
-//     return UserData(
-//       username: snapshot.data['username'] ?? 'TEENY PEENY',
-//       contact: snapshot.data['contact'] ?? 'WEIRD NUMBEAR',
-//     );
-//   }
-
-//   Future createUser(String username, String contact) async {
-//     return await usersReference.document(uid).setData({
-//       'username': username,
-//       'contact': contact,
-//     });
-//   }
-
-//   Stream<UserData> get userData {
-//     return usersReference.document(uid).snapshots().map(_userDataFromSnapshots);
-//   }
-// }
   AdminData _adminDataFromSnapshot(DocumentSnapshot snapshot) {
     return AdminData(
       uid: snapshot.documentID,
@@ -297,12 +283,12 @@ class DatabaseService {
 
   // Announcement getter
   Stream<List<AnnouncementData>> get announcementData {
-    return announcementReference.snapshots().map(_announcementDataFromSnapshot);
+    return announcementReference.orderBy('date', descending: true).snapshots().map(_announcementDataFromSnapshot);
   }
 
   // Get announcement data from hall id
   Stream<List<AnnouncementData>> announcementFromHall(String hid) {
-    return announcementReference.where('hid', isEqualTo: hid).snapshots().map(_announcementDataFromSnapshot);
+    return announcementReference.where('hid', isEqualTo: hid).orderBy('date', descending: true).snapshots().map(_announcementDataFromSnapshot);
   }
 
   // Delete announcement

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:map1/model/user.dart';
 import 'package:map1/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:map1/shared/loading.dart';
 
 class AddAnouncementModal extends StatefulWidget {
   @override
@@ -11,7 +10,7 @@ class AddAnouncementModal extends StatefulWidget {
 
 class AddAnouncementModalState extends State<AddAnouncementModal> {
   final _key = GlobalKey<FormState>();
-  String _title, _error;
+  String _title;
   bool _processing = false;
 
   @override
@@ -20,7 +19,7 @@ class AddAnouncementModalState extends State<AddAnouncementModal> {
     final databaseService = DatabaseService(uid: adminData.uid);
 
     return _processing
-        ? Loading()
+        ? Center(child:CircularProgressIndicator())
         : Column(
             children: <Widget>[
               Row(
@@ -61,29 +60,26 @@ class AddAnouncementModalState extends State<AddAnouncementModal> {
                         Expanded(
                           flex: 6,
                           child: TextFormField(
-                            decoration:
-                                InputDecoration(hintText: 'Announcement Title'),
-                            validator: ((val) => val.length == 0
-                                ? 'The announcement cannot be blank'
-                                : null),
+                            decoration: InputDecoration(hintText: 'Announcement Title'),
+                            validator: ((val) => val.length == 0 ? 'The announcement cannot be blank' : null),
                             maxLength: 200,
                             onChanged: ((val) => _title = val),
                           ),
                         )
                       ]),
                       FlatButton(
-                          color: Colors.blueAccent,
-                          child: Text('Publish'),
-                          onPressed: () async {
-                            if(_key.currentState.validate()){
-                              setState(() => _processing = true);
-                              databaseService
-                                  .insertAnnouncement(adminData.hid, _title)
-                                  .then((status) {
-                                Navigator.pop(context);
-                              });
-                            }
-                          }),
+                        color: Colors.blueAccent,
+                        child: Text('Publish'),
+                        onPressed: () async {
+                          if (_key.currentState.validate()) {
+                            setState(() => _processing = true);
+                            databaseService.insertAnnouncement(adminData.hid, _title).then((status) {
+                              setState(() => _processing = false);
+                              Navigator.pop(context);
+                            });
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),

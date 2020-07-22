@@ -19,20 +19,11 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return MaterialApp(
         // home: Authentication()
-        home: SplashScreen.navigate(
-          name: 'assets/splash.flr',
-          next: (context) => Authentication(),
-          until: () => Future.delayed(Duration(seconds: 5)),
-          startAnimation: 'minton',
-        )
+        home: Authentication(),
         );
     } else {
       final databaseService = DatabaseService(uid: user.uid);
-      
-      // To-do: make admin routes
-
-      //Temporary Code for admin access, should be changed
-      if (user.uid == 'J6u4BPWqE4OkmEjbbEaDg8OsUiu1') {
+      if (user.isAdmin) {
         return StreamProvider<AdminData>.value(
           value: databaseService.adminData,
           child: MaterialApp(
@@ -45,13 +36,7 @@ class Wrapper extends StatelessWidget {
               ],
               debugShowCheckedModeBanner: false,
               onGenerateRoute: Routes.generateRoute,
-              // home: AdminDashboard(),
-              home: SplashScreen.navigate(
-                name: 'assets/splash.flr',
-                next: (context) => AdminDashboard(),
-                until: () => Future.delayed(Duration(seconds: 5)),
-                startAnimation: 'minton',
-              )
+              home: AdminHome(), 
               ),
         );
       } else {
@@ -82,12 +67,7 @@ class Wrapper extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               onGenerateRoute: Routes.generateRoute,
               // home: Home(),
-              home: SplashScreen.navigate(
-                name: 'assets/splash.flr',
-                next: (context) => Home(),
-                until: () => Future.delayed(Duration(seconds: 5)),
-                startAnimation: 'minton',
-              ),
+              home: Home(), 
             ),
         );
       }
