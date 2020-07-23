@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:map1/shared/constant.dart';
-import 'package:map1/model/booking.dart';
 import 'package:intl/intl.dart';
 
 class BookingList extends StatelessWidget {
@@ -44,15 +43,15 @@ class BookingList extends StatelessWidget {
               child: ListTile(
                 contentPadding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 title: Text(
-                  "Hall: ${booking.hallName} \nCourt Number: ${booking.slotNumber}",
+                  "Hall: ${booking.hallName} \nCourt Number: ${booking.courtNumber}",
                   style: eventText,
                 ),
                 subtitle: Padding(
-                  padding: const EdgeInsets.only(top:10),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(booking.bookingStatus),
+                      Text(''),
                       Text(dateString),
                     ],
                   ),

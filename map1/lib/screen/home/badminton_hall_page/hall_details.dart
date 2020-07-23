@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:map1/model/court.dart';
-import 'package:map1/screen/home/badminton_hall_page/court_view.dart';
+import 'package:map1/screen/home/badminton_hall_page/hall_courts.dart';
 import 'package:map1/shared/constant.dart';
 
 class HallDetails extends StatelessWidget {
@@ -158,12 +158,9 @@ class HallDetails extends StatelessWidget {
                         )),
                     WidgetSpan(
                         child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                      child: Icon(
-                        Icons.place,
-                        color: Colors.red,
-                      ),
-                    )),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 2.0),
+                            child: null)),
                     TextSpan(
                         text: '\n',
                         style: TextStyle(
@@ -232,7 +229,7 @@ class HallDetails extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => CourtView(
+                                        builder: (context) => HallCourts(
                                             badmintonHall: badmintonHall)),
                                   );
                                 },

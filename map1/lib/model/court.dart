@@ -7,7 +7,7 @@ class BadmintonHall {
   final String name;
   final String address;
   final String contact;
-  final GeoPoint geoPoint; 
+  final GeoPoint geoPoint;
   final String description;
   final Map<String, dynamic> operationHours;
   final String operationHoursInString;
@@ -27,12 +27,12 @@ class BadmintonHall {
       this.slot,
       this.pricePerHour,
       this.imageUrl});
-  
-  double get latitude{
+
+  double get latitude {
     return geoPoint.latitude ?? -1;
   }
 
-  double get longitude{
+  double get longitude {
     return geoPoint.longitude ?? -1;
   }
 }
@@ -40,7 +40,8 @@ class BadmintonHall {
 class Court {
   final String cid;
   final String name;
+  final int courtNumber;
   final Map bookedSlot;
 
-  Court({this.cid, this.name, this.bookedSlot});
+  Court({this.cid, this.name, this.courtNumber, this.bookedSlot});
 }

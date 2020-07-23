@@ -35,7 +35,7 @@ dependencies:
   table_calendar: ^2.2.3
   fl_chart: ^0.9.0
   dotted_border: ^1.0.5
-  intl: 0.16.1
+  intl: 0.16.0
   flutter_slidable: "^0.5.4"
   flare_splash_screen: ^3.0.1
   

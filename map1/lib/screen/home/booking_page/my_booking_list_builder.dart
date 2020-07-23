@@ -89,17 +89,6 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
                                             fontWeight: FontWeight.bold),
                                       )),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Container(
-                                          child: Text(
-                                        'Booking Status: ${myBookingList[index].bookingStatus}',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
                                   ]),
                             ),
                           ),
@@ -163,17 +152,6 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
                                           fontWeight: FontWeight.bold),
                                     )),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Container(
-                                        child: Text(
-                                      'Booking Status: ${myBookingList[index].bookingStatus}',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                  ),
                                   FlatButton(
                                     color: blue,
                                     child: Text(
@@ -206,46 +184,9 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
                           child: ClipRRect(
                             borderRadius: new BorderRadius.circular(24.0),
                             child: FlatButton.icon(
-                              icon: Icon(Icons.cancel, size: 20.0),
-                              label: Text('Cancel'),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                    title: Text(
-                                        'You want to cancel this booking',
-                                        style: TextStyle(fontSize: 20.0)),
-                                    content: Text(
-                                        'Are you sure? After approval by the administrator, '
-                                        'the booking record will be deleted, '
-                                        'which may take several hours'),
-                                    actions: [
-                                      FlatButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                          child: Text('No')),
-                                      FlatButton(
-                                          onPressed: () async {
-                                            DatabaseService databaseService =
-                                                DatabaseService();
-                                            await databaseService.cancelBooking(
-                                                myBookingList[index].bookingId);
-                                            final snackBar = SnackBar(
-                                              content: Text(
-                                                  'Booking is pending cancellation, please wait a few hours'),
-                                            );
-                                            Navigator.pop(context);
-                                            Scaffold.of(context)
-                                                .showSnackBar(snackBar);
-                                          },
-                                          child: Text('Yes')),
-                                    ],
-                                    elevation: 5.0,
-                                  ),
-                                  barrierDismissible: false,
-                                );
-                              },
-                            ),
+                                icon: Icon(Icons.cancel, size: 0),
+                                label: Text(''),
+                                onPressed: null),
                           ),
                         ),
                       ],
