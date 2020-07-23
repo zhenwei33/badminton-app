@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:map1/screen/admin_home/adminAnnouncement/adminAnnouncement.dart';
+import 'package:map1/screen/admin_home/adminHall/adminHall.dart';
 import 'package:map1/screen/admin_home/dashboard/dashboard.dart';
 import 'package:map1/services/auth.dart';
 import 'package:map1/shared/constant.dart';
@@ -47,7 +48,7 @@ class _AdminHomeState extends State<AdminHome> {
                       ),
                       Tab(
                         icon: Icon(
-                          Icons.calendar_today,
+                          Icons.location_city,
                         ),
                       ),
                       Tab(
@@ -64,8 +65,8 @@ class _AdminHomeState extends State<AdminHome> {
                 children: <Widget>[
                   AdminDashboard(),
                   AdminAnnouncement(),
-                  AdminDashboard(),
-                  AdminAnnouncement(),
+                  AdminHall(),
+                  Center(child: FlatButton(onPressed: () => authService.signOut(), child: Text('logout')),),
                 ],
               ),
             ),

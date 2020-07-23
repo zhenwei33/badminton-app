@@ -30,10 +30,7 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
       itemCount: myBookingList.length,
       itemBuilder: (context, index) {
         // it's past condition
-        if (DateTime.now()
-                .difference(DateTime.parse(myBookingList[index].bookedDate))
-                .inDays >
-            0) {
+        if (DateTime.now().difference(DateTime.parse(myBookingList[index].bookedDate)).inDays > 0) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
@@ -51,56 +48,41 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
                           Container(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16.0),
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Container(
-                                          child: Text(
-                                        'Badminton Hall: ${myBookingList[index].hallName}',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Container(
-                                          child: Text(
-                                        'Booking Date & Time: ${myBookingList[index].bookedDate}'
-                                        ' ${myBookingList[index].startTime}',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Container(
-                                          child: Text(
-                                        'Booked Hour(s): ${myBookingList[index].bookedHour}',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Container(
-                                          child: Text(
-                                        'Booking Status: ${myBookingList[index].bookingStatus}',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                  ]),
+                              child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Container(
+                                      child: Text(
+                                    'Badminton Hall: ${myBookingList[index].hallName}',
+                                    style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Container(
+                                      child: Text(
+                                    'Booking Date & Time: ${myBookingList[index].bookedDate}'
+                                    ' ${myBookingList[index].startTime}',
+                                    style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Container(
+                                      child: Text(
+                                    'Booked Hour(s): ${myBookingList[index].bookedHour}',
+                                    style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Container(
+                                      child: Text(
+                                    'Booking Status: ${myBookingList[index].bookingStatus}',
+                                    style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                              ]),
                             ),
                           ),
                         ],
@@ -125,79 +107,59 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
                         Container(
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16.0),
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Container(
-                                        child: Text(
-                                      'Badminton Hall: ${myBookingList[index].hallName}',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Container(
-                                        child: Text(
-                                      'Booking Date & Time: ${myBookingList[index].bookedDate}'
-                                      ' ${myBookingList[index].startTime}',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Container(
-                                        child: Text(
-                                      'Booked Hour(s): ${myBookingList[index].bookedHour}',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Container(
-                                        child: Text(
-                                      'Booking Status: ${myBookingList[index].bookingStatus}',
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                  ),
-                                  FlatButton(
-                                    color: blue,
+                            child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Container(
                                     child: Text(
-                                      'Click to see Details',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                                  'Badminton Hall: ${myBookingList[index].hallName}',
+                                  style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Container(
+                                    child: Text(
+                                  'Booking Date & Time: ${myBookingList[index].bookedDate}'
+                                  ' ${myBookingList[index].startTime}',
+                                  style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Container(
+                                    child: Text(
+                                  'Booked Hour(s): ${myBookingList[index].bookedHour}',
+                                  style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Container(
+                                    child: Text(
+                                  'Booking Status: ${myBookingList[index].bookingStatus}',
+                                  style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                              FlatButton(
+                                color: blue,
+                                child: Text(
+                                  'Click to see Details',
+                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MyBookingDetails(
+                                        booking: myBookingList[index],
+                                        badmintonHall: getBadmintonHall(myBookingList[index].hallId),
+                                      ),
                                     ),
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MyBookingDetails(
-                                                      booking:
-                                                          myBookingList[index],
-                                                      badmintonHall:
-                                                          getBadmintonHall(
-                                                              myBookingList[
-                                                                      index]
-                                                                  .hallId))));
-                                    },
-                                  )
-                                ]),
+                                  );
+                                },
+                              )
+                            ]),
                           ),
                         ),
                         Container(
@@ -212,31 +174,21 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
                                 showDialog(
                                   context: context,
                                   builder: (_) => AlertDialog(
-                                    title: Text(
-                                        'You want to cancel this booking',
-                                        style: TextStyle(fontSize: 20.0)),
-                                    content: Text(
-                                        'Are you sure? After approval by the administrator, '
+                                    title: Text('You want to cancel this booking', style: TextStyle(fontSize: 20.0)),
+                                    content: Text('Are you sure? After approval by the administrator, '
                                         'the booking record will be deleted, '
                                         'which may take several hours'),
                                     actions: [
-                                      FlatButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                          child: Text('No')),
+                                      FlatButton(onPressed: () => Navigator.pop(context), child: Text('No')),
                                       FlatButton(
                                           onPressed: () async {
-                                            DatabaseService databaseService =
-                                                DatabaseService();
-                                            await databaseService.cancelBooking(
-                                                myBookingList[index].bookingId);
+                                            DatabaseService databaseService = DatabaseService();
+                                            await databaseService.cancelBooking(myBookingList[index].bookingId);
                                             final snackBar = SnackBar(
-                                              content: Text(
-                                                  'Booking is pending cancellation, please wait a few hours'),
+                                              content: Text('Booking is pending cancellation, please wait a few hours'),
                                             );
                                             Navigator.pop(context);
-                                            Scaffold.of(context)
-                                                .showSnackBar(snackBar);
+                                            Scaffold.of(context).showSnackBar(snackBar);
                                           },
                                           child: Text('Yes')),
                                     ],

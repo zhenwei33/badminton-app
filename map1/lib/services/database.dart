@@ -41,11 +41,7 @@ class DatabaseService {
   }
 
   Future checkUserIsAdmin() async {
-    return await adminReference
-        .document(uid)
-        .get()
-        .then((snapshot) => snapshot.exists)
-        .catchError((error) => print('ERROR: At Admin Checking'));
+    return await adminReference.document(uid).get().then((snapshot) => snapshot.exists).catchError((error) => print('ERROR: At Admin Checking'));
   }
 
   // update user data
@@ -93,7 +89,6 @@ class DatabaseService {
   // get hall list from snapshot
   List<BadmintonHall> _hallListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      // print(doc.data['operationHours']);
       double tempPrice = 0.0;
       if (doc.data['pricePerHour'] != null) {
         tempPrice = doc.data['pricePerHour'].toDouble();
@@ -126,23 +121,29 @@ class DatabaseService {
   }
 
   BadmintonHall _badmintonHallDataFromSnapshot(DocumentSnapshot doc) {
+    double tempPrice = 0.0;
+    if (doc.data['pricePerHour'] != null) {
+      tempPrice = doc.data['pricePerHour'].toDouble();
+    }
+
     return BadmintonHall(
-        hid: doc.documentID,
-        name: doc.data['name'],
-        address: doc.data['address'],
-        contact: doc.data['contact'],
-        geoPoint: doc.data['location'],
-        description: doc.data['description'],
-        operationHours: doc.data['operationHours'],
-        operationHoursInString: doc.data['operationHoursInString'],
-        slot: doc.data['slot'],
-        pricePerHour: doc.data['pricePerHour'],
-        imageUrl: doc.data['imageUrl']);
+      hid: doc.documentID,
+      name: doc.data['name'],
+      address: doc.data['address'],
+      contact: doc.data['contact'],
+      geoPoint: doc.data['location'],
+      description: doc.data['description'],
+      operationHours: doc.data['operationHours'],
+      operationHoursInString: doc.data['operationHoursInString'],
+      slot: doc.data['slot'],
+      pricePerHour: tempPrice,
+      imageUrl: doc.data['imageUrl'],
+    );
   }
 
-  // get current userData doc stream
-  Stream<BadmintonHall> getABadmintonHall(String hid) {
-    return hallReference.document(hid).snapshots().map(_badmintonHallDataFromSnapshot);
+  // get badminton hall by hall Id
+  Future<BadmintonHall> getBadmintonHallByHid(String hid) {
+    return hallReference.document(hid).get().then((snapshot) => _badmintonHallDataFromSnapshot(snapshot));
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -244,7 +245,7 @@ class DatabaseService {
     return bookingReference.where('uid', isEqualTo: uid).snapshots().map(_bookingMapsFromSnapshot);
   }
 
-  Stream<List<Booking>> getBookingsFromHallId(String hid){
+  Stream<List<Booking>> getBookingsFromHallId(String hid) {
     return bookingReference.where('hallId', isEqualTo: hid).snapshots().map(_bookingsFromSnapshot);
   }
 

@@ -1,6 +1,5 @@
-// To-do : Add button that appends Badminton Court at end of name when registering
+// To-do : Add button that appends Badminton Court at end of name when registeringgit
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
 
 class BadmintonHall {
   final String hid;

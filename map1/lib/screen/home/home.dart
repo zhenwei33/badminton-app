@@ -36,7 +36,7 @@ class Home extends StatelessWidget {
                     ),
                     Tab(
                       icon: Icon(
-                        Icons.calendar_today,
+                        Icons.event,
                       ),
                     ),
                     Tab(

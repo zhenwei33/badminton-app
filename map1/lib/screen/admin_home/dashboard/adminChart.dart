@@ -18,10 +18,13 @@ class _HomePageState extends State<AdminChart> {
   ];
   @override
   Widget build(BuildContext context) {
+    Map bookingDateMap = new Map();
     List allMonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     List existedMonths = new List();
+    List<FlSpot> flSpots = new List<FlSpot>();
+    int highestCount = 0;
 
-    Map bookingDateMap = new Map();
+    // assign bookingDateMap with keys (date in int) and values (count of bookings)
     widget.bookings.forEach((booking) {
       final date = DateTime.parse(booking.bookedDate).month;
       if (bookingDateMap[date] == null) {
@@ -30,20 +33,22 @@ class _HomePageState extends State<AdminChart> {
       }
       bookingDateMap[date] += 1;
     });
-    print(bookingDateMap);
+
+    // assign 0 to the missing months in the bookingDateMap
     allMonths.forEach((month) {
       if (!existedMonths.contains(month)) bookingDateMap[month] = 0.0;
     });
     
-    List<FlSpot> flSpots = new List<FlSpot>();
-    int highestCount = 0;
-    final finalMap = new SplayTreeMap.from(bookingDateMap, (a,b) => a.compareTo(b));
-    print(finalMap);
-    finalMap.forEach((key, value) {
+    // sory the map based on key (date in int)
+    final sortedMap = new SplayTreeMap.from(bookingDateMap, (a,b) => a.compareTo(b));
+
+    // instantiate and assign FlSpot to flSpot list
+    sortedMap.forEach((key, value) {
       if (value > highestCount) highestCount = value;
       flSpots.add(FlSpot(key.toDouble(), value.toDouble()));
     });
 
+    // round highest count to nearest 10s for upper boundary (eg: 17 => 20, 31 => 40)
     final int yAxisUpperBoundary = ((highestCount + 9) ~/ 10) * 10;
 
     return LineChart(
@@ -53,7 +58,6 @@ class _HomePageState extends State<AdminChart> {
         ],
         gridData: FlGridData(drawHorizontalLine: false),
         borderData: FlBorderData(border: Border.all(width: 0)),
-        //extraLinesData: ExtraLinesData(extraLinesOnTop: false),
         minX: 1,
         maxX: 12,
         minY: 0,
@@ -108,7 +112,6 @@ class _HomePageState extends State<AdminChart> {
             isStrokeCapRound: true,
             belowBarData: BarAreaData(
               show: true,
-              // gradientFrom: Offset(0.0, 0.0),d
               gradientColorStops: [0.0, 1.0],
               colors: gradientColors.map((color) => color.withOpacity(0.5)).toList(),
             ),
