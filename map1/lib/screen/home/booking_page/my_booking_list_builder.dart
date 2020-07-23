@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:map1/model/booking.dart';
 import 'package:map1/model/court.dart';
 import 'package:map1/screen/home/booking_page/my_booking_details.dart';
-import 'package:map1/services/database.dart';
 import 'package:map1/shared/constant.dart';
 import 'package:provider/provider.dart';
 
@@ -36,58 +35,57 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
             child: Container(
               child: FittedBox(
                 child: Material(
-                    color: Colors.grey[300],
-                    elevation: 14.0,
-                    borderRadius: BorderRadius.circular(30.0),
-                    shadowColor: Color(0x802196F3),
-                    child: Padding(
-                      padding: const EdgeInsets.all(30.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 16.0),
-                              child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                  color: Colors.grey[300],
+                  elevation: 14.0,
+                  borderRadius: BorderRadius.circular(30.0),
+                  shadowColor: Color(0x802196F3),
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Container(
-                                      child: Text(
-                                    'Badminton Hall: ${myBookingList[index].hallName}',
-                                    style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
-                                  )),
+                                    child: Text(
+                                      'Badminton Hall: ${myBookingList[index].hallName}',
+                                      style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Container(
-                                      child: Text(
-                                    'Booking Date & Time: ${myBookingList[index].bookedDate}'
-                                    ' ${myBookingList[index].startTime}',
-                                    style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
-                                  )),
+                                    child: Text(
+                                      'Booking Date & Time: ${myBookingList[index].bookedDate}'
+                                      ' ${myBookingList[index].startTime}',
+                                      style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Container(
-                                      child: Text(
-                                    'Booked Hour(s): ${myBookingList[index].bookedHour}',
-                                    style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
-                                  )),
+                                    child: Text(
+                                      'Booked Hour(s): ${myBookingList[index].bookedHour}',
+                                      style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Container(
-                                      child: Text(
-                                    'Booking Status: ${myBookingList[index].bookingStatus}',
-                                    style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
-                                  )),
-                                ),
-                              ]),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    )),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
           );
@@ -97,17 +95,19 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
             child: Container(
               child: FittedBox(
                 child: Material(
-                    color: Colors.white,
-                    elevation: 14.0,
-                    borderRadius: BorderRadius.circular(30.0),
-                    shadowColor: Color(0x802196F3),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
-                            child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+                  color: Colors.white,
+                  elevation: 14.0,
+                  borderRadius: BorderRadius.circular(30.0),
+                  shadowColor: Color(0x802196F3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Container(
@@ -133,14 +133,6 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
                                   style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
                                 )),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Container(
-                                    child: Text(
-                                  'Booking Status: ${myBookingList[index].bookingStatus}',
-                                  style: TextStyle(color: Colors.black54, fontSize: 18.0, fontWeight: FontWeight.bold),
-                                )),
-                              ),
                               FlatButton(
                                 color: blue,
                                 child: Text(
@@ -159,49 +151,21 @@ class _MyBookingListBuilderState extends State<MyBookingListBuilder> {
                                   );
                                 },
                               )
-                            ]),
+                            ],
                           ),
                         ),
-                        Container(
-                          width: 100,
-                          height: 200,
-                          child: ClipRRect(
-                            borderRadius: new BorderRadius.circular(24.0),
-                            child: FlatButton.icon(
-                              icon: Icon(Icons.cancel, size: 20.0),
-                              label: Text('Cancel'),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                    title: Text('You want to cancel this booking', style: TextStyle(fontSize: 20.0)),
-                                    content: Text('Are you sure? After approval by the administrator, '
-                                        'the booking record will be deleted, '
-                                        'which may take several hours'),
-                                    actions: [
-                                      FlatButton(onPressed: () => Navigator.pop(context), child: Text('No')),
-                                      FlatButton(
-                                          onPressed: () async {
-                                            DatabaseService databaseService = DatabaseService();
-                                            await databaseService.cancelBooking(myBookingList[index].bookingId);
-                                            final snackBar = SnackBar(
-                                              content: Text('Booking is pending cancellation, please wait a few hours'),
-                                            );
-                                            Navigator.pop(context);
-                                            Scaffold.of(context).showSnackBar(snackBar);
-                                          },
-                                          child: Text('Yes')),
-                                    ],
-                                    elevation: 5.0,
-                                  ),
-                                  barrierDismissible: false,
-                                );
-                              },
-                            ),
-                          ),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 200,
+                        child: ClipRRect(
+                          borderRadius: new BorderRadius.circular(24.0),
+                          child: FlatButton.icon(icon: Icon(Icons.cancel, size: 0), label: Text(''), onPressed: null),
                         ),
-                      ],
-                    )),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
