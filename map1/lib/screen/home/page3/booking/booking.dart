@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:map1/model/user.dart';
 import 'package:intl/intl.dart';
 import 'bookingList.dart';
+import 'package:map1/route/Routes.dart';
 
 class BookingSchedule extends StatefulWidget {
   @override
@@ -135,8 +136,22 @@ class _BookingScheduleState extends State<BookingSchedule> with TickerProviderSt
               ),
               body: Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: BookingList(
-                  bookings: _selectedEvents,
+                child: Stack(
+                  children: [
+                    BookingList(
+                      bookings: _selectedEvents,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: OutlineButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20.0),
+                        ),
+                        child: Text('View in List'),
+                        onPressed: () => Navigator.pushNamed(context, my_booking),
+                      ),
+                    )
+                  ],
                 ),
               ),
             );
