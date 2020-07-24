@@ -139,7 +139,7 @@ class _AdminAnnouncementState extends State<AdminAnnouncement> {
                                           content: Text('Are you sure you want to delete this announcement?'),
                                           actions: <Widget>[
                                             FlatButton(
-                                              onPressed: () => Navigator.pop(context),
+                                              onPressed: () => Navigator.of(context, rootNavigator:true).pop(),
                                               child: Text('No'),
                                             ),
                                             FlatButton(

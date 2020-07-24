@@ -51,29 +51,33 @@ class ScheduleListState extends State<ScheduleList> {
                     ),
                     secondaryActions: <Widget>[
                       IconSlideAction(
-                          caption: 'Edit',
-                          color: Colors.lightBlueAccent,
-                          icon: Icons.edit,
-                          onTap: () async {
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => ScheduleModal(
-                                          date: widget.eventsDate,
-                                          scheduleItem: widget.events[index],
-                                        )));
-                          }),
+                        caption: 'Edit',
+                        color: Colors.lightBlueAccent,
+                        icon: Icons.edit,
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ScheduleModal(
+                                date: widget.eventsDate,
+                                scheduleItem: widget.events[index],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                       IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.redAccent,
-                          icon: Icons.delete,
-                          onTap: () async {
-                            setState(() {
-                              _processing = true;
-                            });
-                            await widget.databaseService
-                                .deleteSchedule(DateFormat('yyyyMMdd').format(widget.eventsDate).toString(), widget.events[index]);
-                          }),
+                        caption: 'Delete',
+                        color: Colors.redAccent,
+                        icon: Icons.delete,
+                        onTap: () async {
+                          setState(() {
+                            _processing = true;
+                          });
+                          await widget.databaseService
+                              .deleteSchedule(DateFormat('yyyyMMdd').format(widget.eventsDate).toString(), widget.events[index]);
+                        },
+                      ),
                     ],
                   ),
                 );

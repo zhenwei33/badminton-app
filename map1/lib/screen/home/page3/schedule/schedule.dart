@@ -45,7 +45,6 @@ class _ScheduleState extends State<Schedule> with TickerProviderStateMixin {
   }
 
   void _onDaySelected(DateTime day, List events) {
-    print('called');
     setState(() {
       _selectedEventsDate = day;
       _selectedEvents = events;

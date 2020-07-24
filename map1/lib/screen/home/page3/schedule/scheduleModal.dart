@@ -21,6 +21,7 @@ class _ScheduleModalState extends State<ScheduleModal> {
   String _title;
   String _subtitle;
   String _time = '--:--:--';
+  String _customError = '';
   bool _processing = false;
 
   @override
@@ -62,10 +63,12 @@ class _ScheduleModalState extends State<ScheduleModal> {
           child: Column(
             children: <Widget>[
               TextFormField(
+                validator: (value) => value.isEmpty ? 'Title cannot be blank' : null,
                 decoration: InputDecoration(hintText: widget.scheduleItem == null ? 'Add Title...' : widget.scheduleItem.title),
                 onChanged: (val) => _title = val,
               ),
               TextFormField(
+                validator: (value) => value.isEmpty ? 'Subtitle cannot be blank' : null,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 decoration: InputDecoration(hintText: widget.scheduleItem == null ? 'Add Subtitle ...' : widget.scheduleItem.subtitle),
@@ -97,44 +100,57 @@ class _ScheduleModalState extends State<ScheduleModal> {
                   ),
                 ),
               ),
+              Center(
+                child: Text(
+                  _customError,
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
               _processing
                   ? CircularProgressIndicator()
-                  : Column(children: <Widget>[
-                      FlatButton(
-                        child: Text('Save'),
-                        onPressed: () async {
-                          setState(() {
-                            _processing = true;
-                          });
-                          if (widget.scheduleItem == null) {
-                            await databaseService
-                                .addSchedule(DateFormat('yyyyMMdd').format(widget.date).toString(), _title, _subtitle, _time)
-                                .then((_) {
-                              Navigator.pop(context);
+                  : Column(
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text('Save'),
+                          onPressed: () async {
+                            final formState = _key.currentState;
+                            if (formState.validate() && _time != '--:--:--') {
                               setState(() {
-                                _processing = false;
+                                _processing = true;
                               });
-                            }).catchError((err) => print("ERRORRORORR" + err));
-                          } else {
-                            await databaseService
-                                .updateSchedule(
-                                    DateFormat('yyyyMMdd').format(widget.date).toString(), widget.scheduleItem.sid, _title, _subtitle, _time)
-                                .then((_) {
-                              Navigator.pop(context);
-                              setState(() {
-                                _processing = false;
-                              });
-                            }).catchError((err) => print("ERRORRORORR" + err));
-                          }
-                        },
-                      ),
-                      FlatButton(
-                        child: Text('Cancel'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ])
+                              if (widget.scheduleItem == null) {
+                                await databaseService
+                                    .addSchedule(DateFormat('yyyyMMdd').format(widget.date).toString(), _title, _subtitle, _time)
+                                    .then((_) {
+                                  Navigator.pop(context);
+                                  setState(() {
+                                    _processing = false;
+                                  });
+                                }).catchError((err) => print("ERRORRORORR" + err));
+                              } else {
+                                await databaseService
+                                    .updateSchedule(
+                                        DateFormat('yyyyMMdd').format(widget.date).toString(), widget.scheduleItem.sid, _title, _subtitle, _time)
+                                    .then((_) {
+                                  Navigator.pop(context);
+                                  setState(() {
+                                    _processing = false;
+                                  });
+                                }).catchError((err) => print("ERRORRORORR" + err));
+                              }
+                            } else {
+                              setState(() => _customError = 'Form is Invalid');
+                            }
+                          },
+                        ),
+                        FlatButton(
+                          child: Text('Cancel'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    )
             ],
           ),
         ),
