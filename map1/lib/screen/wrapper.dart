@@ -45,9 +45,6 @@ class Wrapper extends StatelessWidget {
             StreamProvider<List<AnnouncementData>>.value(
               value: databaseService.announcementData
             ),
-            StreamProvider<AdminData>.value(
-              value: databaseService.adminData
-            ),
             StreamProvider<List<BadmintonHall>>.value(
               value: databaseService.getBadmintonHalls,
             ),

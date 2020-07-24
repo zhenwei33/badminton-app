@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: SplashScreen.navigate(
           name: 'assets/splash.flr',
           next: (_) => Wrapper(),
