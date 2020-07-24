@@ -181,14 +181,14 @@ class MakePayment extends StatelessWidget {
                             actions: [
                               FlatButton(
                                   onPressed: () {
-                                    Navigator.of(context, rootNavigator:true).pushNamed(my_booking);
+                                    Navigator.of(context, rootNavigator:true).pop();
                                   },
                                   child: Text('OK'))
                             ],
                             elevation: 5.0,
                           ),
                           barrierDismissible: false,
-                        );
+                        ).then((_) => Navigator.pushNamed(context, my_booking));
                       },
                     ),
                   ),

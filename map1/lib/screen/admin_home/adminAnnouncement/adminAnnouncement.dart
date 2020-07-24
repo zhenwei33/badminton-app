@@ -146,7 +146,7 @@ class _AdminAnnouncementState extends State<AdminAnnouncement> {
                                               child: Text('Yes'),
                                               onPressed: () async {
                                                 await databaseService.deleteAnnouncement(announcement.aid, adminData.hid);
-                                                Navigator.pop(context);
+                                                Navigator.of(context, rootNavigator:true).pop();
                                               },
                                             ),
                                           ],
