@@ -38,24 +38,14 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
   void initState() {
     setState(() {
       _date = DateTime.parse(widget.booking.bookedDate);
-      bookedDateSlash = '${_date.day.toString()}' +
-          '/${_date.month.toString()}' +
-          '/${_date.year.toString()}';
+      bookedDateSlash = '${_date.day.toString()}' + '/${_date.month.toString()}' + '/${_date.year.toString()}';
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> weekDay = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday'
-    ];
+    List<String> weekDay = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     List<String> workingWeekDay = [];
     for (var x = 0; x < weekDay.length; x++) {
       if (widget.badmintonHall.operationHours[weekDay[x]] != null) {
@@ -143,11 +133,9 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
         }
 
         // not sure correct or not
-        if (int.parse(timeBound) < _timeSlot.last &&
-            int.parse(timeBound) > int.parse(bookingTime)) {
+        if (int.parse(timeBound) < _timeSlot.last && int.parse(timeBound) > int.parse(bookingTime)) {
           if ((int.parse(timeBound) + 100) >= int.parse(bookingTime)) {
-            this._error =
-                'Please select a time after ${(int.parse(timeBound) + 100)} for today';
+            this._error = 'Please select a time after ${(int.parse(timeBound) + 100)} for today';
             return null;
           }
         }
@@ -163,8 +151,7 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
       for (var x = 0; x < courtBooking.length; x++) {
         // check start time
         if (bookingTime == courtBooking.elementAt(x).startTime) {
-          this._error =
-              'The ${courtBooking.elementAt(x).startTime} slot is already booked on that day';
+          this._error = 'The ${courtBooking.elementAt(x).startTime} slot is already booked on that day';
           return null;
         }
 
@@ -173,8 +160,7 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
         tempTime = int.parse(courtBooking.elementAt(x).startTime) + 100;
         for (var y = 1; y < courtBooking.elementAt(x).bookedHour; y++) {
           if (bookingTime == tempTime.toString()) {
-            this._error =
-                'The ${tempTime.toString()} slot is already booked on that day';
+            this._error = 'The ${tempTime.toString()} slot is already booked on that day';
             return null;
           }
           tempTime += 100;
@@ -183,10 +169,8 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
         // check if (the bookingTime after adding bookingHour) crash with start time of other booking
         int addedBookingTime = int.parse(bookingTime) + 100;
         for (var z = 2; z <= bookingHour; z++) {
-          if (courtBooking.elementAt(x).startTime ==
-              addedBookingTime.toString()) {
-            this._error =
-                'The ${addedBookingTime.toString()} slot is already booked, please make your booking time shorter';
+          if (courtBooking.elementAt(x).startTime == addedBookingTime.toString()) {
+            this._error = 'The ${addedBookingTime.toString()} slot is already booked, please make your booking time shorter';
             return null;
           }
           addedBookingTime += 100;
@@ -231,10 +215,7 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: blue,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(25),
-                bottomRight: Radius.circular(25))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25))),
         title: Center(
             child: Text(
           "Change Booking Time",
@@ -249,9 +230,7 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
                 Container(
                   height: 100,
                   width: 100,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15)),
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 15),
@@ -289,9 +268,8 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  // color: teal,
                   height: 80,
-                  width: 160,
+                  width: 150,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -325,57 +303,37 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
                           ],
                         ),
                         onPressed: () async {
-                          DateTime tempDate =
-                              DateTime.parse(widget.booking.bookedDate);
+                          DateTime tempDate = DateTime.parse(widget.booking.bookedDate);
                           final DateTime picked = await showRoundedDatePicker(
                             context: context,
                             initialDate: _date,
-                            firstDate: DateTime(tempDate.year, tempDate.month,
-                                tempDate.day - 3),
-                            lastDate: DateTime(tempDate.year, tempDate.month,
-                                tempDate.day + 3),
+                            firstDate: DateTime(tempDate.year, tempDate.month, tempDate.day - 3),
+                            lastDate: DateTime(tempDate.year, tempDate.month, tempDate.day + 3),
                             borderRadius: 5.0,
                           );
                           if (picked != null) {
-                            String bookedWeekDay =
-                                DateFormat('EEEE').format(picked);
+                            String bookedWeekDay = DateFormat('EEEE').format(picked);
 
                             // if week day does not exist
-                            if (widget.badmintonHall
-                                    .operationHours[bookedWeekDay] !=
-                                null) {
-                              String todayStartTime = widget.badmintonHall
-                                      .operationHours[bookedWeekDay][0]
-                                      .toString() +
-                                  '00';
-                              String todayEndTime = widget.badmintonHall
-                                      .operationHours[bookedWeekDay][1]
-                                      .toString() +
-                                  '00';
+                            if (widget.badmintonHall.operationHours[bookedWeekDay] != null) {
+                              String todayStartTime = widget.badmintonHall.operationHours[bookedWeekDay][0].toString() + '00';
+                              String todayEndTime = widget.badmintonHall.operationHours[bookedWeekDay][1].toString() + '00';
                               if (todayEndTime.length == 1)
                                 todayEndTime = '0' + todayEndTime + '00';
-                              else if (todayEndTime.length == 2)
-                                todayEndTime = todayEndTime + '00';
+                              else if (todayEndTime.length == 2) todayEndTime = todayEndTime + '00';
 
                               List<int> temptimeSlot = [];
-                              List<DropdownMenuItem<String>>
-                                  temptimeSlotInString = [];
+                              List<DropdownMenuItem<String>> temptimeSlotInString = [];
 
-                              for (var x = int.parse(todayStartTime);
-                                  x < int.parse(todayEndTime);
-                                  x = x + 100) {
+                              for (var x = int.parse(todayStartTime); x < int.parse(todayEndTime); x = x + 100) {
                                 temptimeSlot.add(x);
                               }
 
                               for (var x = 0; x < temptimeSlot.length; x++) {
                                 if (temptimeSlot[x].toString().length == 3) {
-                                  temptimeSlotInString.add(DropdownMenuItem(
-                                      value: '0${temptimeSlot[x]}',
-                                      child: Text('0${temptimeSlot[x]}')));
+                                  temptimeSlotInString.add(DropdownMenuItem(value: '0${temptimeSlot[x]}', child: Text('0${temptimeSlot[x]}')));
                                 } else {
-                                  temptimeSlotInString.add(DropdownMenuItem(
-                                      value: '${temptimeSlot[x]}',
-                                      child: Text('${temptimeSlot[x]}')));
+                                  temptimeSlotInString.add(DropdownMenuItem(value: '${temptimeSlot[x]}', child: Text('${temptimeSlot[x]}')));
                                 }
                               }
 
@@ -383,21 +341,16 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
                                 _date = picked;
                                 _timeSlot = temptimeSlot;
                                 _timeSlotInString = temptimeSlotInString;
-                                selectedDropdownItem =
-                                    temptimeSlotInString[0].value;
+                                selectedDropdownItem = temptimeSlotInString[0].value;
                                 // to check which week day, and set start time and end time
                                 startTime = int.parse(todayStartTime);
                                 endTime = int.parse(todayEndTime);
-                                bookedDateSlash = '${_date.day.toString()}' +
-                                    '/${_date.month.toString()}' +
-                                    '/${_date.year.toString()}';
+                                bookedDateSlash = '${_date.day.toString()}' + '/${_date.month.toString()}' + '/${_date.year.toString()}';
                               });
                             } else {
                               setState(() {
                                 _date = picked;
-                                bookedDateSlash = '${_date.day.toString()}' +
-                                    '/${_date.month.toString()}' +
-                                    '/${_date.year.toString()}';
+                                bookedDateSlash = '${_date.day.toString()}' + '/${_date.month.toString()}' + '/${_date.year.toString()}';
                               });
                             }
                           }
@@ -486,11 +439,9 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
                       trackShape: RoundedRectSliderTrackShape(),
                       activeTrackColor: blue,
                       inactiveTickMarkColor: Color(0xFFBCE0FD),
-                      tickMarkShape:
-                          RoundSliderTickMarkShape(tickMarkRadius: 3),
+                      tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 3),
                       activeTickMarkColor: blue,
-                      thumbShape: CustomSliderThumbCircle(
-                          thumbRadius: 10, min: 0, max: 3),
+                      thumbShape: CustomSliderThumbCircle(thumbRadius: 10, min: 0, max: 3),
                       overlayColor: blue.withOpacity(0.3),
                       minThumbSeparation: 100,
                     ),
@@ -514,10 +465,7 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
             ),
             StreamBuilder<List<Booking>>(
                 stream: DatabaseService().getCourtBookingListOnTheSameDay(
-                    widget.badmintonHall.hid,
-                    widget.booking.courtNumber,
-                    DateFormat('yyyy-MM-dd')
-                        .format(DateTime.parse(_date.toString()))),
+                    widget.badmintonHall.hid, widget.booking.courtNumber, DateFormat('yyyy-MM-dd').format(DateTime.parse(_date.toString()))),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<Booking> bookingOnThatDay = snapshot.data;
@@ -535,8 +483,7 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
                           var val = await _navigateValidator(
                             widget.badmintonHall.hid,
                             widget.booking.courtNumber,
-                            DateFormat('yyyy-MM-dd')
-                                .format(DateTime.parse(_date.toString())),
+                            DateFormat('yyyy-MM-dd').format(DateTime.parse(_date.toString())),
                             selectedDropdownItem,
                             widget.booking.bookedHour,
                             bookingOnThatDay,
@@ -551,40 +498,32 @@ class _ChangeBookingTimeState extends State<ChangeBookingTime> {
                             showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text('Change booking time',
-                                    style: TextStyle(fontSize: 20.0)),
-                                content: Text(
-                                    'Are you sure to change your booking time?\n'
+                                title: Text('Change booking time', style: TextStyle(fontSize: 20.0)),
+                                content: Text('Are you sure to change your booking time?\n'
                                     'The action cannot be undone'),
                                 actions: [
-                                  FlatButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: Text('No')),
+                                  FlatButton(onPressed: () => Navigator.pop(context), child: Text('No')),
                                   FlatButton(
                                     child: Text('Yes'),
                                     onPressed: () async {
-                                      DatabaseService databaseService =
-                                          DatabaseService();
+                                      DatabaseService databaseService = DatabaseService();
                                       await databaseService.changeBookingTime(
                                           widget.booking.bookingId,
-                                          DateFormat('yyyy-MM-dd').format(
-                                              DateTime.parse(_date.toString())),
+                                          DateFormat('yyyy-MM-dd').format(DateTime.parse(_date.toString())),
                                           selectedDropdownItem,
                                           widget.booking.bookedHour);
                                       final snackBar = SnackBar(
-                                        content: Text(
-                                            'Your booking time is changed, please remember'),
+                                        content: Text('Your booking time is changed, please remember'),
                                       );
-                                      Navigator.pushNamed(context, my_booking);
-                                      Scaffold.of(context)
-                                          .showSnackBar(snackBar);
+                                      Navigator.of(context, rootNavigator: true).pop();
+                                      Scaffold.of(context).showSnackBar(snackBar);
                                     },
                                   ),
                                 ],
                                 elevation: 5.0,
                               ),
                               barrierDismissible: false,
-                            );
+                            ).then((_) => Navigator.pushNamed(context, my_booking));
                           }
                         },
                       ),

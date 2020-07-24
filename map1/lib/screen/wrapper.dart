@@ -18,7 +18,6 @@ class Wrapper extends StatelessWidget {
     final user = Provider.of<User>(context);
     if (user == null) {
       return MaterialApp(
-        // home: Authentication()
         home: Authentication(),
         );
     } else {
@@ -66,7 +65,6 @@ class Wrapper extends StatelessWidget {
               ],
               debugShowCheckedModeBanner: false,
               onGenerateRoute: Routes.generateRoute,
-              // home: Home(),
               home: Home(), 
             ),
         );

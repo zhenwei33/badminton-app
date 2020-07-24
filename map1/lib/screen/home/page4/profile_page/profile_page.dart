@@ -48,12 +48,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 elevation: 0.0,
                 backgroundColor: blue4,
                 title: Text('Profile'),
-                // leading: IconButton(
-                //   icon: Icon(Icons.arrow_left),
-                //   onPressed: () {
-                //     Navigator.pop(context);
-                //   }
-                // ),
               ),
               body: Builder(
                 builder: (context) => Container(
@@ -215,7 +209,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           SizedBox(height: 30.0),
                           Row(children: <Widget>[
                             Icon(
-                              FontAwesomeIcons.idCard,
+                              Icons.card_membership,
                               color: Colors.grey[400],
                             ),
                             SizedBox(width: 10.0),

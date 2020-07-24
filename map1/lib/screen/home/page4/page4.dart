@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:map1/screen/home/page1/article/carousel.dart';
 import 'package:map1/screen/home/page4/profile_page/profile_page.dart';
 import 'package:map1/services/auth.dart';
 import 'package:map1/shared/constant.dart';
@@ -20,7 +19,6 @@ class _Page4State extends State<Page4> {
       child: Scaffold(
         body: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
-          // EdgeInsets.all(16.0),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -34,32 +32,32 @@ class _Page4State extends State<Page4> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10.0),
-                // firebase notification (not impelemented)
-                SwitchListTile(
-                    title: Text('Received Notification'),
-                    subtitle: Text('Receive notification from the apps'),
-                    activeColor: Colors.purple,
-                    value: defaultNotification, // implement function
-                    onChanged: (val) {
-                      if (val == true) {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 20.0, horizontal: 60.0),
-                              child: Text(
-                                  'Push Notification: You will now be notified whenever your booking is near'),
-                            );
-                          },
-                        );
-                      }
-                      setState(() {
-                        defaultNotification = !defaultNotification;
-                      });
-                    }),
-                SizedBox(height: 5.0),
+                // SizedBox(height: 10.0),
+                // // firebase notification (not impelemented)
+                // SwitchListTile(
+                //     title: Text('Received Notification'),
+                //     subtitle: Text('Receive notification from the apps'),
+                //     activeColor: Colors.purple,
+                //     value: defaultNotification, // implement function
+                //     onChanged: (val) {
+                //       if (val == true) {
+                //         showModalBottomSheet(
+                //           context: context,
+                //           builder: (context) {
+                //             return Container(
+                //               padding: EdgeInsets.symmetric(
+                //                   vertical: 20.0, horizontal: 60.0),
+                //               child: Text(
+                //                   'Push Notification: You will now be notified whenever your booking is near'),
+                //             );
+                //           },
+                //         );
+                //       }
+                //       setState(() {
+                //         defaultNotification = !defaultNotification;
+                //       });
+                //     }),
+                SizedBox(height: 20.0),
                 ListTile(
                   title: Text('My Profile'),
                   subtitle: Text('Edit or view profile'),

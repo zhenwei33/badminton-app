@@ -45,7 +45,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                         val.isEmpty ? 'Please enter a username' : null,
                     onChanged: (val) => setState(() => _currentUsername = val),
                   ),
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 20.0),
                   TextFormField(
                     initialValue: userData.contact,
                     decoration:
@@ -55,7 +55,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                         : null,
                     onChanged: (val) => setState(() => _currentContact = val),
                   ),
-                  SizedBox(height: 40.0),
+                  SizedBox(height: 20.0),
                   RaisedButton(
                       color: Colors.red[400],
                       child: Text(

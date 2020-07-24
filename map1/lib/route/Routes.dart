@@ -22,18 +22,12 @@ const String page4 = '/page4';
 const String profile_page = '/user_profile_page';
 
 const String my_booking = '/my_booking';
-// const String badminton_hall = '/badminton_hall';
-// const String hall_details = '/badminton_hall/details';
-// const String hall_courts = '/badminton_hall/courts';
-// const String hall_booking = '/badminton_hall/booking';
-// const String booking_payment = '/badminton_hall/booking/payment';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case home:
-        return MaterialPageRoute(
-            settings: RouteSettings(name: home), builder: (_) => Home());
+        return MaterialPageRoute(settings: RouteSettings(name: home), builder: (_) => Home());
       case page1:
         return MaterialPageRoute(builder: (_) => Page1());
       case page2:
@@ -46,30 +40,23 @@ class Routes {
         return MaterialPageRoute(builder: (_) => ProfilePage());
       case my_booking:
         return MaterialPageRoute(builder: (_) => MyBookings());
-      // case badminton_hall:
-      //   return MaterialPageRoute(builder: (_) => BadmintonHalls());
-      // case hall_details:
-      //   return MaterialPageRoute(builder: (_) => HallDetails());
-      // case hall_courts:
-      //   return MaterialPageRoute(builder: (_) => HallCourts());
-      // case hall_booking:
-      //   return MaterialPageRoute(builder: (_) => MakeBooking());
-      // case booking_payment:
-      //   return MaterialPageRoute(builder: (_) => MakePayment());
       default:
         return _errorRoute();
     }
   }
 
   static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(builder: (_) {
-      return Scaffold(
+    return MaterialPageRoute(
+      builder: (_) {
+        return Scaffold(
           appBar: AppBar(
             title: Text('Route Error'),
           ),
           body: Center(
             child: Text('Route Error'),
-          ));
-    });
+          ),
+        );
+      },
+    );
   }
 }
